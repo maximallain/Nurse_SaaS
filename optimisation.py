@@ -1,6 +1,7 @@
 import math
 import numpy as np
 import random
+import requests as req
 
 
 def generate_random_clients(nb, xmin, xmax, ymin, ymax):
@@ -12,7 +13,7 @@ def calculate_cost_matrix(listOfPatientsWithOrigin):
     cost_matrix = np.zeros((mat_dim, mat_dim))
     for i in range(1, mat_dim) :  # costs from client i to client j
         for j in range(1, mat_dim) :
-            cost_matrix[i,j] = math.sqrt((listOfPatientsWithOrigin[i][0] - listOfPatientsWithOrigin[j][0]) ** 2 + (listOfPatientsWithOrigin[i][1] - listOfPatientsWithOrigin[j][1]) ** 2)
+            cost_matrix[i,j] = distance(listOfPatientsWithOrigin[i][0],listOfPatientsWithOrigin[i][1],listOfPatientsWithOrigin[j][0],listOfPatientsWithOrigin[j][1])
     return cost_matrix
 
 
@@ -86,8 +87,14 @@ def sequential_build_deliveries(sorted_savings, arg_sorted_savings, patients_lis
         rounds_list = rounds_list + [round]  # the new round is added to the deliveries list
     return rounds_list
 
+def distance(x1, y1, x2, y2):
+    url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + str(x1) + "," + str(y1) + "&destinations=" + str(x2) + "," + str(y2) + "&key=AIzaSyC0eSQgRkKnFCo3gnu4UlPMDnpoLjwifso"
+    return req.get(url).json().get("rows")[0].get("elements")[0].get("duration").get("value")
 
-listOfPatients = generate_random_clients(10, 0, 10, 0, 10)
+#print(distance(48, 2, 49, 3))
+
+
+listOfPatients = generate_random_clients(10, 48, 49, 2, 3)
 sorted_savings = clarke_and_wright_init(listOfPatients)[0]
 arg_sorted_savings = clarke_and_wright_init(listOfPatients)[1]
 L = sequential_build_deliveries(sorted_savings, arg_sorted_savings, listOfPatients[1:])[0]
