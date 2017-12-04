@@ -1,7 +1,7 @@
-from django.db import models
+from django import forms
 
 
-class Soin(models.Model):
+class Soins(forms.Form):
     nom_soin = models.CharField(max_length=100)
     type_soin = models.CharField(max_length=100)
     adresse_soin = models.CharField(max_length=100)
