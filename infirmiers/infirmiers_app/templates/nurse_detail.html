@@ -6,6 +6,17 @@
         <h1>{{ object.FirstName }} {{ object.LastName }}</h1>
         <p>{{ object.Gender }}</p>
         <p>{{ object.PhoneNumber }}</p>
+        <p>Availabilities</p>
+        {% for availableday in object.availableDays.all %}
+            <ul>
+                <li>
+                    {{ availableday.weekday }}
+                    {% for interval in availableday.intervals.all %}
+                        <p>{{ interval.real_start_time }} - {{ interval.real_end_time }}</p>
+                    {% endfor %}
+                </li>
+            </ul>
+        {% endfor %}
         <a class="homepage_button" align="center" href="{% url 'nurse_list' %}">See Nurses</a>
     
     </body>
