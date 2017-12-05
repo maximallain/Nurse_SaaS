@@ -1,0 +1,11 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Nurse</title>
+</head>
+<body>
+    <form action="{% url 'nurse_creation_view' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+    </form>
+</body>
