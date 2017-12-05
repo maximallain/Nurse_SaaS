@@ -19,6 +19,9 @@ class Interval(models.Model):
 def convert_to_real_time(number):
         """Method that takes a integer as parameter and that calculate the real time based on around fifteen"""
         return time(hour=number//4, minute=(number%4)*15).isoformat(timespec='minutes')
+
+
+
         
 
 
