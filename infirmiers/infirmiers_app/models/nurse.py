@@ -11,6 +11,7 @@ class Nurse(models.Model):
     LastName = models.CharField(max_length=50)
     Gender = models.CharField(max_length=1, choices=Gender_Choices) 
     PhoneNumber = models.IntegerField()
+    Office = models.IntegerField()
     
 
     

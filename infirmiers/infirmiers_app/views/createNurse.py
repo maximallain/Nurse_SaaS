@@ -15,8 +15,9 @@ def nurse_creation_view(request):
             LastName = form.cleaned_data['LastName']
             Gender = form.cleaned_data['Gender'][0]
             PhoneNumber = form.cleaned_data['PhoneNumber']
+            Office = request.user.id
 
-            nurse = Nurse(FirstName=FirstName, LastName=LastName, Gender=Gender, PhoneNumber=PhoneNumber)
+            nurse = Nurse(FirstName=FirstName, LastName=LastName, Gender=Gender, PhoneNumber=PhoneNumber, Office=Office)
             nurse.save()
 
             return HttpResponseRedirect(reverse("nurse_list"))

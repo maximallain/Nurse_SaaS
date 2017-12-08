@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <title>Nurse</title>
@@ -5,14 +8,18 @@
 <body>
     <h1>Nurses</h1>
     {% for nurse in object_list %}
-        <ul>
-            <li><a href="{% url 'nurse_detail' nurse.pk %}">{{ nurse.FirstName }} {{ nurse.LastName }}</a> - {{ nurse.PhoneNumber }}</li>
-            <form action="{% url 'nurse_list' nurse.pk %}" method="post">
-                {% csrf_token %}
-                <button type="submit" name="Submit">Add an availability</button>
-            </form>
-        </ul>
+        {% if nurse.Office == user.id %}
+            <ul>
+                <li><a href="{% url 'nurse_detail' nurse.pk %}">{{ nurse.FirstName }} {{ nurse.LastName }}</a> - {{ nurse.PhoneNumber }}</li>
+                <form action="{% url 'nurse_list' nurse.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" name="Submit">Add an availability</button>
+                </form>
+            </ul>
+        {% endif %}
     {% endfor %}
     <a class="homepage_button" align="center" href="{% url 'nurse_creation_view' %}">Add a Nurse</a>
 
 </body>
+
+{% endblock %}
