@@ -1,4 +1,5 @@
 from django.db import models
+from patients import Patient
 
 
 class Soin(models.Model):
@@ -7,3 +8,5 @@ class Soin(models.Model):
     adresse_soin = models.CharField(max_length=100)
     frequence_soin = models.CharField(max_length=100)
     ponctualite_definie = models.CharField(max_length=100)
+    patient = models.ForeignKey(Patient)
+
