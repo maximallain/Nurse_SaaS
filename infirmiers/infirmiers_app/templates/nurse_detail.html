@@ -1,29 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<<<<<<< infirmiers/infirmiers_app/templates/nurse_detail.html
 <head>
-        <meta charset="UTF-8">
-        <title>Nurse</title>
-    </head>
-    <body>
-        <h1>{{ object.FirstName }} {{ object.LastName }}</h1>
-        <p>{{ object.Gender }}</p>
-        <p>{{ object.PhoneNumber }}</p>
-        <p>Availabilities</p>
-        {% for availableday in object.availableDays.all %}
-            <ul>
-                <li>
-                    {{ availableday.weekday }}
-                    {% for interval in availableday.intervals.all %}
-                        <p>{{ interval.real_start_time }} - {{ interval.real_end_time }}</p>
-                    {% endfor %}
-                </li>
-            </ul>
-        {% endfor %}
-        <a class="homepage_button" align="center" href="{% url 'nurse_list' %}">See Nurses</a>
-    
-    </body>
-
+    <meta charset="UTF-8">
+    <title>Nurse</title>
+</head>
+<body>
+    <h1>{{ object.FirstName }} {{ object.LastName }}</h1>
+    <p>{{ object.Gender }}</p>
+    <p>{{ object.PhoneNumber }}</p>
+    <p>{{ object.Office }}</p>
+    <p>Availabilities</p>
+    {% for availableday in object.availableDays.all %}
+        <ul>
+            <li>
+                {{ availableday.weekday }}
+                {% for interval in availableday.intervals.all %}
+                    <p>{{ interval.real_start_time }} - {{ interval.real_end_time }}</p>
+                {% endfor %}
+            </li>
+        </ul>
+    {% endfor %}
+    <a class="homepage_button" align="center" href="{% url 'nurse_list' %}">See Nurses</a>
+</body>
 
 {% endblock %}
