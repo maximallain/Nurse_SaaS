@@ -6,6 +6,9 @@ from datetime import time
 class Interval(models.Model):
     start_time = models.PositiveIntegerField(validators=[MaxValueValidator(95)],null=True)
     end_time = models.PositiveIntegerField(validators=[MaxValueValidator(96)], null=True)
+    #Définition de l'unicité d'un intervalle définit par start_time et end_time
+    class Meta:
+        unique_together = ["start_time", "end_time"]
 
 
     @property
