@@ -9,4 +9,3 @@ class Soin(models.Model):
     frequence_soin = models.CharField(max_length=100)
     ponctualite_definie = models.CharField(max_length=100)
     # patient = models.ForeignKey(Patient)
-
