@@ -15,4 +15,8 @@ class NurseListView(ListView):
         return context
 
     def post(self, request, nurse_id):
-        return HttpResponseRedirect(reverse("availability_creation_view", args=[nurse_id])) #Redirect to the availability_creation_view
+        if "NewForm" in request.POST:
+            return HttpResponseRedirect(reverse("availability_creation_view", args=[nurse_id])) #Redirect to the availability_creation_view
+        elif "Deletion" in request.POST:
+            Nurse.objects.filter(pk = nurse_id)[0].delete()
+            return HttpResponseRedirect(reverse("nurse_list"))
