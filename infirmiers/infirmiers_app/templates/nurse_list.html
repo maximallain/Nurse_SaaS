@@ -11,9 +11,13 @@
         {% if nurse.Office == user.id %}
             <ul>
                 <li><a href="{% url 'nurse_detail' nurse.pk %}">{{ nurse.FirstName }} {{ nurse.LastName }}</a> - {{ nurse.PhoneNumber }}</li>
-                <form action="{% url 'nurse_list' nurse.pk %}" method="post">
+                <form action="{% url 'nurse_list' nurse.pk %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit" name="Submit">Add an availability</button>
+                    <button type="submit" name="NewForm">Add an availability</button>
+                </form>
+                <form action="{% url 'nurse_list' nurse.pk %}" method="POST">
+                    {% csrf_token %}
+                <button type="submit" name="Deletion">Delete</button>
                 </form>
             </ul>
         {% endif %}
@@ -21,5 +25,6 @@
     <a class="w3-bar-item w3-button logo" align="center" href="{% url 'nurse_creation_view' %}">Add a Nurse</a>
 
 </body>
+
 
 {% endblock %}
