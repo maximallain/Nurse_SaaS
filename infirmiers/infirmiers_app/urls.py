@@ -12,5 +12,4 @@ urlpatterns = [
     url('^nurses/(?P<nurse_id>\d+)', NurseListView.as_view(), name='nurse_list'),
     url('^nurse/(?P<pk>\d+)$', NurseDetailView.as_view(), name='nurse_detail'),
     url('^availability/(?P<nurse_id>\d+)$',availability_creation_view, name="availability_creation_view")
-
 ]
