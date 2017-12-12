@@ -14,11 +14,9 @@ class SoinListView(ListView):
         context = super(SoinListView, self).get_context_data(**kwargs)
         return context
 
-
     def post(self, request, soin_id):
         if "Deletion" in request.POST:
             Soin.objects.filter(pk=soin_id)[0].delete()
             return HttpResponseRedirect(reverse("soin_list"))
-        """elif "NewForm" in request.POST:
-            return HttpResponseRedirect(reverse("patient_detail",args=[patient_id]))"""
+
 
