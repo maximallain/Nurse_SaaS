@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from soins_app.models.visits import Visit
 #from .Patients import Patient
 
 
