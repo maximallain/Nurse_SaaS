@@ -9,7 +9,7 @@
     <h1>Patients</h1>
     {% for patient in object_list %}
             <ul>
-                <li><a href="{% url 'patient_detail' patient.pk %}" name="NewForm">{{ patient.prenom }} {{ patient.nom }}</a> </li>
+                <li><a href="{% url 'patient_detail' patient.pk %}">{{ patient.prenom }} {{ patient.nom }}</a> </li>
             </ul>
     {% endfor %}
     <a class="w3-bar-item w3-button logo" align="center" href="{% url 'patient_request' %}">Add a Patient</a>
