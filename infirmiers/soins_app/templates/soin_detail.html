@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Soin</title>
+</head>
+<body>
+    <h1>{{ object.nom_soin }}</h1>
+    <p>{{ object.type_soin }}</p>
+    <p>{{ object.adresse_soin }}</p>
+    <p>{{ object.frequence_soin }}</p>
+    <p>{{ object.ponctualite_definie }}</p>
+
+
+    <a class="homepage_button" align="center" >See Soin</a>
+</body>
+
+{% endblock %}

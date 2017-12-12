@@ -1,5 +1,5 @@
 from django.db import models
-from soins_app.models.patients import Patient
+#from .Patients import Patient
 
 
 class Soin(models.Model):

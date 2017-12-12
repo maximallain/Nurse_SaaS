@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Nurse</title>
+</head>
+<body>
+    <h1>{{ object.prenom }} {{ object.nom }}</h1>
+    <p>{{ object.adresse }}</p>
+    <p>{{ object.telephone }}</p>
+    <p>{{ object.email }}</p>
+
+    <a class="homepage_button" align="center" href="{% url 'patient_list' %}">See Patients</a>
+</body>
+
+{% endblock %}
