@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'infirmiers_app.apps.InfirmiersAppConfig',
+    'soins_app.apps.SoinsAppConfig',
     'signUp.apps.SignupConfig',
     'django.contrib.admin',
     'django.contrib.auth',

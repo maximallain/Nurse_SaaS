@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Soins</title>
+</head>
+<body>
+    <h1>Nurses</h1>
+    {% for soin in object_list %}
+        <ul>
+            <li><a href="{% url 'soin_detail' soin.pk %}">{{ soin.nom_soin }} {{ soin.type_soin }}</a> - {{ soin.adresse_soin }}</li>
+        </ul>
+    {% endfor %}
+    <a class="w3-bar-item w3-button logo" align="center" href="{% url 'soin_request' %}">Add a Soin</a>
+</body>
+
+{% endblock %}
