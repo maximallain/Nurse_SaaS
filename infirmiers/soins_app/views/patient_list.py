@@ -15,4 +15,6 @@ class PatientListView(ListView):
         return context
 
     def post(self, request, patient_id):
-        return HttpResponseRedirect(reverse("availability_creation_view", args=[patient_id])) #Redirect to the availability_creation_view
+        if "Deletion" in request.POST:
+            Patient.objects.filter(pk=patient_id)[0].delete()
+            return HttpResponseRedirect(reverse("patient_list"))

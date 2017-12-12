@@ -15,4 +15,8 @@ class SoinListView(ListView):
         return context
 
     def post(self, request, soin_id):
-        return HttpResponseRedirect(reverse("availability_creation_view", args=[soin_id])) #Redirect to the availability_creation_view
+        if "Deletion" in request.POST:
+            Soin.objects.filter(pk=soin_id)[0].delete()
+            return HttpResponseRedirect(reverse("soin_list"))
+
+

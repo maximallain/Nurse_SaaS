@@ -3,14 +3,17 @@
 {% block content %}
 <head>
     <meta charset="UTF-8">
-    <title>Nurse</title>
+    <title>Patients</title>
 </head>
 <body>
-    <h1>{{ object.prenom }} {{ object.nom }}</h1>
-    <p>{{ object.adresse }}</p>
-    <p>{{ object.telephone }}</p>
-    <p>{{ object.email }}</p>
-
+    <h1>{{ patient.prenom }} {{ patient.nom }}</h1>
+    <p>{{ patient.adresse }}</p>
+    <p>{{ patient.telephone }}</p>
+    <p>{{ patient.email }}</p>
+    <form action="{% url 'patient_list' patient.pk %}" method="POST">
+        {% csrf_token %}
+    <button type="submit" name="Deletion">Delete {{ patient.prenom }} {{ patient.nom }}</button>
+    </form>
     <a class="homepage_button" align="center" href="{% url 'patient_list' %}">See Patients</a>
 </body>
 
