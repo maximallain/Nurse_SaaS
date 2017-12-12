@@ -18,5 +18,3 @@ class PatientListView(ListView):
         if "Deletion" in request.POST:
             Patient.objects.filter(pk=patient_id)[0].delete()
             return HttpResponseRedirect(reverse("patient_list"))
-        elif "NewForm" in request.POST:
-            return HttpResponseRedirect(reverse("patient_detail",args=[patient_id]))
