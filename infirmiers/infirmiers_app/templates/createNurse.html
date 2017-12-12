@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nurse</title>
+</head>
+<body>
+    <p style="color:red">{{ error_message }}</p>
+    <form action="{% url 'nurse_creation_view' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit" />
+    </form>
+</body>
+
+{% endblock %}

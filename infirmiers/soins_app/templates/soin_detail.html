@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>Soin</title>
+</head>
+<body>
+    <h1>{{ soin.nom_soin }}</h1>
+    <p>{{ soin.type_soin }}</p>
+    <p>{{ soin.adresse_soin }}</p>
+    <p>{{ soin.frequence_soin }}</p>
+    <p>{{ soin.ponctualite_definie }}</p>
+    <form action="{% url 'soin_list' soin.pk %}" method="POST">
+        {% csrf_token %}
+    <button type="submit" name="Deletion">Delete</button>
+    </form>
+
+
+    <a class="homepage_button" align="center" href="{% url 'soin_list' %}">See Soin</a>
+</body>
+
+{% endblock %}
