@@ -1,7 +1,7 @@
 from django.db import models
 from datetime import date
 from soins_app.models.visits import Visit
-#from .Patients import Patient
+from .Patients import Patient
 
 
 class Soin(models.Model):
@@ -28,5 +28,4 @@ class Soin(models.Model):
     strict_punctuality = models.BooleanField(default=False)
     start_date = models.DateField(default=date.today)
     treatment_duration = models.IntegerField(default=0)
-
-    # patient = models.ForeignKey(Patient)
+    patient = models.ForeignKey(Patient, default=1)

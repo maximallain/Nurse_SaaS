@@ -8,5 +8,5 @@ class Visit(models.Model):
     completed = models.BooleanField(default="False")
     #default duration visit is 2hours - MVP
     duration_visit = models.IntegerField(default=2)
-    #soin = models.ForeignKey('soins.Soin')
+    soin = models.ForeignKey('soins_app.Soin', default=1)
     nurse = models.ForeignKey(Nurse)
