@@ -11,13 +11,11 @@
     <p>{{ object.PhoneNumber }}</p>
     <p>{{ object.Office }}</p>
     <p>Availabilities</p>
-    {% for availableday in object.availableDays.all %}
+    {% for interval in object.intervals.all %}
         <ul>
             <li>
-                {{ availableday.weekday }}
-                {% for interval in availableday.intervals.all %}
-                    <p>{{ interval.real_start_time }} - {{ interval.real_end_time }}</p>
-                {% endfor %}
+                {{ interval.weekday }} : 
+                {{ interval.real_start_time }} - {{ interval.real_end_time }}
             </li>
         </ul>
     {% endfor %}

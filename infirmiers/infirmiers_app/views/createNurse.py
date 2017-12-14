@@ -5,7 +5,6 @@ from django.db.utils import IntegrityError
 
 from infirmiers_app.forms.nurseCreationForm import NurseCreationForm
 from infirmiers_app.models.nurse import Nurse
-from infirmiers_app.models.availableDay import AvailableDay
 from infirmiers_app.models.interval import Interval
 
 def nurse_creation_view(request):

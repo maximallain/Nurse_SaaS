@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^infirmier/', include('infirmiers_app.urls')),
     url(r'^soins/', include('soins_app.urls')),
-    url(r'^infirmier/', include('infirmiers_app.urls')),
     url(r'^signup/', include('signUp.urls')),
+    url(r'^api/v1/', include('api.urls')),
+
 ]
