@@ -12,12 +12,20 @@ def soin_request(request):
         if form.is_valid():
             nom_soin = form.cleaned_data['nom_soin']
             type_soin = form.cleaned_data['type_soin']
-            adresse_soin = form.cleaned_data['adresse_soin']
             frequence_soin = form.cleaned_data['frequence_soin']
-            ponctualite_definie = form.cleaned_data['ponctualite_definie']
+            strict_punctuality = form.cleaned_data['strict_punctuality']
+            start_date=form.cleaned_data['start_date']
+            treatment_duration=form.cleaned_data['treatment_duration']
             #envoi = True
-            Soin(nom_soin=nom_soin, type_soin = type_soin, adresse_soin = adresse_soin, frequence_soin = frequence_soin, ponctualite_definie = ponctualite_definie).save()
+            Soin(nom_soin=nom_soin,
+                 type_soin = type_soin,
+                 frequence_soin = frequence_soin,
+                 strict_punctuality = strict_punctuality,
+                 start_date=start_date,
+                 treatment_duration=treatment_duration
+                 ).save()
             return HttpResponseRedirect(reverse("soin_list"))
+
     else:
         form = Soins()
 
