@@ -1,0 +1,4 @@
+Set up the module django-multipleselectfield
+
+1 - Install with pip : pip install django-multiselectfield
+2 - In the file settings, put 'multiselectfield' under "INSTALLED_APP"
