@@ -4,11 +4,23 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import time
 
 class Interval(models.Model):
+    
+    WeekDay_Choices = (
+        ('M', 'Monday'),
+        ('T', 'Tuesday'),
+        ('W', 'Wednesday'),
+        ('Th', 'Thursday'),
+        ('F', 'Friday'),
+        ('S', 'Saturday'),
+        ('Su', 'Sunday'),
+    )
+    
     start_time = models.PositiveIntegerField(validators=[MaxValueValidator(95)],null=True)
     end_time = models.PositiveIntegerField(validators=[MaxValueValidator(96)], null=True)
+    weekday = models.CharField(max_length=2, choices=WeekDay_Choices, null=True)
     #Définition de l'unicité d'un intervalle définit par start_time et end_time
     class Meta:
-        unique_together = ["start_time", "end_time"]
+        unique_together = ["start_time", "end_time", "weekday"]
 
 
     @property

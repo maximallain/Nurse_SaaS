@@ -34,13 +34,15 @@ INSTALLED_APPS = [
     'infirmiers_app.apps.InfirmiersAppConfig',
     'soins_app.apps.SoinsAppConfig',
     'signUp.apps.SignupConfig',
+    'api.apps.ApiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'multiselectfield'
+    'multiselectfield',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

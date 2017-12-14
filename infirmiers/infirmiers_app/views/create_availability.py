@@ -5,7 +5,6 @@ from django.db.utils import IntegrityError
 
 from infirmiers_app.forms.availabilityForm import AvailabilityForm
 from infirmiers_app.models.nurse import Nurse
-from infirmiers_app.models.availableDay import AvailableDay
 from infirmiers_app.models.interval import Interval
 
 def availability_creation_view(request, nurse_id):
@@ -18,19 +17,14 @@ def availability_creation_view(request, nurse_id):
 
             #create an object Interval
             try:
-                time_available = Interval(start_time=Start_time, end_time=End_time)
-                time_available.save()
+                interval = Interval(start_time=Start_time, end_time=End_time, weekday=WeekDay)
+                interval.save()
             except IntegrityError:
-                time_available = Interval.objects.filter(start_time=Start_time, end_time=End_time)[0]
+                interval = Interval.objects.filter(start_time=Start_time, end_time=End_time, weekday=WeekDay)[0]
 
-            #create an object AvailableDay
-            availability = AvailableDay(weekday=WeekDay)
-            availability.save()
-            availability.intervals.add(time_available)
-
-            #create an object Nurse
+            #get the corresponded Nurse
             nurse = Nurse.objects.get(pk = nurse_id)
-            nurse.availableDays.add(availability)
+            nurse.intervals.add(interval)
 
             return HttpResponseRedirect(reverse("nurse_list"))
 
