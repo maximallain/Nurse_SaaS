@@ -8,7 +8,7 @@
 <body>
     <h1>Nurses</h1>
     {% for nurse in object_list %}
-        {% if nurse.Office == user.id %}
+        {% if nurse.office.user.id == user.id %}
             <ul>
                 <li><a href="{% url 'nurse_detail' nurse.pk %}">{{ nurse.FirstName }} {{ nurse.LastName }}</a> - {{ nurse.PhoneNumber }}</li>
                 <form action="{% url 'nurse_list' nurse.pk %}" method="POST">

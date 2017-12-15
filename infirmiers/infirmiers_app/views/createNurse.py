@@ -6,6 +6,7 @@ from django.db.utils import IntegrityError
 from infirmiers_app.forms.nurseCreationForm import NurseCreationForm
 from infirmiers_app.models.nurse import Nurse
 from infirmiers_app.models.interval import Interval
+from signUp.models.office import Office
 
 def nurse_creation_view(request):
     if request.method == 'POST':
@@ -16,9 +17,9 @@ def nurse_creation_view(request):
             LastName = form.cleaned_data['LastName']
             Gender = form.cleaned_data['Gender'][0]
             PhoneNumber = form.cleaned_data['PhoneNumber']
-            Office = request.user.id
+            office = Office.objects.filter(user = request.user )[0]
 
-            nurse = Nurse(FirstName=FirstName, LastName=LastName, Gender=Gender, PhoneNumber=PhoneNumber, Office=Office)
+            nurse = Nurse(FirstName=FirstName, LastName=LastName, Gender=Gender, PhoneNumber=PhoneNumber, office=office)
             try:
                 nurse.save()
                 return HttpResponseRedirect(reverse("nurse_list"))
