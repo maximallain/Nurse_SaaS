@@ -7,14 +7,19 @@
 </head>
 <body>
     <h1>{{ patient.prenom }} {{ patient.nom }}</h1>
+    <p>{{patient.pk}}</p>
     <p>{{ patient.adresse }}</p>
     <p>{{ patient.telephone }}</p>
     <p>{{ patient.email }}</p>
-    <form action="{% url 'patient_list' patient.pk %}" method="POST">
+    <p>Office n°{{ patient.Office}}</p>
+    <a class="w3-bar-item w3-button logo" align="center" href="{% url 'soin_request' patient.pk %}">Add a Treatment to {{patient.prenom}}</a>
+    </br>
+    <form class="w3-bar-item w3-button logo" align="center" action="{% url 'patient_list' patient.pk %}" method="POST">
         {% csrf_token %}
     <button type="submit" name="Deletion">Delete {{ patient.prenom }} {{ patient.nom }}</button>
     </form>
-    <a class="homepage_button" align="center" href="{% url 'patient_list' %}">See Patients</a>
+    </br>
+    <a class="w3-bar-item w3-button logo" align="center" href="{% url 'patient_list' %}">See Patients</a>
 </body>
 
 {% endblock %}

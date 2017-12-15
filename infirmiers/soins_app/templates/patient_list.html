@@ -8,9 +8,11 @@
 <body>
     <h1>Patients</h1>
     {% for patient in object_list %}
+        {% if patient.Office == user.id %}
             <ul>
                 <li><a href="{% url 'patient_detail' patient.pk %}">{{ patient.prenom }} {{ patient.nom }}</a> </li>
             </ul>
+        {% endif %}
     {% endfor %}
     <a class="w3-bar-item w3-button logo" align="center" href="{% url 'patient_request' %}">Add a Patient</a>
 

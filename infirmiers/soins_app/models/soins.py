@@ -27,8 +27,10 @@ class Soin(models.Model):
     strict_punctuality = models.BooleanField(default=False)
     start_date = models.DateField(default=date.today)
     treatment_duration = models.IntegerField(default=0)
-    patient = models.ForeignKey(Patient, null=True)
+    #patient = models.ForeignKey(Patient, null=True)
     frequence_soin = MultiSelectField(max_length=2, choices=Treatment_Frequency_Choice)
+    patient_id = models.IntegerField(default=0)
+
 
     #Autogeneration of visits in database when saving a care
     def save(self, *args, **kwargs):

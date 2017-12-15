@@ -18,5 +18,3 @@ class SoinListView(ListView):
         if "Deletion" in request.POST:
             Soin.objects.filter(pk=soin_id)[0].delete()
             return HttpResponseRedirect(reverse("soin_list"))
-
-
