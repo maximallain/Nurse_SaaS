@@ -201,11 +201,11 @@ class Round:
 
     def check_cost_left(self, other_round, rounds_list):
         """
-        Returns True iff other_delivery can be merged to the left of the current delivery
+        Returns True iff other_round can be merged to the left of the current round
         without exceeding the nurses' availabilities
         :param other_round: the other round that we want to merge with self
         :param rounds_list: the list of already formed rounds in the solution that is being computed
-        :return: True iff other_delivery can be merged to the left of the current delivery
+        :return: True iff other_round can be merged to the left of the current round
         without exceeding the nurses' availabilities
         """
         rounds_list_2 = [round for round in rounds_list]
@@ -226,11 +226,11 @@ class Round:
 
     def check_cost_right(self, other_round, rounds_list):
         """
-        Returns True iff other_delivery can be merged to the right of the current delivery
+        Returns True iff other_round can be merged to the right of the current round
         without exceeding the nurses' availabilities
         :param other_round: the other round that we want to merge with self
         :param rounds_list: the list of already formed rounds in the solution that is being computed
-        :return: True iff other_delivery can be merged to the right of the current delivery
+        :return: True iff other_round can be merged to the right of the current round
         without exceeding the nurses' availabilities
         """
         print(rounds_list)
@@ -252,13 +252,13 @@ class Round:
 
     def can_merge_left(self, other_round, rounds_list, force_common_patient=False):
         """
-        Returns True if other_round can be merged to the left of the current delivery, False otherwise.
+        Returns True if other_round can be merged to the left of the current round, False otherwise.
         If force_common_patient is True then this method returns False if the two rounds don't have a common
         patient at their border.
         :param other_round: the other round that we want to merge with self
         :param rounds_list: the list of already formed rounds in the solution that is being computed
         :param force_common_patient: if set to True, forces both rounds to have a common patient at their borders
-        :return: True if other_round can be merged to the left of the current delivery, False otherwise
+        :return: True if other_round can be merged to the left of the current round, False otherwise
         """
         if not self.check_cost_left(other_round, rounds_list):
             return False
@@ -275,13 +275,13 @@ class Round:
 
     def can_merge_right(self, other_round, rounds_list, force_common_patient=False):
         """
-        Returns True if other_round can be merged to the right of the current delivery, False otherwise.
+        Returns True if other_round can be merged to the right of the current round, False otherwise.
         If force_common_patient is True then this method returns False if the two rounds don't have a common
         patient at their border.
         :param other_round: the other round that we want to merge with self
         :param rounds_list: the list of already formed rounds in the solution that is being computed
         :param force_common_patient: if set to True, forces both rounds to have a common patient at their borders
-        :return: True if other_round can be merged to the right of the current delivery, False otherwise
+        :return: True if other_round can be merged to the right of the current round, False otherwise
         """
         if not self.check_cost_right(other_round, rounds_list):
             return False
@@ -312,7 +312,7 @@ class Round:
 
     def merge_left(self, other_round, update=True):
         """
-        Merges other_round to the left of this delivery
+        Merges other_round to the left of this round
         :param other_round: the other round that we want to merge with self
         :param update: if set to True, a complete update of self is performed
         """
@@ -330,7 +330,7 @@ class Round:
 
     def merge_right(self, other_round, update=True):
         """
-        Merges other_round to the right of this delivery
+        Merges other_round to the right of this round
         :param other_round: the other round that we want to merge with self
         :param update: if set to True, a complete update of self is performed
         """
@@ -378,15 +378,15 @@ class Solution:
         string += "number of tours = {}, total cost = {}, total savings = {}".format(len(self._rounds_list),
                                                                                      self._total_cost,
                                                                                      self._total_savings) + "\n"
-        for delivery in self._rounds_list:
-            string += str(delivery)
+        for round in self._rounds_list:
+            string += str(round)
         return string
 
     def _get_rounds_list(self):
         return self._rounds_list
 
-    def _set_rounds_list(self, deliveries_list):
-        self._rounds_list = deliveries_list
+    def _set_rounds_list(self, rounds_list):
+        self._rounds_list = rounds_list
         self.calculate_total_cost()
         self.calculate_total_savings(True)
 
@@ -635,10 +635,10 @@ class Solver:
 
     def _get_patients_pair_from_arg(self, arg_k):
         """
-        Returns a tuple (patient_i, patient_j) where both client_i and client_j are instance of class Patient,
+        Returns a tuple (patient_i, patient_j) where both patient_i and patient_j are instance of class Patient,
         and where the savings from patient_i to patient_j is at the (arg_k)th position in sorted_savings
         :param arg_k: the position of potential savings we are looking at
-        :return: a tuple (client_i, client_j) corresponding to the savings at (arg_k)th position
+        :return: a tuple (patient_i, patient_j) corresponding to the savings at (arg_k)th position
         """
         number_of_patients = len(self._problem.patients_list)
         patient_i = arg_k // number_of_patients
@@ -707,7 +707,7 @@ class Solver:
         return rounds_list
 
     @staticmethod
-    def _search_deliveries_for_patient(patient, rounds_list, left_border=False, interior=False,
+    def _search_rounds_for_patient(patient, rounds_list, left_border=False, interior=False,
                                        right_border=False):
         """
         Searches for a specified patient in a list of rounds. The search is performed at the border
@@ -716,9 +716,9 @@ class Solver:
         It returns None if the patient has not been found in any of the rounds at the right place.
         :param patient: the patient we are looking for
         :param rounds_list: the list of rounds we are searching the patient in
-        :param left_border: If set to True, the patient can be placed at the left border of deliveries
-        :param interior: If set to True, the patient can be placed in the interior of deliveries
-        :param right_border: If set to True, the patient can be placed at the right border of deliveries
+        :param left_border: If set to True, the patient can be placed at the left border of rounds
+        :param interior: If set to True, the patient can be placed in the interior of rounds
+        :param right_border: If set to True, the patient can be placed at the right border of rounds
         :return: The round where the patient has been found if it has, None otherwise
         """
         for round in rounds_list:
@@ -742,13 +742,13 @@ class Solver:
         n = len(self._sorted_savings)
         for i in range(1, n + 1):
             patient_a, patient_b = self._get_patients_pair_from_arg(self._arg_sorted_savings[n - i])
-            patient_a_somewhere = self._search_deliveries_for_patient(patient_a, rounds_list, True, True,
+            patient_a_somewhere = self._search_rounds_for_patient(patient_a, rounds_list, True, True,
                                                                       True)
-            patient_b_somewhere = self._search_deliveries_for_patient(patient_b, rounds_list, True, True,
+            patient_b_somewhere = self._search_rounds_for_patient(patient_b, rounds_list, True, True,
                                                                       True)
-            patient_a_right = self._search_deliveries_for_patient(patient_a, rounds_list, False, False,
+            patient_a_right = self._search_rounds_for_patient(patient_a, rounds_list, False, False,
                                                                   True)
-            patient_b_left = self._search_deliveries_for_patient(patient_b, rounds_list, True, False,
+            patient_b_left = self._search_rounds_for_patient(patient_b, rounds_list, True, False,
                                                                  False)
             if patient_a != patient_b and patient_a_somewhere is None and patient_b_somewhere is None:
                 new_round = Round([patient_a, patient_b], problem=self._problem)
@@ -780,11 +780,11 @@ class Solver:
                     rounds_list.append(round)
         return rounds_list
 
-    def _build_deliveries(self, version):
+    def _build_rounds(self, version):
         """
         Builds a rounds list using the specified version of Clarke & Wright algorithm
         :param version: the version of Clarke & Wright algorithm to use, should be either 'Sequential' or 'Parallel'
-        :return: a list of rounds built using _sequential_build_deliveries or _parallel_build_deliveries, or an empty
+        :return: a list of rounds built using _sequential_build_rounds or _parallel_build_rounds, or an empty
                 list if the specified version is wrong
         """
         if version == 'Sequential':
@@ -825,6 +825,6 @@ class Solver:
         if name is None:
             name = version + " Clarke & Wright"
         self._clarke_and_wright_init()
-        rounds_list = self._build_deliveries(version)
+        rounds_list = self._build_rounds(version)
         self._add_single_patient_rounds(rounds_list)
         self._problem.solutions_list.append(Solution(name, rounds_list))
