@@ -11,4 +11,4 @@ def nurse_detail(request, pk):
 
     if request.method == 'GET':
         serializer = NurseSerializers(nurse)
-        return JsonResponse(serializer.data)
+        return JSONResponse(serializer.data)
