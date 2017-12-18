@@ -17,4 +17,4 @@ class SoinListView(ListView):
     def post(self, request, soin_id):
         if "Deletion" in request.POST:
             Soin.objects.filter(pk=soin_id)[0].delete()
-            return HttpResponseRedirect(reverse("soin_list"))
+            return HttpResponseRedirect(reverse("patient_list"))

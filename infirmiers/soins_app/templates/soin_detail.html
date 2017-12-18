@@ -11,13 +11,13 @@
     <p>{{ soin.adresse_soin }}</p>
     <p>{{ soin.frequence_soin }}</p>
     <p>{{ soin.ponctualite_definie }}</p>
-    <form action="{% url 'soin_list' soin.pk %}" method="POST">
+    <form action="{% url 'patient_list' soin.pk %}" method="POST">
         {% csrf_token %}
-    <button type="submit" name="Deletion">Delete</button>
+    <button type="submit" name="Deletion Soin">Delete</button>
     </form>
 
 
-    <a class="homepage_button" align="center" href="{% url 'soin_list' %}">See Soin</a>
+    <a class="homepage_button" align="center" href="{% url 'patient_list' %}">See Soin (à changer)</a>
 </body>
 
 {% endblock %}

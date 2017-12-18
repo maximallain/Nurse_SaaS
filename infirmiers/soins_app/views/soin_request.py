@@ -3,6 +3,7 @@ from soins_app.models.soins import Soin
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from soins_app.models.Patients import Patient
 
 def soin_request(request, patient_id):
 
@@ -16,15 +17,21 @@ def soin_request(request, patient_id):
             strict_punctuality = form.cleaned_data['strict_punctuality']
             start_date=form.cleaned_data['start_date']
             treatment_duration=form.cleaned_data['treatment_duration']
-            #envoi = True
-            Soin(nom_soin=nom_soin,
+
+            soin =  Soin(nom_soin=nom_soin,
                  type_soin = type_soin,
                  frequence_soin = frequence_soin,
                  strict_punctuality = strict_punctuality,
                  start_date=start_date,
                  treatment_duration=treatment_duration,
-                 patient_id=patient_id
-                 ).save()
+                 patient = patient_id
+                 )
+            #envoi = True
+            soin.save()
+
+            patient = Patient.objects.get(pk = patient_id)
+            patient.treatments.add(soin)
+
             #return HttpResponseRedirect(reverse("patient_detail"), {'patient_pk' : patient_id})
             return HttpResponseRedirect(reverse("patient_list"))
 

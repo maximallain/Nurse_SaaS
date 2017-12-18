@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import *
 from .visits import Visit
-from .Patients import Patient
 from multiselectfield import MultiSelectField
 
 class Soin(models.Model):
@@ -20,16 +19,15 @@ class Soin(models.Model):
         ('5', 'Saturday'),
         ('6', 'Sunday')
     )
-    
+
     nom_soin = models.CharField(max_length=100)
     type_soin = models.CharField(max_length=2, choices=Treatment_Type_Choices)
     ponctualite_definie = models.CharField(max_length=100)
     strict_punctuality = models.BooleanField(default=False)
     start_date = models.DateField(default=date.today)
     treatment_duration = models.IntegerField(default=0)
-    #patient = models.ForeignKey(Patient, null=True)
+    #patient = models.IntegerField(default=0)
     frequence_soin = MultiSelectField(max_length=2, choices=Treatment_Frequency_Choice)
-    patient_id = models.IntegerField(default=0)
 
 
     #Autogeneration of visits in database when saving a care
@@ -57,7 +55,7 @@ def create_visits_from_soin(soin):
         except IndexError:
             next_weekday = liste_dispo[0]
             timedeltadays = next_weekday + (7 - current_date.weekday())
-        
+
         current_date += timedelta(days=timedeltadays)
         current_index = liste_dispo.index(current_date.weekday())
 
