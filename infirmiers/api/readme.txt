@@ -13,9 +13,10 @@ Get a specified nurse with his availabilites. The parameter is the id of the nur
 4 - http://127.0.0.1:8000/api/v1/visits
 Get the lists of the availabilities with their date and duration
 
-5 - http://127.0.0.1:8000/api/v1/visits/<date>/
+5 - http://127.0.0.1:8000/api/v1/visits/?<date>?<officepk>
 Get the lists of the availabilities with their date and duration
 Format of date : "2017-1_12"
+Can put parameters date and officepk
 
 6 - http://127.0.0.1:8000/api/v1/visit/<visitpk>/
 Get a specified visit. The parameter is the id of the visit.
