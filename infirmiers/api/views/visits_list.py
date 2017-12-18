@@ -22,3 +22,4 @@ class VisitList(generics.ListAPIView):
             return queryset
         except KeyError:
             return queryset
+        
