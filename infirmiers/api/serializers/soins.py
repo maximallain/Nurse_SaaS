@@ -9,7 +9,6 @@ class SoinSerializer(serializers.ModelSerializer):
     class Meta:
         model = Soin
         fields = ('patient',)
-
     
     def get_patient(self, obj):
         patient = Patient.objects.filter(treatments = obj)[0]

@@ -26,7 +26,6 @@ class Soin(models.Model):
     strict_punctuality = models.BooleanField(default=False)
     start_date = models.DateField(default=date.today)
     treatment_duration = models.IntegerField(default=0)
-    #patient = models.IntegerField(default=0)
     frequence_soin = MultiSelectField(max_length=2, choices=Treatment_Frequency_Choice)
 
 
