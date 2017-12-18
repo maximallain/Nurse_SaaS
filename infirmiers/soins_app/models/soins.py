@@ -39,6 +39,7 @@ class Soin(models.Model):
             A.date = date_visit
             A.save()
             A.soin = self
+            A.save()
 
 def create_visits_from_soin(soin):
     i = 1
