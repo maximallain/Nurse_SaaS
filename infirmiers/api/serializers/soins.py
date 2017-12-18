@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from soins_app.models.soins import Soin
+from soins_app.models.Patients import Patient
 from .patients import PatientSerializer
 
 class SoinSerializer(serializers.ModelSerializer):
@@ -11,5 +12,6 @@ class SoinSerializer(serializers.ModelSerializer):
 
     
     def get_patient(self, obj):
-        serializer = PatientSerializer(obj.patient)
+        patient = Patient.objects.filter(treatments = obj)[0]
+        serializer = PatientSerializer(patient)
         return serializer.data
