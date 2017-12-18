@@ -15,8 +15,9 @@ def patient_request(request):
             adresse = form.cleaned_data['adresse']
             telephone = form.cleaned_data['telephone']
             email = form.cleaned_data['email']
+            office = request.user.id
             #envoi = True
-            Patient(nom=nom, prenom = prenom, adresse = adresse, telephone = telephone,email=email).save()
+            Patient(nom=nom, prenom = prenom, adresse = adresse, telephone = telephone,email=email,Office=office).save()
             return HttpResponseRedirect(reverse("patient_list"))
     else:
         form = Patients_Form()

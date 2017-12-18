@@ -3,7 +3,10 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView
 
+from soins_app.models.soins import Soin
 from soins_app.models.Patients import Patient
+
+
 
 class PatientListView(ListView):
     """This class is based on ListView special feature in Django"""
@@ -14,7 +17,18 @@ class PatientListView(ListView):
         context = super(PatientListView, self).get_context_data(**kwargs)
         return context
 
-    def post(self, request, patient_id):
-        if "Deletion" in request.POST:
-            Patient.objects.filter(pk=patient_id)[0].delete()
+    def post(self, request, id):
+        """if "Deletion" in request.POST:
+            Patient.objects.filter(pk=id)[0].delete()
+            return HttpResponseRedirect(reverse("patient_list"))"""
+        if "Deletion Patient" in request.POST:
+            Patient.objects.filter(pk=id)[0].delete()
             return HttpResponseRedirect(reverse("patient_list"))
+        elif "Deletion Soin" in request.POST:
+            Soin.objects.filter(pk=id)[0].delete()
+            return HttpResponseRedirect(reverse("patient_list"))
+
+    """def post(self, request, id_soin, id_patient ):
+            if "Deletion" in request.POST:
+                Soin.objects.filter(pk=id)[0].delete()
+                return HttpResponseRedirect(reverse("patient_list"))"""
