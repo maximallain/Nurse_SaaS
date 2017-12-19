@@ -1,5 +1,7 @@
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.contrib.auth.models import User
 from .forms import SignUpForm, SignUpFormOffice
 from .models.office import Office
@@ -21,7 +23,8 @@ def signup(request):
             raw_password = user_form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            office_pk = Office.objects.filter(user = user)[0].pk
+            return HttpResponseRedirect(reverse("home"))
     else:
         user_form = SignUpForm()
         office_form = SignUpFormOffice()
