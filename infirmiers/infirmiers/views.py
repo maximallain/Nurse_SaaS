@@ -11,7 +11,6 @@ def home(request):
         user = request.user
         officepk = Office.objects.filter(user = user)[0].pk
         requests.get("http://127.0.0.1:5000/optimize?officepk=" + str(officepk))
-        #return HttpResponseRedirect("home")
 
     current_user_id = request.user
     current_office = Office.objects.filter(user = request.user)[0]
