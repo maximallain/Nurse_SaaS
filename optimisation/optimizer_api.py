@@ -33,15 +33,11 @@ def launch_optimizer():
     solver = Solver(problem)
     solver.compute_clarke_and_wright("Parallel")
     solution = problem.solutions_list[-1]
-    arg_sorted_round_costs = np.argsort([round.total_cost for round in solution.rounds_list])[::-1]
-    arg_sorted_nurses_availabilities = np.argsort([nurse.availability for nurse in nurses_list])[::-1]
     visits_summary = []
-    for i in range(min(len(nurses_list), len(solution.rounds_list))):
-        nurse = nurses_list[arg_sorted_nurses_availabilities[i]]
-        round = solution.rounds_list[arg_sorted_round_costs[i]]
+    for round in solution.rounds_list:
         for patient in round.patients_list:
-            time_when_visited = solution.time_when_patient_visited(patient, nurse, problem)
-            visits_summary.append({"visit_pk": patient.pk, "nurse_pk": nurse.pk, "time": str(time_when_visited//3600) + ':' + str((time_when_visited%3600)//3600)})
+            time_when_visited = round.time_when_patient_visited(patient, problem)
+            visits_summary.append({"visit_pk": patient.pk, "nurse_pk": round.nurse.pk, "time": str(time_when_visited//3600) + ':' + str((time_when_visited%3600)//3600)})
     req.request("PUT", "http://127.0.0.1:8000/api/v1/visits", data=visits_summary)
     return ""
 

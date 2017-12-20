@@ -85,8 +85,11 @@ class Patient(Point):
         Converts this patient into a string
         :return: a string representing this patient
         """
-        return "identifier : {}, address : {}, duration of care : {}".format(self.identifier, self.address,
+        result = "identifier : {}, address : {}, duration of care : {}".format(self.identifier, self.address,
                                                                                  self.duration_of_care)
+        if self.must_be_visited_exactly_at != -1:
+            result += ", must be exactly visited at : {}".format(self.must_be_visited_exactly_at)
+        return result
 
 
 class Office(Point):
@@ -136,8 +139,23 @@ class Round:
         Converts this Round object to a string
         :return: a string representing this round
         """
-        self.print_round()
-        return ""
+        result = "Printing round properties :\n"
+        result += "Office :\n"
+        result += str(self._office) + "\n"
+        result += str(self._nurse) + "\n"
+        result += "Patients list : ({} patient(s))".format(len(self._patients_list)) + "\n"
+        for i in range(len(self._patients_list)):
+            patient = self._patients_list[i]
+            if i == 0:
+                last_point = self._office
+            else:
+                last_point = self._patients_list[i-1]
+            result += "cost of trip : {}".format(self._problem.cost(last_point, patient)) + "\n"
+            result += str(patient) + ", visited at {}".format(self.time_when_patient_visited(patient, self._problem)) + "\n"
+        result += "cost of trip : {}".format(self._problem.cost(self._patients_list[-1], self._office)) + "\n"
+        result += "Round properties :" + "\n"
+        result += "Total cost = {}, total savings = {}".format(self._total_cost, self._total_savings) + "\n"
+        return result
 
     def _get_office(self):
         return self._office
@@ -214,11 +232,11 @@ class Round:
         if self.patients_list == list():
             self._total_cost = 0
         else:
-            t = self._problem.cost(self.office, self.patients_list[0]) + self.patients_list[0].duration_of_care
-            for i in range(len(self.patients_list) - 1):
-                t += self._problem.cost(self.patients_list[i], self.patients_list[i + 1]) \
-                     + self.patients_list[i + 1].duration_of_care
-            t += self._problem.cost(self.patients_list[-1], self.office)
+            t = self._problem.cost(self._office, self._patients_list[0]) + self._patients_list[0].duration_of_care
+            for i in range(len(self._patients_list) - 1):
+                t += self._problem.cost(self._patients_list[i], self._patients_list[i + 1]) \
+                     + self._patients_list[i + 1].duration_of_care
+            t += self._problem.cost(self._patients_list[-1], self._office)
             self._total_cost = t
 
     def update(self):
@@ -372,6 +390,22 @@ class Round:
         else:
             self.update()
 
+    def time_when_patient_visited(self, patient_to_visit, problem):
+        time = self._nurse.start_time
+        if patient_to_visit in self._patients_list:
+            time += problem.cost(problem.office, self._patients_list[0])
+            for i in range(len(self._patients_list)):
+                patient = self._patients_list[i]
+                next_patient = None
+                if i < len(self._patients_list) - 1:
+                    next_patient = self._patients_list[i+1]
+                if patient.must_be_visited_exactly_at != -1:
+                    time = patient.must_be_visited_exactly_at
+                if patient is patient_to_visit:
+                    return time
+                time += patient.duration_of_care + problem.cost(patient, next_patient)
+        return -1
+
     def can_be_assigned_to(self, nurse, problem):
         time = nurse.start_time + problem.cost(self.office, self.patients_list[0])
         for i in range(len(self._patients_list)-1):
@@ -455,35 +489,6 @@ class Solution:
     def calculate_total_cost(self):
         """Updates the _total_cost attribute"""
         self._total_cost = sum([round.total_cost for round in self.rounds_list])
-
-    def time_when_patient_visited(self, patient_to_visit, nurse, problem):
-        time = nurse.start_time
-        for round in self._rounds_list:
-            if patient_to_visit in round.patients_list:
-                time += problem.cost(problem.office, round.patients_list[0])
-                for i in range(len(round.patients_list)):
-                    patient = round.patients_list[i]
-                    next_patient = None
-                    if i < len(round.patients_list) -1:
-                        next_patient = round.patients_list[i+1]
-                    if patient is patient_to_visit:
-                        return time
-                    time += patient.duration_of_care + problem.cost(patient, next_patient)
-        return -1
-
-    """def change_rounds_if_necessary(self):
-        if len(self.rounds_list) > 0:
-            spare_nurses = len(self.rounds_list[0].problem.nurses_list) - len(self.rounds_list)
-            for round in 
-
-    def time_when_patients_visited(self, patients_list, nurse, problem):
-
-        pass
-
-    def split_rounds(self, round, num_of_patient):
-        self.rounds_list.remove(round)
-        self.rounds_list.append(Round(round.patients_list[:num_of_patient], round.problem))
-        self.rounds_list.append(Round(round.patients_list[num_of_patient:], round.problem))"""
 
 
 class Problem:
@@ -1014,10 +1019,3 @@ class Solver:
         rounds_list = self._build_rounds(version)
         self._add_single_patient_rounds(rounds_list)
         self._problem.solutions_list.append(Solution(name, rounds_list))
-
-
-"""prob = Problem(Office(identifier="Office", x=48.5, y=2.5), nurses_list=[Nurse(pk=0, availability=50000), Nurse(pk=1, availability=10000), Nurse(pk=2, availability=5000)])
-prob.generate_random_patients(9)
-solver = Solver(prob)
-solver.compute_clarke_and_wright("Parallel")
-prob.print_solutions()"""
