@@ -20,3 +20,8 @@ Can put parameters date and officepk
 
 6 - http://127.0.0.1:8000/api/v1/visit/<visitpk>/
 Get a specified visit. The parameter is the id of the visit.
+
+7 -POST http://127.0.0.1:8000/api/v1/visits/create
+Post a list of visits to update nurse_pk and start_time to the visit object.
+Json expected in the body : 
+[{"visit_pk":111, "nurse_pk":9, "time":"05:10"},{"visit_pk":112, "nurse_pk":8, "time":"10:10"}]
