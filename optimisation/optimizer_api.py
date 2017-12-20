@@ -3,7 +3,7 @@ import datetime
 from flask import request, url_for
 from flask_api import FlaskAPI, status, exceptions
 
-from .algo import *
+from algo import *
 
 app = FlaskAPI(__name__)
 days = ["M", "T", "W", "Th", "F", "S", "Su"]

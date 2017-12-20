@@ -1,7 +1,8 @@
 import numpy as np
 import requests as req
 
-key = "AIzaSyAqOBngyzDj3dlnNc7qL-v5RW-uNEB1d9g"
+key = "AIzaSyATtwrFvepaVpvY0oYYyY_G71Mk97D7yzo"
+MAX_API_ELEMENTS = 100
 
 class Nurse:
     """
@@ -19,6 +20,9 @@ class Nurse:
         self.start_time = start_time
         self.availability = availability
 
+    def __str__(self):
+        return "Nurse : pk = {}, availability = {}, start_time = {}".format(self.pk, self.availability, self.start_time)
+
 
 class Point:
     """
@@ -35,7 +39,7 @@ class Point:
         """
         self.identifier = identifier
         if address is None:
-            self.address = str(x) + "|" + str(y)
+            self.address = str(x) + "," + str(y)
         else:
             self.address = address
 
@@ -71,7 +75,7 @@ class Patient(Point):
         :param duration_of_care: the duration of the care in seconds
         :param pk: the id of the patient
         """
-        Point.__init__(self, address, x, y, identifier)
+        Point.__init__(self, address=address, x=x, y=y, identifier=identifier)
         self.duration_of_care = duration_of_care
         self.pk = pk
         self.must_be_visited_exactly_at = must_be_visited_exactly_at
@@ -99,7 +103,7 @@ class Office(Point):
         :param x: the x coordinate (longitude) of this point
         :param y: the y coordinate (latitude) of this point
         """
-        Point.__init__(self, address, x, y, identifier)
+        Point.__init__(self, address=address, x=x, y=y, identifier=identifier)
 
 
 class Round:
@@ -183,11 +187,15 @@ class Round:
         """Prints this round's office to the console"""
         print(self._office)
 
+    def print_nurse(self):
+        print(self._nurse)
+
     def print_round(self):
         """Prints this round to the console"""
         print("Printing round properties :")
         print("Office :")
         self.print_office()
+        self.print_nurse()
         self.print_patients_list()
         print("Round properties :")
         print("Total cost = {}, total savings = {}"
@@ -252,7 +260,6 @@ class Round:
         :return: True iff other_round can be merged to the right of the current round
         without exceeding the nurses' availabilities
         """
-        print(rounds_list)
         rounds_list_2 = [round for round in rounds_list]
         if self in rounds_list and other_round in rounds_list:
             i, j = rounds_list.index(self), rounds_list.index(other_round)
@@ -366,7 +373,7 @@ class Round:
             self.update()
 
     def can_be_assigned_to(self, nurse, problem):
-        time = nurse.start_time + problem.cost(self.office,self.patients_list[0])
+        time = nurse.start_time + problem.cost(self.office, self.patients_list[0])
         for i in range(len(self._patients_list)-1):
             patient = self._patients_list[i]
             next_patient = self._patients_list[i+1]
@@ -643,12 +650,47 @@ class Problem:
                 return False
         return True
 
+    def query_api(self, start_line, nb_lines, start_column, nb_columns):
+        url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="
+        patients_locations = ""
+        if start_line == 0:
+            patients_locations += str(self._office.address)
+            for i in range(1, nb_lines - 1):
+                patients_locations += "|" + str(self._patients_list[i].address)
+        else:
+            for i in range(start_line, start_line + nb_lines):
+                patients_locations += "|" + str(self._patients_list[i].address)
+        url += patients_locations + "&destinations="
+        patients_locations = ""
+        if start_column == 0:
+            patients_locations += str(self._office.address)
+            for i in range(1, nb_columns - 1):
+                patients_locations += "|" + str(self._patients_list[i].address)
+        else:
+            for i in range(start_column, start_column + nb_columns):
+                patients_locations += "|" + str(self._patients_list[i].address)
+        return url + patients_locations + "&key=" + key
+
+    def generate_api_calls(self):
+        api_calls = []
+        height = -1
+        for i in range(1, self.number_of_patients() + 2):
+            if i * (self.number_of_patients() + 1) > MAX_API_ELEMENTS:
+                height = i - 1
+        if height == -1:
+            height = self.number_of_patients() + 1
+        number_of_handled_lines = 0
+        while number_of_handled_lines < self.number_of_patients()+1:
+            api_calls.append((number_of_handled_lines, min(height, self.number_of_patients() + 1 -
+                                                           number_of_handled_lines), 0, self.number_of_patients() + 1))
+        return api_calls
+
     def calculate_cost_matrix(self):
         """This method calculates the cost_matrix attribute of this problem, calling maps.googleapis.com"""
         url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="
-        patients_locations = str(self.office.x) + "," + str(self.office.y)
+        patients_locations = str(self._office.address)
         for patient in self.patients_list:
-            patients_locations += "|" + str(patient.x) + "," + str(patient.y)
+            patients_locations += "|" + str(patient.address)
         patients_locations = patients_locations[:-1]
         url += patients_locations + "&destinations=" + patients_locations + "&key=" + key
         print(url)
@@ -659,6 +701,18 @@ class Problem:
             for j in range(0, mat_dim):
                 cost_matrix[i, j] = json_matrix[i].get("elements")[j].get("duration").get("value")
         self.costs_matrix = cost_matrix
+
+    def _calculate_cost_matrix(self):
+        mat_dim = self.number_of_patients() + 1
+        cost_matrix = np.zeros((mat_dim, mat_dim))
+        api_calls = self.generate_api_calls()
+        for start_line, nb_lines, start_column, nb_columns in api_calls:
+            json_matrix = req.get(self.query_api(start_line, nb_lines, start_column, nb_columns)).json().get("rows")
+            for i in range(start_line, start_line + nb_lines):
+                for j in range(start_column, start_column + nb_columns):
+                    cost_matrix[i, j] = json_matrix[i].get("elements")[j].get("duration").get("value")
+        self._costs_matrix = cost_matrix
+
 
     def calculate_savings_matrix(self):
         """This method calculates the cost_matrix and savings_matrix attribute of this problem"""
@@ -811,7 +865,8 @@ class Solver:
     def _add_merged_round_if_possible(merged_round, old_round, rounds_list, problem):
         busy_nurses = [round.nurse for round in rounds_list]
         available_nurses = [nurse for nurse in problem.nurses_list if nurse not in busy_nurses]
-        if merged_round.can_be_assigned_to(merged_round.nurse, problem):
+        if merged_round.can_be_assigned_to(old_round.nurse, problem):
+            merged_round.nurse = old_round.nurse
             rounds_list.remove(old_round)
             merged_round.update()
             rounds_list.append(merged_round)
@@ -838,7 +893,7 @@ class Solver:
             round.merge_right(right_round)
             rounds_list.append(round)
         elif merged_round.can_be_assigned_to(right_round.nurse, problem):
-            merged_round.nurse = left_round.nurse
+            merged_round.nurse = right_round.nurse
             rounds_list.remove(left_round)
             rounds_list.remove(right_round)
             round = left_round
@@ -875,35 +930,34 @@ class Solver:
                                                                  False)
             if patient_a != patient_b and patient_a_somewhere is None and patient_b_somewhere is None:
                 new_round = Round([patient_a, patient_b], problem=self._problem)
-                if self._problem.is_enough_availability_for_rounds_list(rounds_list + [new_round]):
-                    rounds_list.append(new_round)
-                    # self._add_round_if_possible(new_round, rounds_list, self._problem)
+                # rounds_list.append(new_round)
+                self._add_round_if_possible(new_round, rounds_list, self._problem)
             elif patient_a_right is not None and patient_b_somewhere is None:
                 merged_round = Round([patient for patient in patient_a_right.patients_list] + [patient_b],
                                      self._problem)
                 if self._problem.is_enough_availability_for_rounds_list(
                         [round for round in rounds_list if round is not patient_a_right] + [merged_round]):
-                    rounds_list.remove(patient_a_right)
+                    """rounds_list.remove(patient_a_right)
                     merged_round.update()
-                    rounds_list.append(merged_round)
-                    #self._add_merged_round_if_possible(merged_round, patient_a_right, rounds_list, self._problem)
+                    rounds_list.append(merged_round)"""
+                    self._add_merged_round_if_possible(merged_round, patient_a_right, rounds_list, self._problem)
             elif patient_b_left is not None and patient_a_somewhere is None:
                 merged_round = Round([patient_a] + [patient for patient in patient_b_left.patients_list], self._problem)
                 if self._problem.is_enough_availability_for_rounds_list(
                         [round for round in rounds_list if round is not patient_b_left] + [merged_round]):
-                    rounds_list.remove(patient_b_left)
+                    """rounds_list.remove(patient_b_left)
                     merged_round.update()
-                    rounds_list.append(merged_round)
-                    # self._add_merged_round_if_possible(merged_round, patient_b_left, rounds_list, self._problem)
+                    rounds_list.append(merged_round)"""
+                    self._add_merged_round_if_possible(merged_round, patient_b_left, rounds_list, self._problem)
             elif patient_a_right is not None and patient_b_left is not None:
                 if patient_a_right is not patient_b_left and patient_a_right.can_merge_right(patient_b_left,
                                                                                              rounds_list):
-                    rounds_list.remove(patient_a_right)
+                    """rounds_list.remove(patient_a_right)
                     rounds_list.remove(patient_b_left)
                     round = patient_a_right
                     round.merge_right(patient_b_left)
-                    rounds_list.append(round)
-                    # self._merge_rounds_if_possible(patient_a_right, patient_b_left, rounds_list, self._problem)
+                    rounds_list.append(round)"""
+                    self._merge_rounds_if_possible(patient_a_right, patient_b_left, rounds_list, self._problem)
         return rounds_list
 
     def _build_rounds(self, version):
@@ -925,6 +979,8 @@ class Solver:
         :param rounds_list: the list of rounds that were built thanks to Clarke & Wright algorithm
         """
         patients_list = self._problem.patients_list
+        busy_nurses = [round.nurse for round in rounds_list]
+        available_nurses = [nurse for nurse in self._problem.nurses_list if nurse not in busy_nurses]
         for patient in patients_list:
             visited = False
             for d in rounds_list:
@@ -933,9 +989,13 @@ class Solver:
                     break
             if not visited:
                 new_round = Round([patient], problem=self._problem)
-                if self._problem.is_enough_availability_for_rounds_list(rounds_list + [new_round]):
-                    print("ADD SINGLE PATIENT")
-                    rounds_list.append(new_round)
+                for nurse in available_nurses:
+                    if new_round.can_be_assigned_to(nurse, self._problem):
+                        new_round.nurse = nurse
+                        rounds_list.append(new_round)
+                        available_nurses.remove(nurse)
+                        busy_nurses.append(nurse)
+                        break
 
     def compute_clarke_and_wright(self, version, name=None):
         """
@@ -954,3 +1014,10 @@ class Solver:
         rounds_list = self._build_rounds(version)
         self._add_single_patient_rounds(rounds_list)
         self._problem.solutions_list.append(Solution(name, rounds_list))
+
+
+"""prob = Problem(Office(identifier="Office", x=48.5, y=2.5), nurses_list=[Nurse(pk=0, availability=50000), Nurse(pk=1, availability=10000), Nurse(pk=2, availability=5000)])
+prob.generate_random_patients(9)
+solver = Solver(prob)
+solver.compute_clarke_and_wright("Parallel")
+prob.print_solutions()"""
