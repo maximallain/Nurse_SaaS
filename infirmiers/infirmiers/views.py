@@ -10,7 +10,7 @@ def home(request):
     if request.method == 'POST':
         user = request.user
         officepk = Office.objects.filter(user = user)[0].pk
-        requests.post("http://127.0.0.1:5000/optimize?officepk=" + str(officepk))
+        requests.get("http://127.0.0.1:5000/optimize?officepk=" + str(officepk))
         return HttpResponseRedirect("home")
 
     current_user_id = request.user
