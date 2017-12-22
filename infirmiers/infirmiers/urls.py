@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from infirmiers import views as home_view
+from infirmiers import admin_lte_views as a_lte
+
 
 
 
@@ -26,5 +28,7 @@ urlpatterns = [
     url(r'^soins/', include('soins_app.urls')),
     url(r'^signup/', include('signUp.urls')),
     url(r'^api/v1/', include('api.urls')),
+    url(r'bower_components/(?P<path>.*)$',a_lte.bower_view, name="bower_components"),
+    url(r'dist/(?P<path>.*)$',a_lte.dist_view, name="dist"),
 
 ]

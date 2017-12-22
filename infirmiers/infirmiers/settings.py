@@ -128,3 +128,6 @@ STATIC_URL = '/static/'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
+
+BOWER_COMPONENTS=os.path.join(BASE_DIR, 'infirmiers/templates/bower_components')
+DIST=os.path.join(BASE_DIR, 'infirmiers/templates/dist')
