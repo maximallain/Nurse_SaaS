@@ -8,6 +8,8 @@
         <br/>
         <a  class="w3-bar-item w3-button logo" href="{% url 'patient_list' %}">Your patients</a>
         <br/>
-        <a  class="w3-bar-item w3-button logo" href="{% url 'soin_list' %}">Your treatments</a>
+        <form action="{% url 'home' %}" method="POST">
+            {% csrf_token %}
+        <button type="submit" name="Planify">Planify tomorrow visits</button>
     </div>
 {% endblock %}

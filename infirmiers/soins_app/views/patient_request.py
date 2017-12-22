@@ -3,6 +3,7 @@ from soins_app.forms.new_patients import Patients_Form
 from soins_app.models.Patients import Patient
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from signUp.models.office import Office
 
 def patient_request(request):
 
@@ -15,9 +16,9 @@ def patient_request(request):
             adresse = form.cleaned_data['adresse']
             telephone = form.cleaned_data['telephone']
             email = form.cleaned_data['email']
-            office = request.user.id
+            office = Office.objects.filter(user = request.user )[0]
             #envoi = True
-            Patient(nom=nom, prenom = prenom, adresse = adresse, telephone = telephone,email=email,Office=office).save()
+            Patient(nom=nom, prenom = prenom, adresse = adresse, telephone = telephone,email=email,office=office).save()
             return HttpResponseRedirect(reverse("patient_list"))
     else:
         form = Patients_Form()
