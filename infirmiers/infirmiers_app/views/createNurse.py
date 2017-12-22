@@ -19,6 +19,13 @@ def nurse_creation_view(request):
             PhoneNumber = form.cleaned_data['PhoneNumber']
             office = Office.objects.filter(user = request.user )[0]
 
+            #Check PhoneNumber can be converted to an integer
+            try:
+                int(PhoneNumber)
+            except ValueError:
+                error_message = "Le numéro de téléphone doit être sous format numérique"
+                return render(request, 'createNurse.html', {'form': form, 'error_message' : error_message}) 
+
             nurse = Nurse(FirstName=FirstName, LastName=LastName, Gender=Gender, PhoneNumber=PhoneNumber, office=office)
             try:
                 nurse.save()
