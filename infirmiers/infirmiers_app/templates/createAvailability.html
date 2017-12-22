@@ -6,9 +6,10 @@
     <title>Nurse</title>
 </head>
 <body>
+    <p>The minutes of Start and End fields have to be around 15</p>
     <form action="{% url 'availability_creation_view' nurse_id  %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
         <input type="submit" value="Submit" />
     </form>
 </body>

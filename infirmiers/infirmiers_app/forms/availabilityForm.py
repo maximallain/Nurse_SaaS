@@ -13,5 +13,5 @@ class AvailabilityForm(forms.Form):
     )
 
     AvailableDay = forms.MultipleChoiceField(label="Day", choices=WeekDay_Choices)
-    Start_time = forms.TimeField(label="Start", widget=forms.TimeInput(format='%H:%M'))
-    End_time = forms.TimeField(label="End", widget=forms.TimeInput(format='%H:%M'))
+    Start_time = forms.TimeField(label="Start (format-HH:MM)", widget=forms.TimeInput(format='%H:%M'))
+    End_time = forms.TimeField(label="End (format-HH:MM)", widget=forms.TimeInput(format='%H:%M'))
