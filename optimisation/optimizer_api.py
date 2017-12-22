@@ -21,12 +21,14 @@ def launch_optimizer():
     print(office_pk, date)
     nurses_of_office = req.request("GET", "http://127.0.0.1:8000/api/v1/nurses/" + office_pk + "/").json()
     for nurse in nurses_of_office:
-        for interval in nurse.get("intervals").get(day_of_week):
-            start, end = interval.get("real_start_time"), interval.get("real_end_time")
-            start_seconds, end_seconds = 3600*int(start.split(":")[0]) + 60*int(start.split(":")[1]), \
-                                         3600*int(end.split(":")[0]) + 60*int(end.split(":")[1])
-            nurses_list.append(Nurse(nurse.get("pk"), start_seconds, end_seconds - start_seconds))
-            print(nurses_list[-1])
+        availabilities = nurse.get("intervals").get(day_of_week)
+        if availabilities is not None:
+            for interval in availabilities:
+                start, end = interval.get("real_start_time"), interval.get("real_end_time")
+                start_seconds, end_seconds = 3600*int(start.split(":")[0]) + 60*int(start.split(":")[1]), \
+                                             3600*int(end.split(":")[0]) + 60*int(end.split(":")[1])
+                nurses_list.append(Nurse(nurse.get("pk"), start_seconds, end_seconds - start_seconds))
+                print(nurses_list[-1])
     office = Office(address=(nurses_of_office[0].get("office").get("adress")))
     print(office)
     patients_list = []
