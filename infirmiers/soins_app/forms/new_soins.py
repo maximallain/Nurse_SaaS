@@ -22,5 +22,5 @@ class Soins(forms.Form):
     type_soin = forms.ChoiceField(choices=Treatment_Type_Choices, label="Type")
     frequence_soin = forms.MultipleChoiceField(choices=Treatment_Frequency_Choice, label="Frequency")
     strict_punctuality = forms.BooleanField(initial=False, label="Strict punctuality", required=False)
-    start_date = forms.DateField(label="Start Date", widget=forms.DateInput(format='%d-%m-%Y'))
+    start_date = forms.DateField(label="Start Date (format:YYYY-M-D)")
     treatment_duration = forms.IntegerField(max_value=180, min_value=0, label="Duration (days)")
