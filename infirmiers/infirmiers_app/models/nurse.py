@@ -11,7 +11,7 @@ class Nurse(models.Model):
     FirstName = models.CharField(max_length=50)
     LastName = models.CharField(max_length=50)
     Gender = models.CharField(max_length=1, choices=Gender_Choices) 
-    PhoneNumber = models.IntegerField(unique=True)
+    PhoneNumber = models.CharField(max_length=10, unique=True)
     office = models.ForeignKey(Office, on_delete=models.CASCADE, null=True)
     
 
