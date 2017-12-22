@@ -696,7 +696,6 @@ class Problem:
         patients_locations = str(self._office.address)
         for patient in self.patients_list:
             patients_locations += "|" + str(patient.address)
-        patients_locations = patients_locations[:-1]
         url += patients_locations + "&destinations=" + patients_locations + "&key=" + key
         print(url)
         json_matrix = req.get(url).json().get("rows")
