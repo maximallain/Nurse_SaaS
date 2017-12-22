@@ -1019,3 +1019,4 @@ class Solver:
         rounds_list = self._build_rounds(version)
         self._add_single_patient_rounds(rounds_list)
         self._problem.solutions_list.append(Solution(name, rounds_list))
+        print(self._problem.solutions_list[-1])
