@@ -22,7 +22,6 @@ class Soin(models.Model):
 
     nom_soin = models.CharField(max_length=100)
     type_soin = models.CharField(max_length=2, choices=Treatment_Type_Choices)
-    ponctualite_definie = models.CharField(max_length=100)
     specific_visit_time = models.TimeField(null = True)
     start_date = models.DateField(default=date.today)
     treatment_duration = models.IntegerField(default=0)
