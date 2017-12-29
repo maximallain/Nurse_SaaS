@@ -2,13 +2,17 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from infirmiers_app.models.nurse import Nurse
 
+@method_decorator(login_required, name='dispatch')
 class NurseListView(ListView):
     """This class is based on ListView special feature in Django"""
     model = Nurse #This view is based on the model Nurse
     template_name = "nurse_list.html" #The template linked to this ListView
+
 
     def get_context_data(self, **kwargs):
         context = super(NurseListView, self).get_context_data(**kwargs)

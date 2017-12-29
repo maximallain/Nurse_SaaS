@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from infirmiers import views as home_view
+from django.contrib.auth import views as auth_views
 
 
 
@@ -26,5 +27,6 @@ urlpatterns = [
     url(r'^soins/', include('soins_app.urls')),
     url(r'^signup/', include('signUp.urls')),
     url(r'^api/v1/', include('api.urls')),
+    url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
 
 ]

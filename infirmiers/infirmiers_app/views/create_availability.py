@@ -6,7 +6,10 @@ from django.db.utils import IntegrityError
 from infirmiers_app.forms.availabilityForm import AvailabilityForm
 from infirmiers_app.models.nurse import Nurse
 from infirmiers_app.models.interval import Interval
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def availability_creation_view(request, nurse_id):
     if request.method == 'POST':
         form = AvailabilityForm(request.POST)
@@ -33,6 +36,7 @@ def availability_creation_view(request, nurse_id):
 
     return render(request, 'createAvailability.html', {'form': form, 'nurse_id':nurse_id })
 
+@login_required
 def manipulate_time(time):
     """Function that calcule the number of about fifteen in the time"""
     hours_time = time.hour
