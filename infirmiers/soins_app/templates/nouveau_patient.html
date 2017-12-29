@@ -6,8 +6,7 @@
     <title>Ajouter un patient</title>
 </head>
 <body>
-    {% if envoi %}Votre message a bien été envoyé !{% endif %}
-
+    <p style="color:red">{{ error_message }}</p>
     <form action="{% url 'patient_request' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}

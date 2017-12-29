@@ -9,4 +9,4 @@ class NurseCreationForm(forms.Form):
     FirstName = forms.CharField(label="First Name", max_length=50)
     LastName = forms.CharField(label="Last Name", max_length=50)
     Gender = forms.MultipleChoiceField(label="Gender", choices=Gender_Choices) 
-    PhoneNumber = forms.IntegerField(label="Phone Number")
+    PhoneNumber = forms.CharField(label="Phone Number", min_length=10, max_length=10)
