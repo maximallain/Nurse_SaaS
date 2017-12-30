@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.db.utils import IntegrityError
+from django.contrib.auth.decorators import login_required
 
 from infirmiers_app.forms.nurseCreationForm import NurseCreationForm
 from infirmiers_app.models.nurse import Nurse
 from infirmiers_app.models.interval import Interval
 from signUp.models.office import Office
 
+@login_required
 def nurse_creation_view(request):
     if request.method == 'POST':
         form = NurseCreationForm(request.POST)
