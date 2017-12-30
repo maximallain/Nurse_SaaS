@@ -48,15 +48,6 @@ class Point:
         else:
             self.address = address
 
-    def cost(self, other_point, problem):
-        """
-        Returns the cost (duration) of the trip between self and other_point
-        :param other_point: the other point to compute the cost from self
-        :param problem: the associated problem, to use its cost_matrix attribute
-        :return: the cost between self and other_point
-        """
-        return problem.cost(self, other_point)
-
     def __str__(self):
         """
         Converts this point into a string
@@ -160,7 +151,7 @@ class Round:
             else:
                 last_point = self._patients_list[i-1]
             result += "cost of trip : {}".format(self._problem.cost(last_point, patient)) + "\n"
-            result += str(patient) + ", visited at {}".format(self.time_when_patient_visited(patient, self._problem)) \
+            result += str(patient) + ", visited at {}".format(self.time_when_patient_visited(patient)) \
                 + "\n"
         result += "cost of trip : {}".format(self._problem.cost(self._patients_list[-1], self._office)) + "\n"
         result += "Round properties :" + "\n"
@@ -229,36 +220,48 @@ class Round:
         print("Total cost = {}, total savings = {}"
               .format(self._total_cost, self._total_savings))
 
-    def calculate_total_savings(self):
-        """Updates the _total_savings attribute of this round"""
-        naive_total = 0
-        for patient in self._patients_list:
-            naive_total = naive_total + self._problem.cost(self._office, patient) + patient.duration_of_care \
-                          + self._problem.cost(patient, self._office)
-        self._total_savings = naive_total - self._total_cost
-
     def calculate_total_cost(self):
         """Updates the _total_cost attribute of this round"""
         if self.patients_list == list():
             self._total_cost = 0
         else:
-            t = self._problem.cost(self._office, self._patients_list[0]) + self._patients_list[0].duration_of_care
+            if self.patients_list[0].must_be_visited_exactly_at == -1:
+                t = self._problem.cost(self._office, self._patients_list[0]) + self._patients_list[0].duration_of_care
+            else:
+                t = self.patients_list[0].must_be_visited_exactly_at + self._patients_list[0].duration_of_care
             for i in range(len(self._patients_list) - 1):
-                t += self._problem.cost(self._patients_list[i], self._patients_list[i + 1]) \
-                     + self._patients_list[i + 1].duration_of_care
+                if self.patients_list[i+1].must_be_visited_exactly_at == -1:
+                    t += self._problem.cost(self._patients_list[i], self._patients_list[i + 1]) \
+                         + self._patients_list[i + 1].duration_of_care
+                else:
+                    t = self.patients_list[i+1].must_be_visited_exactly_at + self._patients_list[i+1].duration_of_care
             t += self._problem.cost(self._patients_list[-1], self._office)
             self._total_cost = t
 
+    def calculate_total_savings(self):
+        """Updates the _total_savings attribute of this round"""
+        naive_total = self._nurse.start_time
+        for patient in self._patients_list:
+            if patient.must_be_visited_exactly_at == -1:
+                naive_total = naive_total + self._problem.cost(self._office, patient) + patient.duration_of_care \
+                              + self._problem.cost(patient, self._office)
+            else:
+                naive_total = patient.must_be_visited_exactly_at + patient.duration_of_care \
+                              + self._problem.cost(patient, self._office)
+        naive_total -= self._nurse.start_time
+        self._total_savings = naive_total - self._total_cost
+
     def update(self):
         """Updates the _total_savings and _total_cost attributes of this round"""
-        self.calculate_total_savings()
         self.calculate_total_cost()
+        self.calculate_total_savings()
 
     def can_merge_left(self, other_round, force_common_patient=False):
         """
         Returns True if other_round can be merged to the left of the current round, False otherwise.
         If force_common_patient is True then this method returns False if the two rounds don't have a common
         patient at their border.
+        !!! This method doesn't care about time and availability constraints
         :param other_round: the other round that we want to merge with self
         :param force_common_patient: if set to True, forces both rounds to have a common patient at their borders
         :return: True if other_round can be merged to the left of the current round, False otherwise
@@ -279,6 +282,7 @@ class Round:
         Returns True if other_round can be merged to the right of the current round, False otherwise.
         If force_common_patient is True then this method returns False if the two rounds don't have a common
         patient at their border.
+        !!! This method doesn't care about time and availability constraints
         :param other_round: the other round that we want to merge with self
         :param force_common_patient: if set to True, forces both rounds to have a common patient at their borders
         :return: True if other_round can be merged to the right of the current round, False otherwise
@@ -294,24 +298,10 @@ class Round:
                     return False
         return True
 
-    def can_merge(self, other_round, force_common_patient=False):
-        """
-        Returns a tuple of booleans, which are respectively the results of can_merge_left and can_merge_right
-        calls
-        :param other_round: the other round that we want to merge with self
-        :param force_common_patient: if set to True, forces both rounds to have a common patient at their borders
-        :return: a tuple of booleans, which are respectively the results of can_merge_left and can_merge_right
-        calls
-        """
-        left = self.can_merge_left(other_round, force_common_patient)
-        right = self.can_merge_right(other_round, force_common_patient)
-        return left, right
-
-    def merge_left(self, other_round, update=True):
+    def merge_left(self, other_round):
         """
         Merges other_round to the left of this round
         :param other_round: the other round that we want to merge with self
-        :param update: if set to True, a complete update of self is performed
         """
         pl = other_round.patients_list[:]
         if len(self._patients_list) != 0:
@@ -320,16 +310,12 @@ class Round:
             else:
                 pl = pl + self._patients_list
         self._patients_list = pl
-        if not update:
-            self.calculate_total_cost()
-        else:
-            self.update()
+        self.update()
 
-    def merge_right(self, other_round, update=True):
+    def merge_right(self, other_round):
         """
         Merges other_round to the right of this round
         :param other_round: the other round that we want to merge with self
-        :param update: if set to True, a complete update of self is performed
         """
         pl = self._patients_list[:]
         if len(other_round.patients_list) != 0:
@@ -338,21 +324,17 @@ class Round:
             else:
                 pl = pl + other_round.patients_list
         self._patients_list = pl
-        if not update:
-            self.calculate_total_cost()
-        else:
-            self.update()
+        self.update()
 
-    def time_when_patient_visited(self, patient_to_visit, problem):
+    def time_when_patient_visited(self, patient_to_visit):
         """
         Computes the time when patient_to_visit (that should be in this round) is visited.
         :param patient_to_visit: the patient
-        :param problem: the associated problem
         :return: the time (in seconds from midnight) when the patient is visited
         """
         time = self._nurse.start_time
         if patient_to_visit in self._patients_list:
-            time += problem.cost(problem.office, self._patients_list[0])
+            time += self._problem.cost(self._problem.office, self._patients_list[0])
             for i in range(len(self._patients_list)):
                 patient = self._patients_list[i]
                 next_patient = None
@@ -362,18 +344,17 @@ class Round:
                     time = patient.must_be_visited_exactly_at
                 if patient is patient_to_visit:
                     return time
-                time += patient.duration_of_care + problem.cost(patient, next_patient)
+                time += patient.duration_of_care + self._problem.cost(patient, next_patient)
         return -1
 
-    def can_be_assigned_to(self, nurse, problem):
+    def can_be_assigned_to(self, nurse):
         """
         Checks if a round can be assigned to a nurse without violating the precise visit time and availability
         constraints
-        :param nurse: the nurse we want to assign th round to
-        :param problem: the associated problem
+        :param nurse: the nurse we want to assign the round to
         :return: True iff this round can be assigned to a nurse without violating the precise visit time constraints
         """
-        time = nurse.start_time + problem.cost(self.office, self.patients_list[0])
+        time = nurse.start_time + self._problem.cost(self.office, self.patients_list[0])
         for i in range(len(self._patients_list)-1):
             patient = self._patients_list[i]
             next_patient = self._patients_list[i+1]
@@ -381,12 +362,12 @@ class Round:
                 return False
             if patient.must_be_visited_exactly_at != -1:
                 time = patient.must_be_visited_exactly_at
-            else:
-                time += patient.duration_of_care + problem.cost(patient, next_patient)
+            time += patient.duration_of_care + self._problem.cost(patient, next_patient)
         if self._patients_list[-1].must_be_visited_exactly_at != -1 \
                 and self._patients_list[-1].must_be_visited_exactly_at < time:
             return False
-        time += self._patients_list[-1].duration_of_care + problem.cost(self._patients_list[-1], problem.office)
+        time += self._patients_list[-1].duration_of_care + self._problem.cost(self._patients_list[-1],
+                                                                              self._problem.office)
         return time <= nurse.start_time + nurse.availability
 
 
@@ -414,8 +395,7 @@ class Solution:
         Converts this object to a string
         :return: a string representing this object
         """
-        for rnd in self._rounds_list:
-            rnd.update()
+        self.update()
         string = ""
         string += "Solution name : {}".format(self.name) + "\n"
         string += "number of tours = {}, total cost = {}, total savings = {}".format(len(self._rounds_list),
@@ -431,7 +411,7 @@ class Solution:
     def _set_rounds_list(self, rounds_list):
         self._rounds_list = rounds_list
         self.calculate_total_cost()
-        self.calculate_total_savings(True)
+        self.calculate_total_savings()
 
     def _get_total_savings(self):
         return self._total_savings
@@ -443,19 +423,21 @@ class Solution:
     total_savings = property(_get_total_savings)
     total_cost = property(_get_total_cost)
 
-    def calculate_total_savings(self, recalculate_for_rounds=False):
-        """
-        Updates the _total_savings attribute
-        :param recalculate_for_rounds: if set to True, recalculates the total_savings attribute for each rnd
-        """
-        if recalculate_for_rounds:
-            for rnd in self._rounds_list:
-                rnd.calculate_total_savings()
-        self._total_savings = sum([d.total_savings for d in self._rounds_list])
-
     def calculate_total_cost(self):
         """Updates the _total_cost attribute"""
         self._total_cost = sum([rnd.total_cost for rnd in self.rounds_list])
+
+    def calculate_total_savings(self):
+        """
+        Updates the _total_savings attribute. A complete update is performed for all rounds in this solution
+        """
+        for rnd in self._rounds_list:
+            rnd.calculate_total_savings()
+        self._total_savings = sum([d.total_savings for d in self._rounds_list])
+
+    def update(self):
+        self.calculate_total_cost()
+        self.calculate_total_savings()
 
 
 class Problem:
@@ -484,7 +466,6 @@ class Problem:
         self._costs_matrix = None
         self._savings_matrix = None
         self._nurses_list = nurses_list
-        self._availability_of_nurses = sorted([nurse.availability for nurse in self._nurses_list])
 
     def _get_office(self):
         return self._office
@@ -751,7 +732,7 @@ class Solver:
         busy_nurses = [rnd.nurse for rnd in rounds_list]
         available_nurses = [nurse for nurse in problem.nurses_list if nurse not in busy_nurses]
         for nurse in available_nurses:
-            if new_round.can_be_assigned_to(nurse, problem):
+            if new_round.can_be_assigned_to(nurse):
                 new_round.nurse = nurse
                 rounds_list.append(new_round)
                 break
@@ -767,14 +748,14 @@ class Solver:
         """
         busy_nurses = [rnd.nurse for rnd in rounds_list]
         available_nurses = [nurse for nurse in problem.nurses_list if nurse not in busy_nurses]
-        if merged_round.can_be_assigned_to(old_round.nurse, problem):
+        if merged_round.can_be_assigned_to(old_round.nurse):
             merged_round.nurse = old_round.nurse
             rounds_list.remove(old_round)
             merged_round.update()
             rounds_list.append(merged_round)
         else:
             for nurse in available_nurses:
-                if merged_round.can_be_assigned_to(nurse, problem):
+                if merged_round.can_be_assigned_to(nurse):
                     merged_round.nurse = nurse
                     rounds_list.remove(old_round)
                     merged_round.update()
@@ -794,19 +775,19 @@ class Solver:
         merged_round = Round(left_round.patients_list, problem)
         merged_round.merge_right(right_round)
         merged_round.update()
-        if merged_round.can_be_assigned_to(left_round.nurse, problem):
+        if merged_round.can_be_assigned_to(left_round.nurse):
             merged_round.nurse = left_round.nurse
             rounds_list.remove(left_round)
             rounds_list.remove(right_round)
             rounds_list.append(merged_round)
-        elif merged_round.can_be_assigned_to(right_round.nurse, problem):
+        elif merged_round.can_be_assigned_to(right_round.nurse):
             merged_round.nurse = right_round.nurse
             rounds_list.remove(left_round)
             rounds_list.remove(right_round)
             rounds_list.append(merged_round)
         else:
             for nurse in available_nurses:
-                if merged_round.can_be_assigned_to(nurse, problem):
+                if merged_round.can_be_assigned_to(nurse):
                     merged_round.nurse = nurse
                     rounds_list.remove(left_round)
                     rounds_list.remove(right_round)
@@ -858,7 +839,7 @@ class Solver:
             if not visited:
                 new_round = Round([patient], problem=self._problem)
                 for nurse in available_nurses:
-                    if new_round.can_be_assigned_to(nurse, self._problem):
+                    if new_round.can_be_assigned_to(nurse):
                         new_round.nurse = nurse
                         rounds_list.append(new_round)
                         available_nurses.remove(nurse)
