@@ -37,8 +37,14 @@ def launch_optimizer():
     patients_list = []
     visits = req.request("GET", "http://127.0.0.1:8000/api/v1/visits/?officepk=" + office_pk + "&date=" + date).json()
     for patient in visits:
-        patients_list.append(Patient(address=patient.get("soin").get("patient").get("adresse"),
-                                     duration_of_care=patient.get("duration_visit"), pk=patient.get("pk")))
+        new_patient = Patient(address=patient.get("soin").get("patient").get("adresse"),
+                                     duration_of_care=patient.get("duration_visit"), pk=patient.get("pk"))
+        specific_visit_time = patient.get("soin").get("specific_visit_time")
+        if specific_visit_time is not None:
+            must_be_visited_exactly_at = \
+                3600 * int(specific_visit_time.split(":")[0]) + 60 * int(specific_visit_time.split(":")[1])
+            new_patient.must_be_visited_exactly_at = must_be_visited_exactly_at
+        patients_list.append(new_patient)
         print(patients_list[-1])
     problem = Problem(office, patients_list, nurses_list)
     solver = Solver(problem)
