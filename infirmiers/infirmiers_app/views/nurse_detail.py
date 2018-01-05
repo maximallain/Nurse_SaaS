@@ -3,7 +3,6 @@ from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-
 from infirmiers_app.models.nurse import Nurse
 
 @method_decorator(login_required, name='dispatch')

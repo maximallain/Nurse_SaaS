@@ -47,7 +47,7 @@ def launch_optimizer():
     visits_summary = []
     for rnd in solution.rounds_list:
         for patient in rnd.patients_list:
-            time_when_visited = rnd.time_when_patient_visited(patient, problem)
+            time_when_visited = rnd.time_when_patient_visited(patient)
             print(time_when_visited)
             visits_summary.append({"visit_pk": patient.pk, "nurse_pk": rnd.nurse.pk,
                                    "time": str(int(time_when_visited) // 3600) + ':' + str(

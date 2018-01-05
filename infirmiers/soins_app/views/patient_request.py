@@ -6,7 +6,6 @@ from django.urls import reverse
 from signUp.models.office import Office
 from django.contrib.auth.decorators import login_required
 
-
 @login_required
 def patient_request(request):
 

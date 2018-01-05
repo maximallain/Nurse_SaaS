@@ -5,7 +5,6 @@ from django.views.generic import ListView
 
 from soins_app.models.soins import Soin
 from soins_app.models.Patients import Patient
-
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 

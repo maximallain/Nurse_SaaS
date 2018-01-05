@@ -9,7 +9,6 @@ from infirmiers_app.models.nurse import Nurse
 from infirmiers_app.models.interval import Interval
 from signUp.models.office import Office
 
-
 @login_required
 def nurse_creation_view(request):
     if request.method == 'POST':

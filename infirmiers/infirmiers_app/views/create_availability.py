@@ -8,7 +8,6 @@ from infirmiers_app.models.nurse import Nurse
 from infirmiers_app.models.interval import Interval
 from django.contrib.auth.decorators import login_required
 
-
 @login_required
 def availability_creation_view(request, nurse_id):
     if request.method == 'POST':
