@@ -13,21 +13,21 @@ def patient_request(request):
         form = Patients_Form(request.POST)
 
         if form.is_valid():
-            nom = form.cleaned_data['nom']
-            prenom = form.cleaned_data['prenom']
-            adresse = form.cleaned_data['adresse']
-            telephone = form.cleaned_data['telephone']
-            email = form.cleaned_data['email']
+            LastName = form.cleaned_data['LastName']
+            FirstName = form.cleaned_data['FirstName']
+            Adress = form.cleaned_data['Adress']
+            PhoneNumber = form.cleaned_data['PhoneNumber']
+            Email = form.cleaned_data['Email']
             office = Office.objects.filter(user = request.user )[0]
 
             #Check telephone can be converted to an integer
             try:
-                int(telephone)
+                int(PhoneNumber)
             except ValueError:
-                error_message = "Le numéro de téléphone doit être sous format numérique"
+                error_message = "The number must be numerical"
                 return render(request, 'nouveau_patient.html', {'form': form, 'error_message' : error_message})
     
-            Patient(nom=nom, prenom = prenom, adresse = adresse, telephone = telephone,email=email,office=office).save()
+            Patient(LastName = LastName, FirstName = FirstName, Adress = Adress, PhoneNumber = PhoneNumber,Email = Email,office = office).save()
             return HttpResponseRedirect(reverse("patient_list"))
     else:
         form = Patients_Form()

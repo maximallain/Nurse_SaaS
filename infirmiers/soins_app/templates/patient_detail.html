@@ -6,11 +6,11 @@
     <title>Patients</title>
 </head>
 <body>
-    <h1>{{ patient.prenom }} {{ patient.nom }}</h1>
+    <h1>{{ patient.FirstName }} {{ patient.LastName }}</h1>
     <p>{{patient.pk}}</p>
-    <p>{{ patient.adresse }}</p>
-    <p>{{ patient.telephone }}</p>
-    <p>{{ patient.email }}</p>
+    <p>{{ patient.Adress }}</p>
+    <p>{{ patient.PhoneNumber }}</p>
+    <p>{{ patient.Email }}</p>
     <p>Office n°{{ patient.Office}}</p>
 
     {% for treatment in object.treatments.all %}
