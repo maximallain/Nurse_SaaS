@@ -13,8 +13,8 @@ def patient_request(request):
         form = Patients_Form(request.POST)
 
         if form.is_valid():
-            LastName = form.cleaned_data['LastName']
-            FirstName = form.cleaned_data['FirstName']
+            LastName = form.cleaned_data['LastName'].upper()
+            FirstName = form.cleaned_data['FirstName'].capitalize()
             Adress = form.cleaned_data['Adress']
             PhoneNumber = form.cleaned_data['PhoneNumber']
             Email = form.cleaned_data['Email']
