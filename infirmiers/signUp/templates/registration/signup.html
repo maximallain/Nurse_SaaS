@@ -1,29 +1,51 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div id="contact">
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in user_form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    {% for field in office_form %}
-    <p>
-      {{ field.label_tag }}<br>
-      {{ field }}
-      {% for error in field.errors %}
-        <p style="color: red">{{ error }}</p>
-      {% endfor %}
-    </p>
-  {% endfor %}
-    <button type="submit">Sign up</button>
-  </form>
+{% if not user.is_authenticated %}
+<div class="register-box">
+    <div class="register-logo">
+        <a href="/"><b>My</b>Nurserie</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="register-box-body">
+        <p class="login-box-msg">Register to MyNurserie</p>
+
+        <form method="post">
+            {% csrf_token %}
+            {% for field in user_form %}
+                <p style="text-align:center">
+                    {{ field.label_tag }}<br>
+                    {{ field }}
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                </p>
+            {% endfor %}
+
+            {% for field in office_form %}
+            <p style="text-align:center">
+              {{ field.label_tag }}<br>
+              {{ field }}
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+            </p>
+          {% endfor %}
+
+            <div class="row">
+
+                <!-- /.col -->
+                <div class="col-xs-4" >
+
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign Up</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+
+
+    </div>
+    <!-- /.login-box-body -->
 </div>
+{% endif %}
 {% endblock %}

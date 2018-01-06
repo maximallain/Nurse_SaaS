@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^infirmier/', include('infirmiers_app.urls')),
     url(r'^soins/', include('soins_app.urls')),
     url(r'^signup/', include('signUp.urls')),
-    url(r'^api/v1/', include('api.urls')),
+    url(r'^api/v1/', include('api.urls'))
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

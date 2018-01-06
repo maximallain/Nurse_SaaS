@@ -1,30 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <title>Nurse</title>
-</head>
-<body>
-    <h1>Nurses</h1>
-    {% for nurse in object_list %}
-        {% if nurse.office.user.id == user.id %}
-            <ul>
-                <li><a href="{% url 'nurse_detail' nurse.pk %}">{{ nurse.FirstName }} {{ nurse.LastName }}</a> - {{ nurse.PhoneNumber }}</li>
-                <form action="{% url 'nurse_list' nurse.pk %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" name="NewForm">Add an availability</button>
-                </form>
-                <form action="{% url 'nurse_list' nurse.pk %}" method="POST">
-                    {% csrf_token %}
-                <button type="submit" name="Deletion">Delete</button>
-                </form>
-            </ul>
-        {% endif %}
-    {% endfor %}
+    <h1>Nurses Registered on the Platform</h1>
+    <div class="row">
+        {% for nurse in object_list %}
+            {% if nurse.office.user.id == user.id %}
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h2 class="box-title"><a href="{% url 'nurse_detail' nurse.pk %}">{{ nurse.FirstName }} {{ nurse.LastName }}</a></h2>
+                </div>
+                <div class="box-body">
+                    <p>{{ nurse.Gender }}</p>
+                    <p>{{ nurse.PhoneNumber }}</p>
+                    <p>{{ nurse.Office }}</p>
+                </div>
+                <div class="box-footer">
+                    <div class="row">
+                    <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-left">
+                        {% csrf_token %}
+                        <button type="submit" name="NewForm" class="btn btn-block btn-primary" style="color: #fff;">Add an availability</button>
+                    </form>
+                    <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-right">
+                        {% csrf_token %}
+                    <button type="submit" name="Deletion" class="btn btn-block btn-danger" style="color: #fff;">Delete</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            {% endif %}
+        {% endfor %}
+    </div>
     <a class="w3-bar-item w3-button logo" align="center" href="{% url 'nurse_creation_view' %}">Add a Nurse</a>
 
-</body>
 
 
 {% endblock %}

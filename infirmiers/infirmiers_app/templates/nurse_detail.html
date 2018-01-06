@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <title>Nurse</title>
-</head>
-<body>
     <h1>{{ object.FirstName }} {{ object.LastName }}</h1>
     <p>{{ object.Gender }}</p>
     <p>{{ object.PhoneNumber }}</p>
@@ -20,6 +15,5 @@
         </ul>
     {% endfor %}
     <a class="homepage_button" align="center" href="{% url 'nurse_list' %}">See Nurses</a>
-</body>
 
 {% endblock %}
