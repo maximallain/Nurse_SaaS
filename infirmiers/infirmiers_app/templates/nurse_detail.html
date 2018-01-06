@@ -5,15 +5,20 @@
     <p>{{ object.Gender }}</p>
     <p>{{ object.PhoneNumber }}</p>
     <p>{{ object.Office }}</p>
+    {% if not object.intervals.all %}
+    <p>No Availabilities registered</p>
+    {% else %}
     <p>Availabilities</p>
     {% for interval in object.intervals.all %}
         <ul>
             <li>
-                {{ interval.weekday }} : 
+                {{ interval.weekday }} :
                 {{ interval.real_start_time }} - {{ interval.real_end_time }}
             </li>
         </ul>
     {% endfor %}
+    {% endif %}
+
     <a class="homepage_button" align="center" href="{% url 'nurse_list' %}">See Nurses</a>
 
 {% endblock %}

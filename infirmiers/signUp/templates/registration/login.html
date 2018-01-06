@@ -29,20 +29,16 @@
             {% endfor %}
             </p>
 
-            <div class="container-fluid">
-                <div class="row">
-                    <!-- /.col -->
-                    <div class="col-md-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                    </div>
-
-                    <div class="col-md-4 pull-right">
-                        <a href="{% url 'signup' %}" >New here, Sign Up!</a>
-                    </div>
-
-
+            <div class="row">
                 <!-- /.col -->
+                <div class="col-md-4 pull-left">
+                    <button type="submit" class="btn btn-primary btn-block" style="color: #fff;text-decoration: none;">Sign In</button>
                 </div>
+
+                <div class="col-md-4 pull-right ">
+                    <a href="{% url 'signup' %}" class="btn btn-block btn-info" style="color: #fff;text-decoration: none;">New here, Sign Up!</a>
+                </div>
+
 
             </div>
 
