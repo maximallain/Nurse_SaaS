@@ -1,41 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Nurses Registered on the Platform</h1>
-    <div class="row">
-        {% for nurse in object_list %}
-            {% if nurse.office.user.id == user.id %}
-        <div class="col-md-6">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h2 class="box-title">{{ nurse.FirstName }} {{ nurse.LastName }}</h2>
-                </div>
-                <div class="box-body">
-                    <p>{{ nurse.Gender }}</p>
-                    <p>{{ nurse.PhoneNumber }}</p>
-                    <p>{{ nurse.Office }}</p>
-                    <a href="{% url 'nurse_detail' nurse.pk %}" class="btn btn-block btn-info" style="color: #fff;text-decoration: none;">See Details</a>
-                </div>
-                <div class="box-footer">
-                    <div class="row">
-                        <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-left">
-                            {% csrf_token %}
-                            <button type="submit" name="NewForm" class="btn btn-block btn-primary" style="color: #fff;">Add an availability</button>
-                        </form>
-                        <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-right">
-                            {% csrf_token %}
-                        <button type="submit" name="Deletion" class="btn btn-block btn-danger" style="color: #fff;">Delete</button>
-                        </form>
-                    </div>
+{% if object_list %}
+<h1>Nurses Registered on the Platform</h1>
+<div class="row">
+    {% for nurse in object_list %}
+        {% if nurse.office.user.id == user.id %}
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header with-border">
+                <h2 class="box-title">{{ nurse.FirstName }} {{ nurse.LastName }}</h2>
+            </div>
+            <div class="box-body">
+                <p>{{ nurse.Gender }}</p>
+                <p>{{ nurse.PhoneNumber }}</p>
+                <p>{{ nurse.Office }}</p>
+                <a href="{% url 'nurse_detail' nurse.pk %}" class="btn btn-block btn-info" style="color: #fff;text-decoration: none;">See Details</a>
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-left">
+                        {% csrf_token %}
+                        <button type="submit" name="NewForm" class="btn btn-block btn-primary" style="color: #fff;">Add an availability</button>
+                    </form>
+                    <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-right">
+                        {% csrf_token %}
+                    <button type="submit" name="Deletion" class="btn btn-block btn-danger" style="color: #fff;">Delete</button>
+                    </form>
                 </div>
             </div>
         </div>
-
-            {% endif %}
-        {% endfor %}
     </div>
-    <a class="w3-bar-item w3-button logo" align="center" href="{% url 'nurse_creation_view' %}">Add a Nurse</a>
+
+        {% endif %}
+    {% endfor %}
+</div>
+
+<a class="btn btn-block btn-success" href="{% url 'nurse_creation_view' %}" style="color: #fff;text-decoration:none;"><i class="ion-plus"></i> Add a Nurse</a>
 
 
-
+{% else %}
+<h1>Not a single nurse is registered on the platform</h1>
+<h2>Please add a nurse</h2>
+{% endif %}
 {% endblock %}

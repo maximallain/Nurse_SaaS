@@ -79,13 +79,6 @@
                         <span class="sr-only">Toggle navigation</span>
                     </a>
                     <div class="navbar-custom-menu">
-                        {% comment %}
-                        <a href="{% url 'home' %}" class="w3-bar-item w3-button logo">MyNurserie</a>
-                        <!-- Right-sided navbar links. Hide them on small screens -->
-                        <div class="w3-right w3-hide-small">
-                            <a href="{% url 'logout' %}" class="w3-bar-item w3-button">Se déconnecter</a>
-                        </div>
-                        {% endcomment %}
                         <div class="nav navbar-nav">
                             <div class="wrapper">
                                     <a href="{% url 'logout' %}" class="btn btn-block btn-danger" style="color: #fff;text-decoration :none;">Se déconnecter</a>
@@ -122,7 +115,7 @@
             <div class="content-wrapper">
 
                 <!-- Main content -->
-                <section class="content container-fluid">
+                <section class="content">
                             <!-- REQUIRED JS SCRIPTS -->
         {% else %}
         <body class="hold-transition login-page">
@@ -156,6 +149,8 @@
         <script src="{% static 'AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
         <!-- AdminLTE App -->
         <script src="{% static 'AdminLTE/dist/js/adminlte.min.js' %}"></script>
+        <!-- FastClick -->
+        <script src="{% static 'AdminLTE/bower_components/fastclick/lib/fastclick.js' %}"></script>
 
         <!-- Optionally, you can add Slimscroll and FastClick plugins.
              Both of these plugins are recommended to enhance the

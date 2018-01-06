@@ -1,38 +1,58 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <title>Patients</title>
-</head>
-<body>
-    <h1>{{ patient.prenom }} {{ patient.nom }}</h1>
-    <p>{{patient.pk}}</p>
-    <p>{{ patient.adresse }}</p>
-    <p>{{ patient.telephone }}</p>
-    <p>{{ patient.email }}</p>
-    <p>Office n°{{ patient.Office}}</p>
-
-    {% for treatment in object.treatments.all %}
-        <ul>
-            <li>
-                <a href="{% url 'soin_detail' treatment.pk %}" >{{ treatment.nom_soin }}</a> :
-                {{ treatment.type_soin }} - {{ treatment.start_date }}
-                Durée : {{ treatment.treatment_duration}}
-                (Hey Didier, on peut rajouter des champs)
-            </li>
-        </ul>
-    {% endfor %}
-
-
-    <a class="w3-bar-item w3-button logo" align="center" href="{% url 'soin_request' patient.pk %}">Add a Treatment to {{patient.prenom}}</a>
-    </br>
-    <form class="w3-bar-item w3-button logo" align="center" action="{% url 'patient_list' patient.pk %}" method="POST">
-        {% csrf_token %}
-    <button class="w3-bar-item w3-button logo" align="center" type="submit" name="Deletion Patient">Delete {{ patient.prenom }} {{ patient.nom }}</button>
-    </form>
-    </br>
-    <a class="w3-bar-item w3-button logo" align="center" href="{% url 'patient_list' %}">See Patients</a>
-</body>
+<div class="row">
+    <div class="col-md-3">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+                <h3 class="profile-username text-center">{{ patient.prenom }} {{ patient.nom }}</h3>
+                <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                        <b>Address</b><a class="pull-right">{{ object.adresse }}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Phone Number</b><a class="pull-right">{{ object.telephone }}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Email</b><a class="pull-right">{{ object.email }}</a>
+                    </li>
+                </ul>
+                {% if not object.treatments.all %}
+                <p>No Treatment registered</p>
+                {% else %}
+                <p>Treatments</p>
+                {% for treatment in object.treatments.all %}
+                <ul>
+                    <li>
+                        <a href="{% url 'soin_detail' treatment.pk %}">{{ treatment.nom_soin }}</a> :
+                        {{ treatment.type_soin }} - {{ treatment.start_date }}
+                        Durée : {{ treatment.treatment_duration}}
+                        (Hey Didier, on peut rajouter des champs)
+                    </li>
+                </ul>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="box-footer">
+                <div class="row">
+                    <form action="{% url 'soin_request' patient.pk %}" method="POST" class="pull-left">
+                        {% csrf_token %}
+                        <button type="submit" name="NewForm" class="btn btn-block btn-primary" style="color: #fff;">Add
+                            a treatment
+                        </button>
+                    </form>
+                    <form action="{% url 'patient_list' patient.pk %}" method="POST" class="pull-right">
+                        {% csrf_token %}
+                        <button type="submit" name="Deletion Patient" class="btn btn-block btn-danger" style="color: #fff;">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<a class="btn btn-block btn-primary" href="{% url 'patient_list' %}" style="color: #fff;text-decoration:none;">Back to
+    Patient list</a>
 
 {% endblock %}
