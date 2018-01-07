@@ -18,6 +18,9 @@ from django.conf import settings
 from django.contrib import admin
 from infirmiers import views as home_view
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
+
+
 
 
 urlpatterns = [
@@ -26,6 +29,7 @@ urlpatterns = [
     url(r'^infirmier/', include('infirmiers_app.urls')),
     url(r'^soins/', include('soins_app.urls')),
     url(r'^signup/', include('signUp.urls')),
-    url(r'^api/v1/', include('api.urls'))
+    url(r'^api/v1/', include('api.urls')),
+    url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -8,9 +8,15 @@ class SoinSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Soin
-        fields = ('patient',)
+        fields = ('patient', 'specific_visit_time')
     
     def get_patient(self, obj):
-        patient = Patient.objects.filter(treatments = obj)[0]
-        serializer = PatientSerializer(patient)
-        return serializer.data
+        try:
+            patient = Patient.objects.filter(treatments = obj)[0]
+            serializer = PatientSerializer(patient)
+            return serializer.data
+        except IndexError:
+            return {}
+
+    def get_specific_visit_time(self, obj):
+        return obj.specific_visit_time

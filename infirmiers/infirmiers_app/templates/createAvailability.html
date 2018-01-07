@@ -8,6 +8,7 @@
                 <h2 class="box-title">Add an availability</h2>
             </div>
             <div class="box-body">
+                <p>The minutes of Start and End fields have to be around 15</p>
                 <form action="{% url 'availability_creation_view' nurse_id  %}" method="post">
                     {% csrf_token %}
                     {{ form }}

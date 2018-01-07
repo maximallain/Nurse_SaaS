@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.db.utils import IntegrityError
+from django.contrib.auth.decorators import login_required
 
 from infirmiers_app.forms.nurseCreationForm import NurseCreationForm
 from infirmiers_app.models.nurse import Nurse
 from infirmiers_app.models.interval import Interval
 from signUp.models.office import Office
 
+@login_required
 def nurse_creation_view(request):
     if request.method == 'POST':
         form = NurseCreationForm(request.POST)
@@ -18,6 +20,13 @@ def nurse_creation_view(request):
             Gender = form.cleaned_data['Gender'][0]
             PhoneNumber = form.cleaned_data['PhoneNumber']
             office = Office.objects.filter(user = request.user )[0]
+
+            #Check PhoneNumber can be converted to an integer
+            try:
+                int(PhoneNumber)
+            except ValueError:
+                error_message = "Le numéro de téléphone doit être sous format numérique"
+                return render(request, 'createNurse.html', {'form': form, 'error_message' : error_message}) 
 
             nurse = Nurse(FirstName=FirstName, LastName=LastName, Gender=Gender, PhoneNumber=PhoneNumber, office=office)
             try:

@@ -4,7 +4,9 @@ from soins_app.models.Patients import Patient
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from signUp.models.office import Office
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def patient_request(request):
 
     if request.method == 'POST':
@@ -17,7 +19,14 @@ def patient_request(request):
             telephone = form.cleaned_data['telephone']
             email = form.cleaned_data['email']
             office = Office.objects.filter(user = request.user )[0]
-            #envoi = True
+
+            #Check telephone can be converted to an integer
+            try:
+                int(telephone)
+            except ValueError:
+                error_message = "Le numéro de téléphone doit être sous format numérique"
+                return render(request, 'nouveau_patient.html', {'form': form, 'error_message' : error_message})
+    
             Patient(nom=nom, prenom = prenom, adresse = adresse, telephone = telephone,email=email,office=office).save()
             return HttpResponseRedirect(reverse("patient_list"))
     else:
