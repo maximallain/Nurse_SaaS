@@ -16,14 +16,10 @@
                     <p>{{ patient.telephone }}</p>
                     <p>{{ patient.email }}</p>
                     <p>Office n°{{ patient.Office}}</p>
-                    <a href="{% url 'patient_detail' patient.pk %}" class="btn btn-block btn-info" style="color: #fff;text-decoration: none;">See Details</a>
                 </div>
                 <div class="box-footer">
                     <div class="row">
-                        <form action="{% url 'soin_request' patient.pk %}" method="POST" class="pull-left">
-                            {% csrf_token %}
-                            <button type="submit" name="NewForm" class="btn btn-block btn-primary" style="color: #fff;">Add an Treatment</button>
-                        </form>
+                        <a href="{% url 'patient_detail' patient.pk %}" class="btn btn-block btn-info" style="color: #fff;text-decoration: none;">See Details</a>
                         <form action="{% url 'patient_list' patient.pk %}" method="POST" class="pull-right">
                             {% csrf_token %}
                         <button type="submit" name="Deletion Patient" class="btn btn-block btn-danger" style="color: #fff;">Delete</button>

@@ -15,14 +15,11 @@
                 <p>{{ nurse.Gender }}</p>
                 <p>{{ nurse.PhoneNumber }}</p>
                 <p>{{ nurse.Office }}</p>
-                <a href="{% url 'nurse_detail' nurse.pk %}" class="btn btn-block btn-info" style="color: #fff;text-decoration: none;">See Details</a>
+
             </div>
             <div class="box-footer">
                 <div class="row">
-                    <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-left">
-                        {% csrf_token %}
-                        <button type="submit" name="NewForm" class="btn btn-block btn-primary" style="color: #fff;">Add an availability</button>
-                    </form>
+                    <a href="{% url 'nurse_detail' nurse.pk %}" class="btn btn-block btn-info" style="color: #fff;text-decoration: none;">See Details</a>
                     <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-right">
                         {% csrf_token %}
                     <button type="submit" name="Deletion" class="btn btn-block btn-danger" style="color: #fff;">Delete</button>

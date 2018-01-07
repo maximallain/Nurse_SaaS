@@ -1,16 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <title>Nurse</title>
-</head>
-<body>
-    <form action="{% url 'availability_creation_view' nurse_id  %}" method="post">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Submit" />
-    </form>
-</body>
+<div class="row">
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header with-border">
+                <h2 class="box-title">Add an availability</h2>
+            </div>
+            <div class="box-body">
+                <form action="{% url 'availability_creation_view' nurse_id  %}" method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit" value="Submit" class="btn btn-block btn-success" style="color: #fff;text-decoration:none;"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

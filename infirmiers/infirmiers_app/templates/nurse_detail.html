@@ -35,7 +35,7 @@
                 <div class="row">
                     <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-left">
                         {% csrf_token %}
-                        <button type="submit" name="NewForm" class="btn btn-block btn-primary" style="color: #fff;">Add an availability</button>
+                        <button type="submit" name="NewForm" class="btn btn-block btn-success" style="color: #fff;"><i class="ion-plus"></i> Add an availability</button>
                     </form>
                     <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-right">
                         {% csrf_token %}

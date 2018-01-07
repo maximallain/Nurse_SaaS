@@ -37,7 +37,7 @@
                 <div class="row">
                     <form action="{% url 'soin_request' patient.pk %}" method="POST" class="pull-left">
                         {% csrf_token %}
-                        <button type="submit" name="NewForm" class="btn btn-block btn-primary" style="color: #fff;">Add
+                        <button type="submit" name="NewForm" class="btn btn-block btn-success" style="color: #fff;"><i class="ion-plus"></i> Add
                             a treatment
                         </button>
                     </form>
