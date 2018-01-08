@@ -6,9 +6,10 @@
     <title>Soin</title>
 </head>
 <body>
-    <h1>{{ soin.nom_soin }}</h1>
+    <h1>{{ soin.name_soin }}</h1>
+    <p>Name of the patient : {{ patient.FirstName }}</p>
     <p>{{ soin.type_soin }}</p>
-    <p>{{ soin.adresse_soin }}</p>
+    <p>Start date : {{ soin.start_date }}</p>
     <p>{{ soin.frequence_soin }}</p>
     <p>{{ soin.ponctualite_definie }}</p>
     <form action="{% url 'patient_list' soin.pk %}" method="POST">

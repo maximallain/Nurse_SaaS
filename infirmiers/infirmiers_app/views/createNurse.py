@@ -15,8 +15,8 @@ def nurse_creation_view(request):
         form = NurseCreationForm(request.POST)
         
         if form.is_valid():
-            FirstName = form.cleaned_data['FirstName']
-            LastName = form.cleaned_data['LastName']
+            FirstName = form.cleaned_data['FirstName'].capitalize()
+            LastName = form.cleaned_data['LastName'].upper()
             Gender = form.cleaned_data['Gender'][0]
             PhoneNumber = form.cleaned_data['PhoneNumber']
             office = Office.objects.filter(user = request.user )[0]

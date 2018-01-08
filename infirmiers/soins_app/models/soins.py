@@ -20,7 +20,7 @@ class Soin(models.Model):
         ('6', 'Sunday')
     )
 
-    nom_soin = models.CharField(max_length=100)
+    name_soin = models.CharField(max_length=100)
     type_soin = models.CharField(max_length=2, choices=Treatment_Type_Choices)
     specific_visit_time = models.TimeField(null = True)
     start_date = models.DateField(default=date.today)

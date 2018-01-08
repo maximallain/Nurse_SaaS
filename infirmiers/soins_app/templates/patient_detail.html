@@ -11,25 +11,24 @@
     <p>{{ patient.Adress }}</p>
     <p>{{ patient.PhoneNumber }}</p>
     <p>{{ patient.Email }}</p>
-    <p>Office n°{{ patient.Office}}</p>
+    <p>Office n°{{ patient.office.pk}}</p>
 
     {% for treatment in object.treatments.all %}
         <ul>
             <li>
-                <a href="{% url 'soin_detail' treatment.pk %}" >{{ treatment.nom_soin }}</a> :
+                <a href="{% url 'soin_detail' patient.pk treatment.pk %}" >{{ treatment.name_soin }}</a> :
                 {{ treatment.type_soin }} - {{ treatment.start_date }}
                 Durée : {{ treatment.treatment_duration}}
-                (Hey Didier, on peut rajouter des champs)
             </li>
         </ul>
     {% endfor %}
 
 
-    <a class="w3-bar-item w3-button logo" align="center" href="{% url 'soin_request' patient.pk %}">Add a Treatment to {{patient.prenom}}</a>
+    <a class="w3-bar-item w3-button logo" align="center" href="{% url 'soin_request' patient.pk %}">Add a Treatment to {{patient.FirstName}}</a>
     </br>
     <form class="w3-bar-item w3-button logo" align="center" action="{% url 'patient_list' patient.pk %}" method="POST">
-        {% csrf_token %}
-    <button class="w3-bar-item w3-button logo" align="center" type="submit" name="Deletion Patient">Delete {{ patient.prenom }} {{ patient.nom }}</button>
+    {% csrf_token %}
+    <button class="w3-bar-item w3-button logo" align="center" type="submit" name="Deletion Patient">Delete {{patient.FirstName}} {{patient.LastName}}</button>
     </form>
     </br>
     <a class="w3-bar-item w3-button logo" align="center" href="{% url 'patient_list' %}">See Patients</a>
