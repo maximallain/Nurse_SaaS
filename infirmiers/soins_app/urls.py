@@ -12,6 +12,6 @@ urlpatterns = [
     url('^patients/(?P<id>\d+)', PatientListView.as_view(), name='patient_list'),
     url('^creation_soins/(?P<patient_id>\d+)', soin_request, name='soin_request'),
     url('^creation_patient', patient_request, name='patient_request'),
-    url('^soin/(?P<patient_id>\d+)/(?P<pk>\d+)$', SoinDetailView.as_view(), name='soin_detail'),
+    url('^soin/(?P<patient_pk>\d+)/(?P<treatment_pk>\d+)$', SoinDetailView.Soin_Detail, name='soin_detail'),
     url('^patient/(?P<pk>\d+)$', PatientDetailView.as_view(), name='patient_detail'),
 ]
