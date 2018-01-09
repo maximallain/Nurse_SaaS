@@ -19,17 +19,9 @@ class PatientListView(ListView):
         return context
 
     def post(self, request, id):
-        """if "Deletion" in request.POST:
-            Patient.objects.filter(pk=id)[0].delete()
-            return HttpResponseRedirect(reverse("patient_list"))"""
         if "Deletion Patient" in request.POST:
             Patient.objects.filter(pk=id)[0].delete()
             return HttpResponseRedirect(reverse("patient_list"))
         elif "Deletion Soin" in request.POST:
             Soin.objects.filter(pk=id)[0].delete()
             return HttpResponseRedirect(reverse("patient_list"))
-
-    """def post(self, request, id_soin, id_patient ):
-            if "Deletion" in request.POST:
-                Soin.objects.filter(pk=id)[0].delete()
-                return HttpResponseRedirect(reverse("patient_list"))"""

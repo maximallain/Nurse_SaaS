@@ -13,14 +13,14 @@ def soin_request(request, patient_id):
         form = Soins(request.POST)
 
         if form.is_valid():
-            nom_soin = form.cleaned_data['nom_soin']
+            name_soin = form.cleaned_data['name_soin']
             type_soin = form.cleaned_data['type_soin']
             frequence_soin = form.cleaned_data['frequence_soin']
             specific_visit_time = form.cleaned_data['specific_visit_time']
             start_date=form.cleaned_data['start_date']
             treatment_duration=form.cleaned_data['treatment_duration']
 
-            soin =  Soin(nom_soin=nom_soin,
+            soin =  Soin(name_soin=name_soin,
                  type_soin = type_soin,
                  frequence_soin = frequence_soin,
                  specific_visit_time = specific_visit_time,

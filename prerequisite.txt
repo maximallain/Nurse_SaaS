@@ -1,8 +1,0 @@
-Set up the module django-multipleselectfield
-
-1 - Install with pip : pip install django-multiselectfield
-2 - In the file settings, put 'multiselectfield' under "INSTALLED_APP"
-
-Set up the library djangorestframework
-1 - Install with pip : pip install djangorestframework
-2 - In the file settings, put 'rest_framework' under "INSTALLED_APP"
