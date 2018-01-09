@@ -28,7 +28,7 @@ def availability_creation_view(request, nurse_id):
             nurse = Nurse.objects.get(pk = nurse_id)
             nurse.intervals.add(interval)
 
-            return HttpResponseRedirect(reverse("nurse_list"))
+            return HttpResponseRedirect(reverse("nurse_detail",args=[nurse_id]))
 
     else:
         form = AvailabilityForm()
