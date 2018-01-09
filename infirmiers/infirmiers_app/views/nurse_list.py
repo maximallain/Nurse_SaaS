@@ -13,6 +13,7 @@ class NurseListView(ListView):
     model = Nurse #This view is based on the model Nurse
     template_name = "nurse_list.html" #The template linked to this ListView
 
+
     def get_context_data(self, **kwargs):
         context = super(NurseListView, self).get_context_data(**kwargs)
         return context
