@@ -10,7 +10,7 @@
     {% for patient in object_list %}
         {% if patient.office.user.id == user.id %}
             <ul>
-                <li><a href="{% url 'patient_detail' patient.pk %}">{{ patient.prenom }} {{ patient.nom }}</a> </li>
+                <li><a href="{% url 'patient_detail' patient.pk %}">{{ patient.FirstName }} {{ patient.LastName }}</a> </li>
             </ul>
         {% endif %}
     {% endfor %}

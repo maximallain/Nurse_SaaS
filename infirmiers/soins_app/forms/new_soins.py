@@ -18,7 +18,7 @@ class Soins(forms.Form):
         ('6', 'Sunday')
     )
 
-    nom_soin = forms.CharField(max_length=100, label= "Name")
+    name_soin = forms.CharField(max_length=100, label= "Name")
     type_soin = forms.ChoiceField(choices=Treatment_Type_Choices, label="Type")
     frequence_soin = forms.MultipleChoiceField(choices=Treatment_Frequency_Choice, label="Frequency", widget=forms.CheckboxSelectMultiple)
     start_date = forms.DateField(label="Start Date (format:YYYY-M-D)")
