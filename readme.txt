@@ -3,10 +3,7 @@ This application lets offices of nurses to handle nurses, patients, cares, and t
 
 Pre-requesite:
 1/ Install the latest version of Python 3.6 (be sure that pip is installed on your machine)
-2/ Install Django via your terminal: pip install django
-3/ Install the module Requests via your terminal: pip install requests
-4/ Install the module django-multiselectfield via your terminal: pip install django-multiselectfield
-5/ Install the module djangorestframework via your terminal: pip install djangorestframework
+2/ Install django, requests, django-multiselectfield, djangorestframework and flask with `pip install -r requirements.txt`
 
 
 Download the app:
