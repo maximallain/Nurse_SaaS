@@ -19,6 +19,14 @@
             </li>
         </ul>
     {% endfor %}
+
+    {% for visit in list_visits %}
+    <ul>
+        <li>
+            {{ visit.date }} - {{ visit.time }} 
+        </li>
+    </ul>
+{% endfor %}
     <a class="homepage_button" align="center" href="{% url 'nurse_list' %}">See Nurses</a>
 </body>
 

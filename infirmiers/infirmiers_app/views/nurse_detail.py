@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from infirmiers_app.models.nurse import Nurse
+from soins_app.models.visits import Visit
 
 @method_decorator(login_required, name='dispatch')
 class NurseDetailView(DetailView):
@@ -13,4 +14,7 @@ class NurseDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(NurseDetailView, self).get_context_data(**kwargs)
+        print(context['nurse'].pk)
+        list_visits = Visit.objects.filter(nurse = context['nurse'].pk)
+        context['list_visits'] = list_visits
         return context
