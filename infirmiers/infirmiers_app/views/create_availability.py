@@ -35,7 +35,7 @@ def availability_creation_view(request, nurse_id):
 
     return render(request, 'createAvailability.html', {'form': form, 'nurse_id':nurse_id })
 
-@login_required
+
 def manipulate_time(time):
     """Function that calcule the number of about fifteen in the time"""
     hours_time = time.hour
