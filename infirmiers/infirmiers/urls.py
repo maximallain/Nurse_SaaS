@@ -14,8 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url,include
+from django.conf import settings
 from django.contrib import admin
 from infirmiers import views as home_view
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
 
@@ -30,4 +32,4 @@ urlpatterns = [
     url(r'^api/v1/', include('api.urls')),
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
 
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

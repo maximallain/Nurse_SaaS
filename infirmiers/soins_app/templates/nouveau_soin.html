@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<head>
-    <meta charset="UTF-8">
-    <title>New Treatment</title>
-</head>
-<body>
-        {% if envoi %}Votre message a bien été envoyé !{% endif %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header with-border">
+                <h2 class="box-title">Add a treatment</h2>
+            </div>
+            <div class="box-body">
+                <form action="{% url 'soin_request' patient_pk %}" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Submit" class="btn btn-block btn-success"
+                           style="color: #fff;text-decoration:none;"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <form action="{% url 'soin_request' patient_pk %}" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Submit" />
-        </form>
-</body>
 {% endblock %}
