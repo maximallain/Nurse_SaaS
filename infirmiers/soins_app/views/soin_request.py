@@ -34,12 +34,10 @@ def soin_request(request, patient_id):
             patient = Patient.objects.get(pk = patient_id)
             patient.treatments.add(soin)
 
-            #return HttpResponseRedirect(reverse("patient_detail"), {'patient_pk' : patient_id})
-            return HttpResponseRedirect(reverse("patient_list"))
+            return HttpResponseRedirect(reverse("patient_detail", args=[patient_id]))
 
     else:
         form = Soins()
 
     return render(request, 'nouveau_soin.html', {'form': form, 'patient_pk': patient_id})
 
-        #return render(request, 'nouveau_soin.html', {'form' : form, patient_pk:patient_pk})
