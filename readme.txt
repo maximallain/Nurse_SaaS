@@ -1,3 +1,6 @@
+Description:
+This application lets offices of nurses to handle nurses, patients, cares, and to optimize the journeys of the nurses.
+
 Pre-requesite:
 1/ Install the latest version of Python 3.6 (be sure that pip is installed on your machine)
 2/ Install Django via your terminal: pip install django
