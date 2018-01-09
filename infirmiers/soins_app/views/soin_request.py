@@ -4,7 +4,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from soins_app.models.Patients import Patient
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def soin_request(request, patient_id):
 
     if request.method == 'POST':
@@ -14,14 +16,14 @@ def soin_request(request, patient_id):
             nom_soin = form.cleaned_data['nom_soin']
             type_soin = form.cleaned_data['type_soin']
             frequence_soin = form.cleaned_data['frequence_soin']
-            strict_punctuality = form.cleaned_data['strict_punctuality']
+            specific_visit_time = form.cleaned_data['specific_visit_time']
             start_date=form.cleaned_data['start_date']
             treatment_duration=form.cleaned_data['treatment_duration']
 
             soin =  Soin(nom_soin=nom_soin,
                  type_soin = type_soin,
                  frequence_soin = frequence_soin,
-                 strict_punctuality = strict_punctuality,
+                 specific_visit_time = specific_visit_time,
                  start_date=start_date,
                  treatment_duration=treatment_duration,
                  patient = patient_id

@@ -10,7 +10,7 @@
     <p style="color:red">{{ error_message }}</p>
     <form action="{% url 'nurse_creation_view' %}" method="post">
             {% csrf_token %}
-            {{ form }}
+            {{ form.as_p }}
             <input type="submit" value="Submit" />
     </form>
 </body>
