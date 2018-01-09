@@ -55,9 +55,15 @@ def launch_optimizer():
         for patient in rnd.patients_list:
             time_when_visited = rnd.time_when_patient_visited(patient)
             print(time_when_visited)
-            visits_summary.append({"visit_pk": patient.pk, "nurse_pk": rnd.nurse.pk,
+            formatted_time = ""
+            if (int(time_when_visited) % 3600) // 60 >= 10:
+                visits_summary.append({"visit_pk": patient.pk, "nurse_pk": rnd.nurse.pk,
                                    "time": str(int(time_when_visited) // 3600) + ':' + str(
                                        (int(time_when_visited) % 3600) // 60)})
+            else:
+                visits_summary.append({"visit_pk": patient.pk, "nurse_pk": rnd.nurse.pk,
+                                       "time": str(int(time_when_visited) // 3600) + ':0' + str(
+                                           (int(time_when_visited) % 3600) // 60)})
     print(visits_summary)
     req.post("http://127.0.0.1:8000/api/v1/visits/create", json=visits_summary)
     return ""
