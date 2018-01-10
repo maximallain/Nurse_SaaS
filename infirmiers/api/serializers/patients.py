@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from soins_app.models.Patients import Patient
+from patients_app.models.Patients import Patient
 from .office import OfficeSerializer
 
 class PatientSerializer(serializers.ModelSerializer):
@@ -7,7 +7,7 @@ class PatientSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Patient
-        fields = ('adresse','office')
+        fields = ('Adress','office')
     
     def get_office(self, obj):
         serializer = OfficeSerializer(obj.office)

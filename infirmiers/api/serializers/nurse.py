@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from infirmiers_app.models.nurse import Nurse
+from nurses_app.models.nurse import Nurse
 from .interval import IntervalSerializer
 from .office import OfficeSerializer
 

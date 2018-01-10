@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from infirmiers_app.models.interval import Interval
+from nurses_app.models.interval import Interval
 
 class IntervalSerializer(serializers.ModelSerializer):
     class Meta:
