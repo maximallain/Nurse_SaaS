@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .jsonresponse import JSONResponse
-from soins_app.models.visits import Visit
+from patients_app.models.visits import Visit
 from api.serializers.visit import VisitSerializer
 
 def visit_detail(request, pk):

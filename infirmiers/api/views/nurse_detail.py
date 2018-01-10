@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .jsonresponse import JSONResponse
-from infirmiers_app.models.nurse import Nurse
+from nurses_app.models.nurse import Nurse
 from api.serializers.nurse import NurseSerializers
 
 def nurse_detail(request, pk):

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from soins_app.models.visits import Visit
+from patients_app.models.visits import Visit
 
 from .soins import SoinSerializer
 

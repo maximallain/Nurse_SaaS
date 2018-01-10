@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from .jsonresponse import JSONResponse
-from soins_app.models.visits import Visit
+from patients_app.models.visits import Visit
 from api.serializers.visit import VisitSerializer
 from rest_framework import generics
 from datetime import date
 
-from soins_app.models.Patients import Patient
+from patients_app.models.Patients import Patient
 
 class VisitList(generics.ListAPIView):
     serializer_class = VisitSerializer

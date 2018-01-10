@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from soins_app.models.soins import Soin
-from soins_app.models.Patients import Patient
+from patients_app.models.soins import Soin
+from patients_app.models.Patients import Patient
 from .patients import PatientSerializer
 
 class SoinSerializer(serializers.ModelSerializer):
