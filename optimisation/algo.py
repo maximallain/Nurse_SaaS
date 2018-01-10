@@ -19,16 +19,30 @@ class Nurse:
         :param start_time: the start time of availability in seconds from midnight
         :param availability: the availability duration (in seconds) of this nurse
         """
-        self.pk = pk
-        self.start_time = start_time
-        self.availability = availability
+        self._pk = pk
+        self._start_time = start_time
+        self._availability = availability
+
+    def _get_pk(self):
+        return self._pk
+
+    def _get_start_time(self):
+        return self._start_time
+
+    def _get_availability(self):
+        return self._availability
+
+    pk = property(_get_pk)
+    start_time = property(_get_start_time)
+    availability = property(_get_availability)
 
     def __str__(self):
         """
         Converts this nurse into a string
         :return: a string representing this nurse
         """
-        return "Nurse : pk = {}, availability = {}, start_time = {}".format(self.pk, self.availability, self.start_time)
+        return "Nurse : pk = {}, availability = {}, start_time = {}".format(self._pk, self._availability,
+                                                                            self._start_time)
 
 
 class Point:
@@ -44,18 +58,24 @@ class Point:
         :param x: the x coordinate (longitude) of this point
         :param y: the y coordinate (latitude) of this point
         """
-        self.identifier = identifier
+        self._identifier = identifier
         if address is None:
-            self.address = str(x) + "," + str(y)
+            self._address = str(x) + "," + str(y)
         else:
-            self.address = address
+            self._address = address
+
+    def _get_identifier(self):
+        return self._identifier
+
+    def _get_address(self):
+        return self._address
 
     def __str__(self):
         """
         Converts this point into a string
         :return: a string representing this point
         """
-        return "identifier : {}, address : {}".format(self.identifier, self.address)
+        return "identifier : {}, address : {}".format(self._identifier, self._address)
 
 
 class Patient(Point):
@@ -77,19 +97,35 @@ class Patient(Point):
                     visited (-1 if no constraint)
         """
         Point.__init__(self, address=address, x=x, y=y, identifier=identifier)
-        self.duration_of_care = duration_of_care
-        self.pk = pk
-        self.must_be_visited_exactly_at = must_be_visited_exactly_at
+        self._duration_of_care = duration_of_care
+        self._pk = pk
+        self._must_be_visited_exactly_at = must_be_visited_exactly_at
+
+    def _get_duration_of_care(self):
+        return self._duration_of_care
+
+    def _get_pk(self):
+        return self._pk
+
+    def _get_must_be_visited_exactly_at(self):
+        return self._must_be_visited_exactly_at
+
+    def _set_must_be_visited_exactly_at(self, must_be_visited_exactly_at):
+        self._must_be_visited_exactly_at = must_be_visited_exactly_at
+
+    duration_of_care = property(_get_duration_of_care)
+    pk = property(_get_pk)
+    must_be_visited_exactly_at = property(_get_must_be_visited_exactly_at, _set_must_be_visited_exactly_at)
 
     def __str__(self):
         """
         Converts this patient into a string
         :return: a string representing this patient
         """
-        result = "identifier : {}, address : {}, duration of care : {}, pk : {}".format(self.identifier, self.address,
-                                                                               self.duration_of_care, self.pk)
-        if self.must_be_visited_exactly_at != -1:
-            result += ", must be exactly visited at : {}".format(self.must_be_visited_exactly_at)
+        result = "identifier : {}, address : {}, duration of care : {}, pk : {}".format(self._identifier, self._address,
+                                                                               self._duration_of_care, self._pk)
+        if self._must_be_visited_exactly_at != -1:
+            result += ", must be exactly visited at : {}".format(self._must_be_visited_exactly_at)
         return result
 
 
@@ -468,7 +504,7 @@ class Problem:
         else:
             self._patients_list = patients_list
         self._number_of_generated_patients = 0
-        self.solutions_list = list()
+        self._solutions_list = list()
         self._costs_matrix = None
         self._nurses_list = nurses_list
 
@@ -477,14 +513,14 @@ class Problem:
 
     def _set_office(self, office):
         self._office = office
-        self.solutions_list = list()
+        self._solutions_list = list()
 
     def _get_patients_list(self):
         return self._patients_list
 
     def _set_patients_list(self, patients_list):
         self._patients_list = patients_list
-        self.solutions_list = list()
+        self._solutions_list = list()
 
     def _get_number_of_generated_patients(self):
         return self._number_of_generated_patients
@@ -507,12 +543,16 @@ class Problem:
     def _set_nurses_list(self, nurses_list):
         self._nurses_list = nurses_list
 
+    def _get_solutions_list(self):
+        return self._solutions_list
+
     office = property(_get_office, _set_office)
     patients_list = property(_get_patients_list, _set_patients_list)
     number_of_generated_patients = property(_get_number_of_generated_patients)
     costs_matrix = property(_get_costs_matrix, _set_costs_matrix)
     savings_matrix = property(_get_savings_matrix, _set_savings_matrix)
     nurses_list = property(_get_nurses_list, _set_nurses_list)
+    solutions_list = property(_get_solutions_list)
 
     def print_patients(self):
         """Prints this problem's patients list"""
