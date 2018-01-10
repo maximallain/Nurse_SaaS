@@ -70,6 +70,9 @@ class Point:
     def _get_address(self):
         return self._address
 
+    identifier = property(_get_identifier)
+    address = property(_get_address)
+
     def __str__(self):
         """
         Converts this point into a string
