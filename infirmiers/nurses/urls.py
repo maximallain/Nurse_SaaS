@@ -26,10 +26,11 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     url(r'^$', home_view.home, name='home'),
     url(r'^admin/', admin.site.urls),
-    url(r'^infirmier/', include('nurses_app.urls')),
-    url(r'^soins/', include('patients_app.urls')),
+    url(r'^nurse/', include('nurses_app.urls')),
+    url(r'^patient/', include('patients_app.urls')),
     url(r'^signup/', include('signUp.urls')),
     url(r'^api/v1/', include('api.urls')),
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
+    url(r'starter$',home_view.starter, name='starter'),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

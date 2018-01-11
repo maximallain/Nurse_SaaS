@@ -15,7 +15,7 @@ def patient_request(request):
         if form.is_valid():
             FirstName = form.cleaned_data['FirstName'].capitalize()
             LastName = form.cleaned_data['LastName'].upper()
-            Adress = form.cleaned_data['Adress']
+            Address = form.cleaned_data['Address']
             PhoneNumber = form.cleaned_data['PhoneNumber']
             Email = form.cleaned_data['Email']
             office = Office.objects.filter(user = request.user )[0]
@@ -27,7 +27,7 @@ def patient_request(request):
                 error_message = "The number must be numerical"
                 return render(request, 'nouveau_patient.html', {'form': form, 'error_message' : error_message})
     
-            Patient(LastName = LastName, FirstName = FirstName, Adress = Adress, PhoneNumber = PhoneNumber,Email = Email,office = office).save()
+            Patient(LastName = LastName, FirstName = FirstName, Address = Address, PhoneNumber = PhoneNumber,Email = Email,office = office).save()
             return HttpResponseRedirect(reverse("patient_list"))
     else:
         form = Patients_Form()

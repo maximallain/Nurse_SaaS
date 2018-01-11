@@ -28,7 +28,6 @@ def soin_request(request, patient_id):
                  treatment_duration=treatment_duration,
                  patient = patient_id
                  )
-            #envoi = True
             soin.save()
 
             patient = Patient.objects.get(pk = patient_id)

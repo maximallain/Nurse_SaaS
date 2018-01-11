@@ -7,16 +7,26 @@
             <div class="box-header with-border">
                 <h2 class="box-title">Add a treatment</h2>
             </div>
-            <div class="box-body">
-                <form action="{% url 'soin_request' patient_pk %}" method="post">
+            <form action="{% url 'soin_request' patient_pk %}" method="post">
+                <div class="box-body">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}" class="col-sm-2 control-label">{{ field.label}}</label><input class="form-control" id="{{ field.id_for_label }}" placeholder="{{ field.label}}">
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <div class="box-footer">
                     <input type="submit" value="Submit" class="btn btn-block btn-success"
                            style="color: #fff;text-decoration:none;"/>
-                </form>
-            </div>
+                </div>
+
+            </form>
         </div>
+
     </div>
+</div>
 </div>
 
 {% endblock %}

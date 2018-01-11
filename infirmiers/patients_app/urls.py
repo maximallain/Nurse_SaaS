@@ -13,3 +13,4 @@ urlpatterns = [
     url('^creation_patient', patient_request, name='patient_request'),
     url('^patient/(?P<pk>\d+)$', PatientDetailView.as_view(), name='patient_detail'),
 ]
+

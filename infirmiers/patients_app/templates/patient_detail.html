@@ -26,7 +26,11 @@
                     <li>
                         <h3>{{ treatment.nom_soin }}</h3>
                         <p>{{ treatment.type_soin }} - {{ treatment.start_date }}</p>
-                        <p>Durée : {{ treatment.treatment_duration}}</p>
+                        <p>Durée : {{ treatment.treatment_duration}} day(s)</p>
+                        <form action="{% url 'patient_detail' patient_pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" name="Deletion Treatment" value="{{ treatment.pk }}">Delete this treatment</button>
+                        </form>
                     </li>
                 </ul>
                 {% endfor %}
@@ -36,13 +40,15 @@
                 <div class="row">
                     <form action="{% url 'soin_request' patient.pk %}" method="POST" class="pull-left">
                         {% csrf_token %}
-                        <button type="submit" name="NewForm" class="btn btn-block btn-success" style="color: #fff;"><i class="ion-plus"></i> Add
+                        <button type="submit" name="NewForm" class="btn btn-block btn-success" style="color: #fff;"><i
+                                class="ion-plus"></i> Add
                             a treatment
                         </button>
                     </form>
                     <form action="{% url 'patient_list' patient.pk %}" method="POST" class="pull-right">
                         {% csrf_token %}
-                        <button type="submit" name="Deletion Patient" class="btn btn-block btn-danger" style="color: #fff;">
+                        <button type="submit" name="Deletion Patient" class="btn btn-block btn-danger"
+                                style="color: #fff;">
                             Delete
                         </button>
                     </form>
