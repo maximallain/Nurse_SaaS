@@ -11,10 +11,7 @@
                         <b>Gender</b><a class="pull-right">{{ object.Gender }}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Phone Number</b><a class="pull-right">{{ object.PhoneNumber }}</a>
-                    </li>
-                    <li class="list-group-item">
-                        <b>Phone Number</b><a class="pull-right">{{ object.Office }}</a>
+                        <b>Phone Number</b><a class="pull-right">{{ nurse.PhoneNumber }}</a>
                     </li>
                 </ul>
                 {% if not object.intervals.all %}
@@ -29,11 +26,18 @@
                     </li>
                 </ul>
                 {% endfor %}
+
                 {% endif %}
-                {% for visit in list_visits %}
+                <p>Planning</p>
+                {% for element in list_all %}
                     <ul>
                         <li>
-                            {{ visit.date }} - {{ visit.time }}
+                            RDV N°{{ element.number_visit }}</br>
+                            Date :      {{ element.visit.date }}</br>
+                            Hour :      {{ element.visit.time }}</br>
+                            Treatment : <a href="{% url 'soin_detail' element.patient.pk element.treatment.pk %}" >{{ element.visit.soin.name_soin }}</a></br>
+                            Patient :   <a href="{% url 'patient_detail' element.patient.pk %}" >{{element.patient.FirstName}} {{element.patient.LastName}}</a></br>
+                            Address :   {{element.patient.Adress}}</br>
                         </li>
                     </ul>
                 {% endfor %}
