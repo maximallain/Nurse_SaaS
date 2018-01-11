@@ -1,5 +1,4 @@
 from point import *
-from nurse import *
 
 
 class Round:

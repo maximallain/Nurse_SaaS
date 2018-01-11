@@ -15,3 +15,5 @@ Steps to run the app:
 3/ Go to the folder "optimisation" via your terminal: cd optimisation
 4/ Run the following command via your terminal (to run the optimizer): python optimizer_api
 5/ Browse the following url: 127.0.0.1:8000/
+
+NB: To use the optimzer, you need a working internet connection

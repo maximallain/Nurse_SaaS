@@ -1,7 +1,7 @@
 import requests as req
 from time import sleep
 import numpy as np
-from solution import *
+from point import *
 
 MAX_API_ELEMENTS = 100
 MAX_API_ELEMENTS_DAILY = 2500
@@ -200,6 +200,9 @@ class Problem:
         return rectangles
 
     def calculate_cost_matrix(self):
+        """
+        Calculates the cost_matrix attribute of this problem, calling the googlemaps API as many times as needed
+        """
         mat_dim = self.number_of_patients() + 1
         cost_matrix = np.zeros((mat_dim, mat_dim))
         api_calls = self.generate_rectangles()

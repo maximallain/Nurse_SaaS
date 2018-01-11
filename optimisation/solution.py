@@ -1,6 +1,3 @@
-from round import *
-
-
 class Solution:
     """
     Class used to represent a solution to a problem, which consists of a list of rounds to be performed by nurses

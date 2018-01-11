@@ -1,5 +1,6 @@
 import unittest
 from solver import *
+from nurse import *
 
 
 class PointTestCase(unittest.TestCase):
@@ -15,7 +16,7 @@ class PointTestCase(unittest.TestCase):
 
 
 class RoundTestCase1(unittest.TestCase):
-    """Tests the calculate_total_cost method with empty patients_list"""
+    """Tests the calculate_total_cost method with different number of patients and precise time constraints"""
 
     def setUp(self):
         self._office = Office(x=0, y=0)
@@ -23,33 +24,19 @@ class RoundTestCase1(unittest.TestCase):
         self._problem = Problem(self._office, [], [self._nurse])
         self._round = Round([], self._problem, self._nurse)
 
-    def test_empty_list(self):
+    def test_calculate_total_cost(self):
         self.assertEqual(self._round.total_cost, 0)
 
-
-class RoundTestCase2(unittest.TestCase):
-    """Tests the calculate_total_cost method with 1 patient"""
-
-    def setUp(self):
-        self._office = Office(x=0, y=0)
-        self._nurse = Nurse(1)
+    def test_calculate_total_cost_one_patient(self):
         self._patient = Patient(x=1, y=0, duration_of_care=1000)
         self._problem = Problem(self._office, [self._patient], [self._nurse])
         self._problem.costs_matrix = np.zeros((2, 2))
         self._problem.costs_matrix[0, 1] = 1000
         self._problem.costs_matrix[1, 0] = 1000
         self._round = Round([self._patient], self._problem, self._nurse)
-
-    def test_one_patient(self):
         self.assertEqual(self._round.total_cost, 3000)
 
-
-class RoundTestCase3(unittest.TestCase):
-    """Tests the calculate_total_cost method with 2 patients"""
-
-    def setUp(self):
-        self._office = Office(x=0, y=0)
-        self._nurse = Nurse(1)
+    def test_calculate_total_cost_two_patients(self):
         self._patients_list = [Patient(x=1, y=0, duration_of_care=1000), Patient(x=2, y=0, duration_of_care=1000)]
         self._problem = Problem(self._office, self._patients_list, [self._nurse])
         self._problem.costs_matrix = np.zeros((3, 3))
@@ -60,17 +47,9 @@ class RoundTestCase3(unittest.TestCase):
         self._problem.costs_matrix[1][2] = 1000
         self._problem.costs_matrix[2][1] = 1000
         self._round = Round(self._patients_list, self._problem, self._nurse)
-
-    def test_two_patients(self):
         self.assertEqual(self._round.total_cost, 6000)
 
-
-class RoundTestCase4(unittest.TestCase):
-    """Tests the calculate_total_cost method with 5 patients"""
-
-    def setUp(self):
-        self._office = Office(x=0, y=0)
-        self._nurse = Nurse(1)
+    def test_calculate_total_cost_five_patients(self):
         self._patients_list = [Patient(x=1, y=0, duration_of_care=1000), Patient(x=2, y=0, duration_of_care=1000),
                                Patient(x=3, y=0, duration_of_care=1000), Patient(x=4, y=0, duration_of_care=1000)]
         self._problem = Problem(self._office, self._patients_list, [self._nurse])
@@ -96,17 +75,9 @@ class RoundTestCase4(unittest.TestCase):
         self._problem.costs_matrix[3][4] = 1000
         self._problem.costs_matrix[4][3] = 1000
         self._round = Round(self._patients_list, self._problem, self._nurse)
-
-    def test_five_patients(self):
         self.assertEqual(self._round.total_cost, 12000)
 
-
-class RoundTestCase5(unittest.TestCase):
-    """Tests the calculate_total_cost method with 2 patients, the 2nd one having a precise visit time constraint"""
-
-    def setUp(self):
-        self._office = Office(x=0, y=0)
-        self._nurse = Nurse(1)
+    def test_calculate_total_cost_two_patients_with_precise_time_constraint(self):
         self._patients_list = [Patient(x=1, y=0, duration_of_care=1000),
                                Patient(x=2, y=0, duration_of_care=1000, must_be_visited_exactly_at=10000)]
         self._problem = Problem(self._office, self._patients_list, [self._nurse])
@@ -118,17 +89,9 @@ class RoundTestCase5(unittest.TestCase):
         self._problem.costs_matrix[1][2] = 1000
         self._problem.costs_matrix[2][1] = 1000
         self._round = Round(self._patients_list, self._problem, self._nurse)
-
-    def test_two_patients_with_precise_time_constraint(self):
         self.assertEqual(self._round.total_cost, 13000)
 
-
-class RoundTestCase6(unittest.TestCase):
-    """Tests the calculate_total_cost method with 5 patients, one having a precise time constraint"""
-
-    def setUp(self):
-        self._office = Office(x=0, y=0)
-        self._nurse = Nurse(1)
+    def test_calculate_total_cost_five_patients_with_precise_time_constraint(self):
         self._patients_list = [Patient(x=1, y=0, duration_of_care=1000), Patient(x=2, y=0, duration_of_care=1000,
                                                                                  must_be_visited_exactly_at=5000),
                                Patient(x=3, y=0, duration_of_care=1000), Patient(x=4, y=0, duration_of_care=1000)]
@@ -155,12 +118,10 @@ class RoundTestCase6(unittest.TestCase):
         self._problem.costs_matrix[3][4] = 1000
         self._problem.costs_matrix[4][3] = 1000
         self._round = Round(self._patients_list, self._problem, self._nurse)
-
-    def test_five_patients(self):
         self.assertEqual(self._round.total_cost, 14000)
 
 
-class RoundTestCase7(unittest.TestCase):
+class RoundTestCase2(unittest.TestCase):
     """Tests the calculate_total_savings method with empty patients_list"""
 
     def setUp(self):
@@ -169,33 +130,19 @@ class RoundTestCase7(unittest.TestCase):
         self._problem = Problem(self._office, [], [self._nurse])
         self._round = Round([], self._problem, self._nurse)
 
-    def test_empty_list(self):
+    def test_calculate_total_savings_empty_list(self):
         self.assertEqual(self._round.total_savings, 0)
 
-
-class RoundTestCase8(unittest.TestCase):
-    """Tests the calculate_total_savings method with 1 patient"""
-
-    def setUp(self):
-        self._office = Office(x=0, y=0)
-        self._nurse = Nurse(1)
+    def test_calculate_total_savings_one_patient(self):
         self._patient = Patient(x=1, y=0, duration_of_care=1000)
         self._problem = Problem(self._office, [self._patient], [self._nurse])
         self._problem.costs_matrix = np.zeros((2, 2))
         self._problem.costs_matrix[0, 1] = 1000
         self._problem.costs_matrix[1, 0] = 1000
         self._round = Round([self._patient], self._problem, self._nurse)
-
-    def test_one_patient(self):
         self.assertEqual(self._round.total_savings, 0)
 
-
-class RoundTestCase9(unittest.TestCase):
-    """Tests the calculate_total_savings method with 2 patients"""
-
-    def setUp(self):
-        self._office = Office(x=0, y=0)
-        self._nurse = Nurse(1)
+    def test_calculate_total_savings_two_patients(self):
         self._patients_list = [Patient(x=1, y=0, duration_of_care=1000), Patient(x=2, y=0, duration_of_care=1000)]
         self._problem = Problem(self._office, self._patients_list, [self._nurse])
         self._problem.costs_matrix = np.zeros((3, 3))
@@ -206,17 +153,9 @@ class RoundTestCase9(unittest.TestCase):
         self._problem.costs_matrix[1][2] = 1000
         self._problem.costs_matrix[2][1] = 1000
         self._round = Round(self._patients_list, self._problem, self._nurse)
-
-    def test_two_patients(self):
         self.assertEqual(self._round.total_savings, 2000)
 
-
-class RoundTestCase10(unittest.TestCase):
-    """Tests the calculate_total_savings method with 5 patients"""
-
-    def setUp(self):
-        self._office = Office(x=0, y=0)
-        self._nurse = Nurse(1)
+    def test_calculate_total_savings_five_patients(self):
         self._patients_list = [Patient(x=1, y=0, duration_of_care=1000), Patient(x=2, y=0, duration_of_care=1000),
                                Patient(x=3, y=0, duration_of_care=1000), Patient(x=4, y=0, duration_of_care=1000)]
         self._problem = Problem(self._office, self._patients_list, [self._nurse])
@@ -242,17 +181,9 @@ class RoundTestCase10(unittest.TestCase):
         self._problem.costs_matrix[3][4] = 1000
         self._problem.costs_matrix[4][3] = 1000
         self._round = Round(self._patients_list, self._problem, self._nurse)
-
-    def test_five_patients(self):
         self.assertEqual(self._round.total_savings, 12000)
 
-
-class RoundTestCase11(unittest.TestCase):
-    """Tests the calculate_total_savings method with 2 patients, the 2nd one having a precise visit time constraint"""
-
-    def setUp(self):
-        self._office = Office(x=0, y=0)
-        self._nurse = Nurse(1)
+    def test_calculate_total_savings_two_patients_with_precise_time_constraint(self):
         self._patients_list = [Patient(x=1, y=0, duration_of_care=1000),
                                Patient(x=2, y=0, duration_of_care=1000, must_be_visited_exactly_at=10000)]
         self._problem = Problem(self._office, self._patients_list, [self._nurse])
@@ -264,17 +195,9 @@ class RoundTestCase11(unittest.TestCase):
         self._problem.costs_matrix[1][2] = 1000
         self._problem.costs_matrix[2][1] = 1000
         self._round = Round(self._patients_list, self._problem, self._nurse)
-
-    def test_two_patients(self):
         self.assertEqual(self._round.total_savings, 0)
 
-
-class RoundTestCase12(unittest.TestCase):
-    """Tests the calculate_total_savings method with 5 patients, one having a precise time constraint"""
-
-    def setUp(self):
-        self._office = Office(x=0, y=0)
-        self._nurse = Nurse(1)
+    def test_calculate_total_savings_five_patients_with_precise_time_constraint(self):
         self._patients_list = [Patient(x=1, y=0, duration_of_care=1000), Patient(x=2, y=0, duration_of_care=1000,
                                                                                  must_be_visited_exactly_at=5000),
                                Patient(x=3, y=0, duration_of_care=1000), Patient(x=4, y=0, duration_of_care=1000)]
@@ -301,12 +224,10 @@ class RoundTestCase12(unittest.TestCase):
         self._problem.costs_matrix[3][4] = 1000
         self._problem.costs_matrix[4][3] = 1000
         self._round = Round(self._patients_list, self._problem, self._nurse)
-
-    def test_five_patients(self):
         self.assertEqual(self._round.total_savings, 10000)
 
 
-class RoundTestCase13(unittest.TestCase):
+class RoundTestCase3(unittest.TestCase):
     """Tests can_merge_left and can_merge_right"""
 
     def setUp(self):
@@ -357,7 +278,7 @@ class RoundTestCase13(unittest.TestCase):
                 Round(patients_list=[self._p[1], self._p[2], self._p[4]], problem=self._problem, nurse=self._n[0])))
 
 
-class RoundTestCase14(unittest.TestCase):
+class RoundTestCase4(unittest.TestCase):
     """Tests merge_left and merge_right"""
 
     def setUp(self):
@@ -425,7 +346,7 @@ class RoundTestCase14(unittest.TestCase):
         self.assertEqual(round2.total_savings, 16000)
 
 
-class RoundTestCase15(unittest.TestCase):
+class RoundTestCase5(unittest.TestCase):
     """Tests time_when_patient_visited method"""
 
     def setUp(self):
@@ -459,7 +380,7 @@ class RoundTestCase15(unittest.TestCase):
         self.assertEqual(round2.time_when_patient_visited(self._p[2]), 8000)
 
 
-class RoundTestCase16(unittest.TestCase):
+class RoundTestCase6(unittest.TestCase):
     """Tests can_be_assigned_to method"""
 
     def setUp(self):
@@ -542,18 +463,12 @@ class ProblemTestCase1(unittest.TestCase):
         self._problem = Problem(Office(), nurses_list=[Nurse(1)])
         self._problem.generate_random_patients(amount=0)
 
-    def test_generate_random_patients(self):
+    def test_generate_random_patients0(self):
         self.assertEqual(0, len(self._problem.patients_list))
 
-
-class ProblemTestCase2(unittest.TestCase):
-    """Tests generate_random_patients method"""
-
-    def setUp(self):
+    def test_generate_random_patients10(self):
         self._problem = Problem(Office(), nurses_list=[Nurse(1)])
         self._problem.generate_random_patients(amount=10, x=(1, 10), y=(2, 5), duration_of_care=(1000, 10000))
-
-    def test_generate_random_patients(self):
         self.assertEqual(10, len(self._problem.patients_list))
         for patient in self._problem.patients_list:
             coordinates = patient.address.split(",")
@@ -561,7 +476,7 @@ class ProblemTestCase2(unittest.TestCase):
             self.assertTrue(1000 <= patient.duration_of_care <= 10000)
 
 
-class ProblemTestCase3(unittest.TestCase):
+class ProblemTestCase2(unittest.TestCase):
     """Tests query_api method"""
     def setUp(self):
         self._problem = Problem(Office(address="officeaddress"), [Patient(address="patient" + str(i))
@@ -598,81 +513,46 @@ class ProblemTestCase3(unittest.TestCase):
                          self._url8)
 
 
-class ProblemTestCase4(unittest.TestCase):
+class ProblemTestCase3(unittest.TestCase):
     """Tests generate_rectangles method with empty list of patients"""
     def setUp(self):
         self._problem = Problem(Office(), [], [Nurse(1)])
 
-    def test_generate_rectangles(self):
+    def test_generate_rectangles0(self):
         self.assertEqual(self._problem.generate_rectangles(), [])
 
-
-class ProblemTestCase5(unittest.TestCase):
-    """Tests generate_rectangles method with 1 patient"""
-    def setUp(self):
+    def test_generate_rectangles1(self):
         self._problem = Problem(Office(), [Patient()], [Nurse(1)])
-
-    def test_generate_rectangles(self):
         self.assertEqual(self._problem.generate_rectangles(), [(0, 2, 0, 2)])
 
-
-class ProblemTestCase6(unittest.TestCase):
-    """Tests generate_rectangles method with 5 patients"""
-    def setUp(self):
+    def test_generate_rectangles5(self):
         self._problem = Problem(Office(), [Patient() for i in range(5)], [Nurse(1)])
-
-    def test_generate_rectangles(self):
         self.assertEqual(self._problem.generate_rectangles(), [(0, 6, 0, 6)])
 
-
-class ProblemTestCase7(unittest.TestCase):
-    """Tests generate_rectangles method with 9 patients"""
-    def setUp(self):
+    def test_generate_rectangles9(self):
         self._problem = Problem(Office(), [Patient() for i in range(9)], [Nurse(1)])
-
-    def test_generate_rectangles(self):
         self.assertEqual(self._problem.generate_rectangles(), [(0, 10, 0, 10)])
 
-
-class ProblemTestCase8(unittest.TestCase):
-    """Tests generate_rectangles method with 10 patients"""
-    def setUp(self):
+    def test_generate_rectangles10(self):
         self._problem = Problem(Office(), [Patient() for i in range(10)], [Nurse(1)])
-
-    def test_generate_rectangles(self):
         self.assertEqual(self._problem.generate_rectangles(), [(0, 9, 0, 11), (9, 2, 0, 11)])
 
-
-class ProblemTestCase9(unittest.TestCase):
-    """Tests generate_rectangles method with 22 patients"""
-    def setUp(self):
+    def test_generate_rectangles22(self):
         self._problem = Problem(Office(), [Patient() for i in range(22)], [Nurse(1)])
-
-    def test_generate_rectangles(self):
         self.assertEqual(self._problem.generate_rectangles(), [(0, 4, 0, 23), (4, 4, 0, 23), (8, 4, 0, 23),
                                                                (12, 4, 0, 23), (16, 4, 0, 23), (20, 3, 0, 23)])
 
-
-class ProblemTestCase10(unittest.TestCase):
-    """Tests generate_rectangles method with 50 patients, should raise an exception"""
-    def setUp(self):
+    def test_generate_rectangles50(self):
         self._problem = Problem(Office(), [Patient() for i in range(50)], [Nurse(1)])
-
-    def test_generate_rectangles(self):
         with self.assertRaises(Exception):
             self._problem.generate_rectangles()
 
-
-class ProblemTestCase11(unittest.TestCase):
-    """Tests generate_rectangles method with 49 patients, should not raise an exception"""
-    def setUp(self):
+    def test_generate_rectangles49(self):
         self._problem = Problem(Office(), [Patient() for i in range(49)], [Nurse(1)])
-
-    def test_generate_rectangles(self):
         self._problem.generate_rectangles()
 
 
-'''class ProblemTestCase12(unittest.TestCase):
+class ProblemTestCase4(unittest.TestCase):
     """Tests calculate_cost_matrix with 1 patient"""
     def setUp(self):
         self._problem = Problem(Office(address="Paris"), [Patient(address="Marseille")], [Nurse(1)])
@@ -685,13 +565,8 @@ class ProblemTestCase11(unittest.TestCase):
         self.assertTrue(self._problem.costs_matrix[1][0] > 20000)
         self.assertEqual(0, self._problem.costs_matrix[1][1])
 
-
-class ProblemTestCase13(unittest.TestCase):
-    """Tests calculate_cost_matrix with 10 patients"""
-    def setUp(self):
+    def test_generate_rectangles2(self):
         self._problem = Problem(Office(address="Paris"), [Patient(address="Marseille") for i in range(10)], [Nurse(1)])
-
-    def test_generate_rectangles(self):
         self._problem.calculate_cost_matrix()
         for i in range(self._problem.number_of_patients() + 1):
             for j in range(self._problem.number_of_patients() + 1):
@@ -700,11 +575,11 @@ class ProblemTestCase13(unittest.TestCase):
                         self._problem.costs_matrix[i][j] > 20000)  # not possible to know exactly the value since
                     # googlemaps API takes the state of traffic in account for example
                 else:
-                    self.assertEqual(0, self._problem.costs_matrix[i][j])'''
+                    self.assertEqual(0, self._problem.costs_matrix[i][j])
 
 
 class SolverTestCase1(unittest.TestCase):
-    """Tests calculate_savings_matrix with empty list of patients"""
+    """Tests calculate_savings_matrix"""
     def setUp(self):
         self._problem = Problem(Office(), [], [Nurse(1)])
         self._problem.costs_matrix = np.zeros((1, 1))
@@ -713,25 +588,17 @@ class SolverTestCase1(unittest.TestCase):
     def test_calculate_savings_matrix(self):
         self.assertEqual(self._solver.calculate_savings_matrix().shape, (0, 0))
 
-
-class SolverTestCase2(unittest.TestCase):
-    """Tests calculate_savings_matrix with 1 patient"""
-    def setUp(self):
+    def test_calculate_savings_matrix2(self):
         self._problem = Problem(Office(), [Patient()], [Nurse(1)])
         self._problem.costs_matrix = np.zeros((2, 2))
         self._problem.costs_matrix[0, 1] = 1000
         self._problem.costs_matrix[1, 0] = 1000
         self._solver = Solver(self._problem)
-
-    def test_calculate_savings_matrix(self):
         savings_matrix = self._solver.calculate_savings_matrix()
         self.assertEqual(savings_matrix.shape, (1, 1))
         self.assertEqual(savings_matrix[0, 0], 0)
 
-
-class SolverTestCase3(unittest.TestCase):
-    """Tests calculate_savings_matrix with 2 patients"""
-    def setUp(self):
+    def test_calculate_savings_matrix3(self):
         self._problem = Problem(Office(), [Patient(), Patient()], [Nurse(1)])
         self._problem.costs_matrix = np.zeros((3, 3))
         self._problem.costs_matrix[0, 1] = 1000
@@ -741,8 +608,6 @@ class SolverTestCase3(unittest.TestCase):
         self._problem.costs_matrix[1, 2] = 1000
         self._problem.costs_matrix[2, 1] = 1000
         self._solver = Solver(self._problem)
-
-    def test_calculate_savings_matrix(self):
         savings_matrix = self._solver.calculate_savings_matrix()
         self.assertEqual(savings_matrix.shape, (2, 2))
         self.assertEqual(savings_matrix[0, 0], 0)
@@ -751,7 +616,7 @@ class SolverTestCase3(unittest.TestCase):
         self.assertEqual(savings_matrix[1, 1], 0)
 
 
-class SolverTestCase4(unittest.TestCase):
+class SolverTestCase2(unittest.TestCase):
     """Tests clarke_and_wright_init"""
     def setUp(self):
         self._problem = Problem(Office(), [Patient(), Patient(), Patient()], [Nurse(1)])
@@ -775,7 +640,7 @@ class SolverTestCase4(unittest.TestCase):
         self.assertEqual(self._solver._sorted_savings, [0, 0, 0, 2000, 2000, 2000, 2000, 4000, 4000])
 
 
-class SolverTestCase5(unittest.TestCase):
+class SolverTestCase3(unittest.TestCase):
     """Tests get_patient_pair_from_arg"""
     def setUp(self):
         self._problem = Problem(Office(), [Patient(), Patient(), Patient()], [Nurse(1)])
@@ -792,7 +657,7 @@ class SolverTestCase5(unittest.TestCase):
         self.assertTrue(patient_a6 is self._problem.patients_list[2] and patient_b6 is self._problem.patients_list[0])
 
 
-class SolverTestCase6(unittest.TestCase):
+class SolverTestCase4(unittest.TestCase):
     """Tests search_rounds_for_patient static method"""
     def setUp(self):
         self._patient_a, self._patient_b, self._patient_c, self._patient_d, self._patient_e = \
@@ -822,7 +687,7 @@ class SolverTestCase6(unittest.TestCase):
                                                                      False))
 
 
-class SolverTestCase7(unittest.TestCase):
+class SolverTestCase5(unittest.TestCase):
     """Tests add_round_if_possible static method"""
     def setUp(self):
         self._office = Office(x=0, y=0)
@@ -894,7 +759,7 @@ class SolverTestCase7(unittest.TestCase):
         self.assertIs(new_round.nurse, self._n[3])
 
 
-class SolverTestCase9(unittest.TestCase):
+class SolverTestCase6(unittest.TestCase):
     """Tests add_merged_round_if_possible static method"""
     def setUp(self):
         self._office = Office(x=0, y=0)
@@ -980,7 +845,7 @@ class SolverTestCase9(unittest.TestCase):
         self.assertEqual(2, len(self._rounds_list))
 
 
-class SolverTestCase10(unittest.TestCase):
+class SolverTestCase7(unittest.TestCase):
     """Tests merge_rounds_if_possible static method"""
     def setUp(self):
         self._office = Office(x=0, y=0)
@@ -1057,7 +922,7 @@ class SolverTestCase10(unittest.TestCase):
         self.assertEqual(2, len(self._rounds_list))
 
 
-class SolverTestCase11(unittest.TestCase):
+class SolverTestCase8(unittest.TestCase):
     """Tests parallel_build_rounds method"""
     def setUp(self):
         self._office = Office(x=0, y=0)
@@ -1126,8 +991,8 @@ class SolverTestCase11(unittest.TestCase):
         self.assertEqual(len(rounds_list), 2)
 
 
-class SolverTestCase12(unittest.TestCase):
-    """Tests parallel_build_rounds method"""
+class SolverTestCase9(unittest.TestCase):
+    """Tests add_single_patient_rounds method"""
     def setUp(self):
         self._office = Office(x=0, y=0)
         self._n = [Nurse(1, start_time=0, availability=10000), Nurse(2, start_time=0, availability=11000),
