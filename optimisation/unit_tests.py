@@ -1,5 +1,5 @@
 import unittest
-from algo import *
+from solver import *
 
 
 class PointTestCase(unittest.TestCase):
@@ -576,26 +576,26 @@ class ProblemTestCase3(unittest.TestCase):
         self._url8 = self._problem.query_api(-1, -2, -3, -4)
 
     def test_query_api(self):
-        self.assertEqual("https://maps.googleapis.com/maps/api/distancematrix/json?origins=&destinations=&key=" + key,
+        self.assertEqual("https://maps.googleapis.com/maps/api/distancematrix/json?origins=&destinations=&key=" + KEY,
                          self._url1)
         self.assertEqual("https://maps.googleapis.com/maps/api/distancematrix/json?origins=officeaddress"
-                         "|patient1|patient2&destinations=&key=" + key, self._url2)
+                         "|patient1|patient2&destinations=&key=" + KEY, self._url2)
         self.assertEqual("https://maps.googleapis.com/maps/api/distancematrix/json?origins=&destinations="
-                         "officeaddress|patient1|patient2&key=" + key, self._url3)
+                         "officeaddress|patient1|patient2&key=" + KEY, self._url3)
         self.assertEqual("https://maps.googleapis.com/maps/api/distancematrix/json?origins="
-                         "patient1|patient2|patient3&destinations=&key=" + key, self._url4)
+                         "patient1|patient2|patient3&destinations=&key=" + KEY, self._url4)
         self.assertEqual("https://maps.googleapis.com/maps/api/distancematrix/json?origins=&destinations="
-                         "patient1|patient2|patient3&key=" + key, self._url5)
+                         "patient1|patient2|patient3&key=" + KEY, self._url5)
         self.assertEqual("https://maps.googleapis.com/maps/api/distancematrix/json?origins="
                          "officeaddress|patient1|patient2|patient3|patient4|patient5&destinations="
-                         "officeaddress|patient1|patient2|patient3|patient4|patient5&key=" + key,
+                         "officeaddress|patient1|patient2|patient3|patient4|patient5&key=" + KEY,
                          self._url6)
         self.assertEqual("https://maps.googleapis.com/maps/api/distancematrix/json?origins="
                          "officeaddress|patient1|patient2|patient3|patient4|patient5&destinations="
-                         "officeaddress|patient1|patient2|patient3|patient4|patient5&key=" + key,
+                         "officeaddress|patient1|patient2|patient3|patient4|patient5&key=" + KEY,
                          self._url7)
-        self.assertEqual("https://maps.googleapis.com/maps/api/distancematrix/json?origins=&destinations=&key=" + key,
-                        self._url8)
+        self.assertEqual("https://maps.googleapis.com/maps/api/distancematrix/json?origins=&destinations=&key=" + KEY,
+                         self._url8)
 
 
 class ProblemTestCase4(unittest.TestCase):

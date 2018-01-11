@@ -3,3 +3,4 @@ requests==2.18.4
 django-multiselectfield==0.1.8
 djangorestframework==3.7.3
 flask==0.12.2
+flask_api==1.0
