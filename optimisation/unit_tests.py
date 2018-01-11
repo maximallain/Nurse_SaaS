@@ -544,7 +544,7 @@ class ProblemTestCase3(unittest.TestCase):
 
     def test_generate_rectangles50(self):
         self._problem = Problem(Office(), [Patient() for i in range(50)], [Nurse(1)])
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             self._problem.generate_rectangles()
 
     def test_generate_rectangles49(self):
@@ -553,11 +553,11 @@ class ProblemTestCase3(unittest.TestCase):
 
 
 class ProblemTestCase4(unittest.TestCase):
-    """Tests calculate_cost_matrix with 1 patient"""
+    """Tests calculate_cost_matrix"""
     def setUp(self):
         self._problem = Problem(Office(address="Paris"), [Patient(address="Marseille")], [Nurse(1)])
 
-    def test_generate_rectangles(self):
+    def test_calculate_cost_matrix(self):
         self._problem.calculate_cost_matrix()
         self.assertEqual(0, self._problem.costs_matrix[0][0])
         self.assertTrue(self._problem.costs_matrix[0][1] > 20000)  # not possible to know exactly the value since
@@ -565,7 +565,7 @@ class ProblemTestCase4(unittest.TestCase):
         self.assertTrue(self._problem.costs_matrix[1][0] > 20000)
         self.assertEqual(0, self._problem.costs_matrix[1][1])
 
-    def test_generate_rectangles2(self):
+    def test_calculate_cost_matrix2(self):
         self._problem = Problem(Office(address="Paris"), [Patient(address="Marseille") for i in range(10)], [Nurse(1)])
         self._problem.calculate_cost_matrix()
         for i in range(self._problem.number_of_patients() + 1):
@@ -576,6 +576,11 @@ class ProblemTestCase4(unittest.TestCase):
                     # googlemaps API takes the state of traffic in account for example
                 else:
                     self.assertEqual(0, self._problem.costs_matrix[i][j])
+
+    def test_calculate_cost_matrix3(self):
+        self._problem = Problem(Office(address="azerty"), [Patient(address="Marseille") for i in range(10)], [Nurse(1)])
+        with self.assertRaises(AttributeError):
+            self._problem.calculate_cost_matrix()
 
 
 class SolverTestCase1(unittest.TestCase):

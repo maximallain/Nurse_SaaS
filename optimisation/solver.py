@@ -35,7 +35,14 @@ class Solver:
         the problem. Sets the attributes _sorted_savings and _arg_sorted_savings of the solver, which will be
         used later"""
         if self._problem.costs_matrix is None:
-            self._problem.calculate_cost_matrix()
+            try:
+                self._problem.calculate_cost_matrix()
+            except AttributeError:
+                print("Unknown address, check the office's and nurses' addresses")
+                pass
+            except ValueError:
+                print("Too many patients, maximum number of patients = 49")
+                pass
         savings_matrix = self.calculate_savings_matrix()
         savings_flat = np.ndarray.flatten(savings_matrix)
         arg_sorted_savings = np.argsort(savings_flat)

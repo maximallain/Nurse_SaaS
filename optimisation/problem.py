@@ -179,7 +179,7 @@ class Problem:
                 (start_line, number_of_lines, start_columns, number_of_columns)
         """
         if (self.number_of_patients() + 1)**2 > MAX_API_ELEMENTS_DAILY:
-            raise Exception("Too many patients")
+            raise ValueError("Too many patients")
         if self.number_of_patients() == 0:
             return []
         rectangles = []
@@ -189,7 +189,7 @@ class Problem:
                 height = i - 1
                 break
         if height == 0:
-            raise Exception("Too many patients")
+            raise ValueError("Too many patients")
         if height == -1 and self.number_of_patients() + 1 <= MAX_API_ELEMENTS:
             height = self.number_of_patients() + 1
         number_of_handled_lines = 0
