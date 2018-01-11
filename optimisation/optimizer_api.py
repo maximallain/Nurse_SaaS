@@ -2,7 +2,8 @@ import datetime
 from flask import request
 from flask_api import FlaskAPI
 
-from algo import *
+from nurse import *
+from solver import *
 
 app = FlaskAPI(__name__)
 days = ["M", "T", "W", "Th", "F", "S", "Su"]

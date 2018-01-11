@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from datetime import date, time
 
-from soins_app.models.visits import Visit
-from infirmiers_app.models.nurse import Nurse
+from patients_app.models.visits import Visit
+from nurses_app.models.nurse import Nurse
 
 class VisitsListPostAPIView(APIView):
 
