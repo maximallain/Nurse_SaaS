@@ -8,7 +8,7 @@
                 <h3 class="profile-username text-center">{{ patient.FirstName }} {{ patient.LastName }}</h3>
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Address</b><a class="pull-right">{{ object.Address }}</a>
+                        <b>Address</b><a class="pull-right">{{ object.Adress }}</a>
                     </li>
                     <li class="list-group-item">
                         <b>Phone Number</b><a class="pull-right">{{ object.PhoneNumber }}</a>
@@ -24,7 +24,7 @@
                 {% for treatment in object.treatments.all %}
                 <ul>
                     <li>
-                        <h3>{{ treatment.nom_soin }}</h3>
+                        <h3> <a href="{% url 'soin_detail' patient.pk treatment.pk %}" >{{ treatment.name_soin }}</a></h3>
                         <p>{{ treatment.type_soin }} - {{ treatment.start_date }}</p>
                         <p>Durée : {{ treatment.treatment_duration}}</p>
                     </li>
