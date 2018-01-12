@@ -28,8 +28,21 @@
                 {% endfor %}
 
                 {% endif %}
-                <p>Planning</p>
-                {% for element in list_all %}
+                <p>Planning of today</p>
+                {% for element in list_all_today %}
+                    <ul>
+                        <li>
+                            RDV N°{{ element.number_visit }}</br>
+                            Date :      {{ element.visit.date }}</br>
+                            Hour :      {{ element.visit.time }}</br>
+                            Treatment : <a href="{% url 'soin_detail' element.patient.pk element.treatment.pk %}" >{{ element.visit.soin.name_soin }}</a></br>
+                            Patient :   <a href="{% url 'patient_detail' element.patient.pk %}" >{{element.patient.FirstName}} {{element.patient.LastName}}</a></br>
+                            Address :   {{element.patient.Adress}}</br>
+                        </li>
+                    </ul>
+                {% endfor %}
+                <p>Planning of tomorrow</p>
+                {% for element in list_all_tomorrow %}
                     <ul>
                         <li>
                             RDV N°{{ element.number_visit }}</br>
