@@ -2,10 +2,12 @@
 
 #Need to create manually the cabinet
 
+#To use it, launch the 2 main functions : main_patients() and main_nurses()
+
 from random import randint
 from random import uniform
 from .place import Place
-from datetime import timedelta, date
+from datetime import timedelta, date, time
 
 from nurses_app.models.nurse import Nurse
 from nurses_app.models.interval import Interval
@@ -40,11 +42,11 @@ def create_soin_to_db(name_soin):
     start_date = date.today() + timedelta(days=1)
     type_soin = "SID"
     frequence_soin = ["0", "1", "2", "3", "4", "5", "6"]
-    soin =  Soin(name_soin=name_soin,
-                 type_soin = type_soin,
-                 frequence_soin = frequence_soin,
-                 start_date=start_date,
-                 )
+    soin = Soin(name_soin=name_soin,
+                type_soin = type_soin,
+                frequence_soin = frequence_soin,
+                start_date=start_date,
+                )
     soin.save()
     return soin
 
