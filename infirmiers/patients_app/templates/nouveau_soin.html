@@ -8,6 +8,7 @@
                 <h2 class="box-title">Add a treatment</h2>
             </div>
             <form action="{% url 'soin_request' patient_pk %}" method="POST">
+                <p style="color:red">{{ error_message }}</p>
                 <div class="box-body">
                     {% csrf_token %}
 
