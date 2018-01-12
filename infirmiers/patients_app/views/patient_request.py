@@ -17,7 +17,7 @@ def patient_request(request):
         form = Patients_Form(request.POST)
 
         if form.is_valid():
-            Adress = form.cleaned_data['Adress']
+            Address = form.cleaned_data['Address']
             if not req.get("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
                            Adress.replace(" ", "%20") + "&destinations=" + Adress.replace(" ", "%20")
                            + "&key=" + KEY).json().get("destination_addresses")[0] == "":
