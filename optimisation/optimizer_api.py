@@ -2,7 +2,8 @@ import datetime
 from flask import request
 from flask_api import FlaskAPI
 
-from algo import *
+from nurse import *
+from solver import *
 
 app = FlaskAPI(__name__)
 days = ["M", "T", "W", "Th", "F", "S", "Su"]
@@ -49,6 +50,8 @@ def launch_optimizer():
     problem = Problem(office, patients_list, nurses_list)
     solver = Solver(problem)
     solver.compute_clarke_and_wright("Parallel")
+    if len(problem.solutions_list) < 1:
+        return
     solution = problem.solutions_list[-1]
     visits_summary = []
     for rnd in solution.rounds_list:

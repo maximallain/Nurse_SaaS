@@ -2,18 +2,23 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8 col-md-push-2">
         <div class="box">
             <div class="box-header with-border">
                 <h2 class="box-title">Add a nurse to the platform</h2>
             </div>
             <div class="box-body">
-                <p style="color:red">{{ error_message }}</p>
                 <form action="{% url 'nurse_creation_view' %}" method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <input type="submit" value="Submit" class="btn btn-block btn-success" style="color: #fff;text-decoration:none;"/>
+                    {% csrf_token %}
+
+                    <p style="color:red">{{ error_message }}</p>
+                    {{ form.as_p}}
+
+                    <br>
+                    <br>
+                    <input type="submit" value="Submit" class="btn btn-block btn-success"/>
                 </form>
+
             </div>
         </div>
     </div>
