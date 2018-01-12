@@ -5,9 +5,9 @@ from multiselectfield import MultiSelectField
 
 class Soin(models.Model):
     Treatment_Type_Choices = (
-        ('SC', 'Soin courant'),
-        ('SS', 'Soin Spécifique'),
-        ('SID', 'Soin infirmier à domicile')
+        ('CT', 'Common treatment'),
+        ('ST', 'Specific Treatment'),
+        ('ET', 'Exceptional Treatment')
     )
 
     Treatment_Frequency_Choice = (

@@ -14,6 +14,8 @@ class PatientDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PatientDetailView, self).get_context_data(**kwargs)
+        conversion_dict_treatment_type=dict(Soin.Treatment_Type_Choices)
+        print(conversion_dict_treatment_type)
         return context
 
     def post(self, request,patient_id):
