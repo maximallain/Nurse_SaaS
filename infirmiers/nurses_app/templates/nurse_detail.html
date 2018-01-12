@@ -8,7 +8,13 @@
                 <h3 class="profile-username text-center">{{ object.FirstName }} {{ object.LastName }}</h3>
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Gender</b><a class="pull-right">{{ object.Gender }}</a>
+                        <b>Gender</b>
+                        {% if object.Gender == "M" %}
+                        <a class="pull-right">Male</a>
+                        {% else %}
+                        <a class="pull-right">Female</a>
+                        {% endif %}
+
                     </li>
                     <li class="list-group-item">
                         <b>Phone Number</b><a class="pull-right">{{ object.PhoneNumber }}</a>

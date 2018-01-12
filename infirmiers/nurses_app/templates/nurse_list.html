@@ -12,8 +12,20 @@
                 <h2 class="box-title">{{ nurse.FirstName }} {{ nurse.LastName }}</h2>
             </div>
             <div class="box-body">
-                <p>{{ nurse.Gender }}</p>
-                <p>{{ nurse.PhoneNumber }}</p>
+                <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                        <b>Gender</b>
+                        {% if object.Gender == "M" %}
+                        <a class="pull-right">Male</a>
+                        {% else %}
+                        <a class="pull-right">Female</a>
+                        {% endif %}
+
+                    </li>
+                    <li class="list-group-item">
+                        <b>Phone Number</b><a class="pull-right">{{ nurse.PhoneNumber }}</a>
+                    </li>
+                </ul>
 
             </div>
             <div class="box-footer">
