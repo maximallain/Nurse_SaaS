@@ -19,7 +19,7 @@ def patient_request(request):
         if form.is_valid():
             Address = form.cleaned_data['Address']
             if not req.get("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
-                           Adress.replace(" ", "%20") + "&destinations=" + Adress.replace(" ", "%20")
+                           Address.replace(" ", "%20") + "&destinations=" + Address.replace(" ", "%20")
                            + "&key=" + KEY).json().get("destination_addresses")[0] == "":
                 FirstName = form.cleaned_data['FirstName'].capitalize()
                 LastName = form.cleaned_data['LastName'].upper()
