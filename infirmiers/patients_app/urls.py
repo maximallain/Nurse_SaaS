@@ -16,3 +16,4 @@ urlpatterns = [
     url('^soin/(?P<patient_pk>\d+)/(?P<treatment_pk>\d+)$', SoinDetailView.Soin_Detail, name='soin_detail'),
 
 ]
+

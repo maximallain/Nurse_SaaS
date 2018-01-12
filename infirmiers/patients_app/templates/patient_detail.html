@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-8 col-md-push-2">
         <div class="box box-primary">
             <div class="box-body box-profile">
                 <h3 class="profile-username text-center">{{ patient.FirstName }} {{ patient.LastName }}</h3>
@@ -19,39 +19,94 @@
                 </ul>
                 {% if not object.treatments.all %}
                 <p>No Treatment registered</p>
-                {% else %}
-                <p>Treatments</p>
-                {% for treatment in object.treatments.all %}
-                <ul>
-                    <li>
-                        <h3> <a href="{% url 'soin_detail' patient.pk treatment.pk %}" >{{ treatment.name_soin }}</a></h3>
-                        <p>{{ treatment.type_soin }} - {{ treatment.start_date }}</p>
-                        <p>Durée : {{ treatment.treatment_duration}}</p>
-                    </li>
-                </ul>
-                {% endfor %}
                 {% endif %}
+
             </div>
             <div class="box-footer">
                 <div class="row">
-                    <form action="{% url 'soin_request' patient.pk %}" method="POST" class="pull-left">
-                        {% csrf_token %}
-                        <button type="submit" name="NewForm" class="btn btn-block btn-success" style="color: #fff;"><i class="ion-plus"></i> Add
-                            a treatment
-                        </button>
-                    </form>
-                    <form action="{% url 'patient_list' patient.pk %}" method="POST" class="pull-right">
-                        {% csrf_token %}
-                        <button type="submit" name="Deletion Patient" class="btn btn-block btn-danger" style="color: #fff;">
-                            Delete
-                        </button>
-                    </form>
+                    <div class="col-md-4 pull-left">
+                        <form action="{% url 'soin_request' patient.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" name="NewForm" class="btn btn-block btn-success">
+                                <i
+                                        class="ion-plus"></i> Add
+                                a treatment
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-4 pull-right">
+                        <form action="{% url 'patient_list' patient.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" name="Deletion Patient" class="btn btn-block btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<a class="btn btn-block btn-primary" href="{% url 'patient_list' %}" style="color: #fff;text-decoration:none;">Back to
-    Patient list</a>
+
+{% if object.treatments.all %}
+<div class="row">
+    {% for treatment in object.treatments.all %}
+    <div class="col-md-4">
+        <div class="box box-danger">
+            <div class="box-header">
+                <h3>{{ treatment.name_soin }}</h3>
+            </div>
+            <div class="box-body">
+                <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                        <b>Type</b><a class="pull-right">{{ treatment.type_soin }}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Start Date</b><a class="pull-right">{{ treatment.start_date }}</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Treatment Duration</b><a class="pull-right">{{ treatment.treatment_duration }} day(s)</a>
+                    </li>
+                    <li class="list-group-item">
+                        <b>Frequence</b><a class="pull-right">{{ treatment.frequence_soin }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="box-footer">
+                <form action="{% url 'patient_detail' patient.pk %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" name="Deletion Treatment" value="{{ treatment.pk }}">Delete this
+                        treatment
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endif %}
+
+<div class="row">
+    <div class="col-md-2 push-md-3">
+        <a class="btn btn-block btn-primary" href="{% url 'patient_list' %}">Back
+            to
+            Patient list</a>
+    </div>
+    {% if object.treatments.all %}
+    <div class="col-md-2 pull-right">
+    <form action="{% url 'soin_request' patient.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" name="NewForm" class="btn btn-block btn-success">
+            <i
+                    class="ion-plus"></i> Add
+            a treatment
+        </button>
+    </form>
+</div>
+
+    {% endif %}
 
 {% endblock %}

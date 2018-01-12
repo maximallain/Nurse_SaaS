@@ -15,3 +15,6 @@ def home(request):
     current_user_id = request.user
     current_office = Office.objects.filter(user = request.user)[0]
     return render(request, 'home.html', locals())
+
+def starter(request):
+    return render(request, 'starter.html')

@@ -9,9 +9,6 @@
     <!-- /.login-logo -->
     <div class="register-box-body">
         <p class="login-box-msg">Register to MyNurserie</p>
-
-        <p style="color:red">{{ error_message }}</p>
-
         <form method="post">
             {% csrf_token %}
             {% for field in user_form %}
