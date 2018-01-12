@@ -2,22 +2,27 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8 col-md-push-2">
         <div class="box">
             <div class="box-header with-border">
                 <h2 class="box-title">Add a patient to the platform</h2>
             </div>
-            <div class="box-body">
-                <p style="color:red">{{ error_message }}</p>
-                <form action="{% url 'patient_request' %}" method="post">
+
+
+            <form action="{% url 'patient_request' %}" method="post">
+                <div class="box-body">
+                    <p style="color:red">{{ error_message }}</p>
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <input type="submit" value="Submit" class="btn btn-block btn-success"
-                           style="color: #fff;text-decoration:none;"/>
-                </form>
-            </div>
+                </div>
+                    <div class="box-footer">
+                        <input type="submit" value="Submit" class="btn btn-block btn-success"
+                               style="color: #fff;text-decoration:none;"/>
+                    </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 
 {% endblock %}

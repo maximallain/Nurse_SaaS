@@ -34,7 +34,6 @@ def soin_request(request, patient_id):
             patient.treatments.add(soin)
 
             return HttpResponseRedirect(reverse("patient_detail", args=[patient_id]))
-
     else:
         form = Soins()
 

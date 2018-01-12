@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-10 col-md-push-1">
         <div class="box box-primary">
             <div class="box-body box-profile">
                 <h3 class="profile-username text-center">{{ object.FirstName }} {{ object.LastName }}</h3>
@@ -13,19 +13,27 @@
                     <li class="list-group-item">
                         <b>Phone Number</b><a class="pull-right">{{ object.PhoneNumber }}</a>
                     </li>
-                    <li class="list-group-item">
-                        <b>Phone Number</b><a class="pull-right">{{ object.Office }}</a>
-                    </li>
                 </ul>
                 {% if not object.intervals.all %}
                 <p>No Availabilities registered</p>
                 {% else %}
                 <p>Availabilities</p>
                 {% for interval in object.intervals.all %}
-                <ul>
-                    <li>
-                        {{ interval.weekday }} :
-                        {{ interval.real_start_time }} - {{ interval.real_end_time }}
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p>{{ interval.weekday }}</p>
+                            </div>
+                            <div class="col-md-3 col-md-push-5">
+                                <a class="pull-right">{{ interval.real_start_time }} - {{ interval.real_end_time }} </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a class="btn btn-block btn-default">Delete</a>
+                            </div>
+                        </div>
                     </li>
                 </ul>
                 {% endfor %}
@@ -33,19 +41,35 @@
             </div>
             <div class="box-footer">
                 <div class="row">
-                    <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-left">
+                    <div class="col-md-4 pull-left">
+                        <form action="{% url 'nurse_list' nurse.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" name="NewForm" class="btn btn-block btn-success">
+                                <i class="ion-plus"></i> Add an availability
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-4 pull-right">
                         {% csrf_token %}
-                        <button type="submit" name="NewForm" class="btn btn-block btn-success" style="color: #fff;"><i class="ion-plus"></i> Add an availability</button>
-                    </form>
-                    <form action="{% url 'nurse_list' nurse.pk %}" method="POST" class="pull-right">
-                        {% csrf_token %}
-                    <button type="submit" name="Deletion" class="btn btn-block btn-danger" style="color: #fff;">Delete</button>
-                    </form>
+                        <form action="{% url 'nurse_list' nurse.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" name="Deletion" class="btn btn-block btn-danger">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<a class="btn btn-block btn-primary" href="{% url 'nurse_list' %}" style="color: #fff;text-decoration:none;">Back to Nurses</a>
+<div class="row">
+    <div class="col-md-2 push-md-3">
+        <a class="btn btn-block btn-primary" href="{% url 'nurse_list' %}" style="color: #fff;text-decoration:none;">Back
+            to
+            Nurses</a>
+    </div>
+</div>
+
 
 {% endblock %}
