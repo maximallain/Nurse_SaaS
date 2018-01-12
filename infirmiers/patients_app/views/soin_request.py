@@ -31,7 +31,6 @@ def soin_request(request, patient_id):
                          treatment_duration=treatment_duration,
                          patient = patient_id
                          )
-                    #envoi = True
                     soin.save()
 
                     patient = Patient.objects.get(pk = patient_id)
@@ -43,7 +42,6 @@ def soin_request(request, patient_id):
             except ValueError:
                 return render(request, 'nouveau_soin.html',
                               {'error_message': "Invalid date", 'form': form, 'patient_pk': patient_id})
-
     else:
         form = Soins()
 
