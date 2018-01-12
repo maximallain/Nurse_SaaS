@@ -20,7 +20,7 @@ PN = ["0000000000", "0000000001", "0000000002", "0000000003", "0000000004", "000
 
 
 def create_nurse_to_db(firstname, lastname, gender, phonenumber):
-    office = Office.objects.filter(user_id = 8 )[0]
+    office = Office.objects.filter(user_id = 1 )[0]
     A = Nurse(FirstName = firstname, LastName = lastname, Gender=gender, PhoneNumber=phonenumber, office=office)
     A.save()
     return A
@@ -31,7 +31,7 @@ def create_interval_to_db(starttime, endtime, week_day):
     return A
 
 def create_patient_to_db(LastName, FirstName, Adress, PhoneNumber, Email):
-    office = Office.objects.filter(user_id = 8 )[0]
+    office = Office.objects.filter(user_id = 1 )[0]
     A = Patient(LastName = LastName, FirstName = FirstName, Adress = Adress, PhoneNumber = PhoneNumber,Email = Email, office = office)
     A.save()
     return A
