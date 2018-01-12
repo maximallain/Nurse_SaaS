@@ -148,26 +148,26 @@ class Problem:
         patients_locations = ""
         if start_line == 0:
             if nb_lines > 0:
-                patients_locations += str(self._office.address)
+                patients_locations += str(self._office.address).replace(" ", "%20")
             for i in range(min(nb_lines - 1, len(self._patients_list))):
-                patients_locations += "|" + str(self._patients_list[i].address)
+                patients_locations += "|" + str(self._patients_list[i].address).replace(" ", "%20")
         else:
             for i in range(start_line, min(start_line + nb_lines, len(self._patients_list) + 1)):
                 if i > start_line:
                     patients_locations += "|"
-                patients_locations += str(self._patients_list[i-1].address)
+                patients_locations += str(self._patients_list[i-1].address).replace(" ", "%20")
         url += patients_locations + "&destinations="
         patients_locations = ""
         if start_column == 0:
             if nb_columns > 0:
-                patients_locations += str(self._office.address)
+                patients_locations += str(self._office.address).replace(" ", "%20")
             for i in range(min(nb_columns - 1, len(self._patients_list))):
-                patients_locations += "|" + str(self._patients_list[i].address)
+                patients_locations += "|" + str(self._patients_list[i].address).replace(" ", "%20")
         else:
             for i in range(start_column, min(start_column + nb_columns, len(self._patients_list) + 1)):
                 if i > start_column:
                     patients_locations += "|"
-                patients_locations += str(self._patients_list[i-1].address)
+                patients_locations += str(self._patients_list[i-1].address).replace(" ", "%20")
         return url + patients_locations + "&key=" + KEY
 
     def generate_rectangles(self):
@@ -179,7 +179,7 @@ class Problem:
                 (start_line, number_of_lines, start_columns, number_of_columns)
         """
         if (self.number_of_patients() + 1)**2 > MAX_API_ELEMENTS_DAILY:
-            raise Exception("Too many patients")
+            raise ValueError("Too many patients")
         if self.number_of_patients() == 0:
             return []
         rectangles = []
@@ -189,7 +189,7 @@ class Problem:
                 height = i - 1
                 break
         if height == 0:
-            raise Exception("Too many patients")
+            raise ValueError("Too many patients")
         if height == -1 and self.number_of_patients() + 1 <= MAX_API_ELEMENTS:
             height = self.number_of_patients() + 1
         number_of_handled_lines = 0

@@ -216,7 +216,14 @@ class Solver:
         """
         if name is None:
             name = "Parallel Clarke & Wright"
-        self.clarke_and_wright_init()
+        try:
+            self.clarke_and_wright_init()
+        except AttributeError:
+            print("Unknown address, check the office's and nurses' addresses")
+            return
+        except ValueError:
+            print("Too many patients, maximum number of patients = 49")
+            return
         rounds_list = self.parallel_build_rounds()
         self.add_single_patient_rounds(rounds_list)
         self._problem.solutions_list.append(Solution(name, rounds_list))
