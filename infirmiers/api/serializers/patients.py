@@ -7,7 +7,7 @@ class PatientSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Patient
-        fields = ('Adress','office')
+        fields = ('Address','office')
     
     def get_office(self, obj):
         serializer = OfficeSerializer(obj.office)
