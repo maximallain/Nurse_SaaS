@@ -555,7 +555,7 @@ class ProblemTestCase3(unittest.TestCase):
 class ProblemTestCase4(unittest.TestCase):
     """Tests calculate_cost_matrix"""
     def setUp(self):
-        self._problem = Problem(Office(address="Paris"), [Patient(address="Marseille")], [Nurse(1)])
+        self._problem = Problem(Office(address="Rue de la Paix Paris"), [Patient(address="Marseille")], [Nurse(1)])
 
     def test_calculate_cost_matrix(self):
         self._problem.calculate_cost_matrix()
