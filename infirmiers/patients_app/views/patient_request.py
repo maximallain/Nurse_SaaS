@@ -34,7 +34,7 @@ def patient_request(request):
                     error_message = "The number must be numerical"
                     return render(request, 'nouveau_patient.html', {'form': form, 'error_message' : error_message})
 
-                Patient(LastName = LastName, FirstName = FirstName, Adress = Adress, PhoneNumber = PhoneNumber,Email = Email,office = office).save()
+                Patient(LastName = LastName, FirstName = FirstName, Address = Address, PhoneNumber = PhoneNumber,Email = Email,office = office).save()
                 return HttpResponseRedirect(reverse("patient_list"))
             else:
                 error_message = "Invalid address"
