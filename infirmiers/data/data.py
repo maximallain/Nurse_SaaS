@@ -32,9 +32,9 @@ def create_interval_to_db(starttime, endtime, week_day):
     A.save()
     return A
 
-def create_patient_to_db(LastName, FirstName, Adress, PhoneNumber, Email):
+def create_patient_to_db(LastName, FirstName, Address, PhoneNumber, Email):
     office = Office.objects.filter(user_id = 1 )[0]
-    A = Patient(LastName = LastName, FirstName = FirstName, Adress = Adress, PhoneNumber = PhoneNumber,Email = Email, office = office)
+    A = Patient(LastName = LastName, FirstName = FirstName, Address = Address, PhoneNumber = PhoneNumber,Email = Email, office = office)
     A.save()
     return A
 
@@ -42,10 +42,12 @@ def create_soin_to_db(name_soin):
     start_date = date.today() + timedelta(days=1)
     type_soin = "SID"
     frequence_soin = ["0", "1", "2", "3", "4", "5", "6"]
+    treatment_duration = 5
     soin = Soin(name_soin=name_soin,
                 type_soin = type_soin,
                 frequence_soin = frequence_soin,
                 start_date=start_date,
+                treatment_duration = treatment_duration
                 )
     soin.save()
     return soin
@@ -129,8 +131,8 @@ def main_patients():
         FirstName = "Patient" + str(i)
         PhoneNumber = str(randint(1000000000, 9999999999))
         Email = "email" + str(i) + "@gmail.com"
-        Adress = random_place_in_paris().address
-        patient = create_patient_to_db(LastName, FirstName, Adress, PhoneNumber, Email)
+        Address = random_place_in_paris().address
+        patient = create_patient_to_db(LastName, FirstName, Address, PhoneNumber, Email)
 
         name_soin = "Soin" + str(i)
         soin = create_soin_to_db(name_soin)
