@@ -1,6 +1,5 @@
-#File to create automatically datas in database
-
-#Need to create manually the cabinet
+#File that allows to create automatically datas in database
+#Need to create manually the office via the interface - id equal to 1
 
 #To use it, launch the 2 main functions : main_patients() and main_nurses()
 
@@ -42,7 +41,7 @@ def create_soin_to_db(name_soin):
     start_date = date.today() + timedelta(days=1)
     type_soin = "SID"
     frequence_soin = ["0", "1", "2", "3", "4", "5", "6"]
-    treatment_duration = 5
+    treatment_duration = 31
     soin = Soin(name_soin=name_soin,
                 type_soin = type_soin,
                 frequence_soin = frequence_soin,

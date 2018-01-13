@@ -54,8 +54,6 @@ class NurseDetailView(DetailView):
                     dict_visit['patient'] = patient
             context_tomorrow.append(dict_visit)
 
-        print(context_today)
-        print(context_tomorrow)
         context['list_all_today'] = context_today
         context['list_all_tomorrow'] = context_tomorrow
 
