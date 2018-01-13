@@ -54,7 +54,7 @@
                             Hour :      {{ element.visit.time }}</br>
                             Treatment : {{ element.visit.soin.name_soin }}</br>
                             Patient :   <a href="{% url 'patient_detail' element.patient.pk %}" >{{element.patient.FirstName}} {{element.patient.LastName}}</a></br>
-                            Address :   {{element.patient.Adress}}</br>
+                            Address :   {{element.patient.Address}}</br>
                         </li>
                     </ul>
                 {% endfor %}
@@ -67,7 +67,7 @@
                             Hour :      {{ element.visit.time }}</br>
                             Treatment : {{ element.visit.soin.name_soin }}</br>
                             Patient :   <a href="{% url 'patient_detail' element.patient.pk %}" >{{element.patient.FirstName}} {{element.patient.LastName}}</a></br>
-                            Address :   {{element.patient.Adress}}</br>
+                            Address :   {{element.patient.Address}}</br>
                         </li>
                     </ul>
                 {% endfor %}

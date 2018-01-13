@@ -16,4 +16,4 @@ Steps to run the app:
 4/ Run the following command via your terminal (to run the optimizer): python optimizer_api
 5/ Browse the following url: 127.0.0.1:8000/
 
-NB: To use the optimzer, you need a working internet connection
+NB: To use the optimizer, you need a working internet connection
