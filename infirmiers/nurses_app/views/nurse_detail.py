@@ -15,15 +15,13 @@ class NurseDetailView(DetailView):
     model = Nurse #This view is based on the model Nurse
     template_name = "nurse_detail.html" #The template linked to this ListView
 
-    def get_context_data(self, **kwargs):
+       def get_context_data(self, **kwargs):
         context = super(NurseDetailView, self).get_context_data(**kwargs)
         today = date.today()
         tomorrow = today + timedelta(days=1)
         list_visits_today = Visit.objects.filter(nurse = context['nurse'].pk,date=today).order_by('time')
         list_visits_tomorrow = Visit.objects.filter(nurse = context['nurse'].pk,date=tomorrow).order_by('time')
-
         list_patient_all = Patient.objects.all()
-
         context_today =[]
         i=0
         for visit in list_visits_today :
@@ -56,5 +54,18 @@ class NurseDetailView(DetailView):
 
         context['list_all_today'] = context_today
         context['list_all_tomorrow'] = context_tomorrow
+
+        nurse = context['object']
+        list_interval = nurse.intervals.all()
+        list_dict_interval_weekday = []
+        for interval in list_interval :
+            dict_interval_weekday = {}
+            dict_interval_weekday['interval']=interval
+            for tuple_weekday in Interval.WeekDay_Choices :
+                if interval.weekday == tuple_weekday[0] :
+                    dict_interval_weekday['weekday']=tuple_weekday[1]
+            list_dict_interval_weekday.append(dict_interval_weekday)
+
+        context['list_dict_interval_weekday'] = list_dict_interval_weekday
 
         return context
