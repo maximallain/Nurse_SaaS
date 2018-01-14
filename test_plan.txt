@@ -10,6 +10,8 @@ Parcours de test de l'application MyNurserie
 8/ Une fois que vous avez ajouté tous vos patients, retournez sur la page d'accueil en cliquant sur le logo en haut à gauche. Cliquez sur "Planify tomorrow visits" pour lancer l'optimisation des visites prévues demain.
 9/ Retournez sur la page des infirmiers. Vous pouvez désormais consulter leurs emplois du temps respectifs du lendemain en cliquant sur "See details"
 
+-------
+
 Accès au jeu de test:
 
 Un set d'infirmiers et de patients a été crée automatiquement via le fichier infirmiers/data/data.py. Ce set est associé à un compte

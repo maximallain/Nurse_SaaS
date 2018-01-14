@@ -23,4 +23,4 @@ class Soins(forms.Form):
     frequence_soin = forms.MultipleChoiceField(choices=Treatment_Frequency_Choice, label="Frequency", widget=forms.CheckboxSelectMultiple)
     start_date = forms.DateField(label="Start Date (format:YYYY-MM-DD)")
     treatment_duration = forms.IntegerField(max_value=180, min_value=0, label="Duration (days)")
-    specific_visit_time = forms.TimeField(label="Start time (format-HH:MM)", widget=forms.TimeInput(format='%H:%M'), required=False)
+    specific_visit_time = forms.TimeField(label="Specific visit time (format-HH:MM)", widget=forms.TimeInput(format='%H:%M'), required=False)
