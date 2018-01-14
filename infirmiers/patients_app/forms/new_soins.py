@@ -21,6 +21,6 @@ class Soins(forms.Form):
     name_soin = forms.CharField(max_length=100, label= "Name")
     type_soin = forms.ChoiceField(choices=Treatment_Type_Choices, label="Type")
     frequence_soin = forms.MultipleChoiceField(choices=Treatment_Frequency_Choice, label="Frequency", widget=forms.CheckboxSelectMultiple)
-    start_date = forms.DateField(label="Start Date (format:YYYY-MM-DD)")
+    start_date = forms.DateField(label="Start Date (YYYY-MM-DD)")
     treatment_duration = forms.IntegerField(max_value=180, min_value=0, label="Duration (days)")
-    specific_visit_time = forms.TimeField(label="Specific visit time (format-HH:MM)", widget=forms.TimeInput(format='%H:%M'), required=False)
+    specific_visit_time = forms.TimeField(label="(Optional) Specific visit time (HH:MM)", widget=forms.TimeInput(format='%H:%M'), required=False)
