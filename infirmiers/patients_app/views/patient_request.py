@@ -19,7 +19,7 @@ def patient_request(request):
         if form.is_valid():
             Address = form.cleaned_data['Address']
             if not req.get("https://maps.googleapis.com/maps/api/distancematrix/json?origins=" +
-                           Adress.replace(" ", "%20") + "&destinations=" + Adress.replace(" ", "%20")
+                           Address.replace(" ", "%20") + "&destinations=" + Address.replace(" ", "%20")
                            + "&key=" + KEY).json().get("destination_addresses")[0] == "":
                 FirstName = form.cleaned_data['FirstName'].capitalize()
                 LastName = form.cleaned_data['LastName'].upper()
@@ -34,7 +34,7 @@ def patient_request(request):
                     error_message = "The number must be numerical"
                     return render(request, 'nouveau_patient.html', {'form': form, 'error_message' : error_message})
 
-                Patient(LastName = LastName, FirstName = FirstName, Adress = Adress, PhoneNumber = PhoneNumber,Email = Email,office = office).save()
+                Patient(LastName = LastName, FirstName = FirstName, Address = Address, PhoneNumber = PhoneNumber,Email = Email,office = office).save()
                 return HttpResponseRedirect(reverse("patient_list"))
             else:
                 error_message = "Invalid address"

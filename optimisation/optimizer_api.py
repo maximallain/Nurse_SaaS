@@ -38,7 +38,7 @@ def launch_optimizer():
     patients_list = []
     visits = req.request("GET", "http://127.0.0.1:8000/api/v1/visits/?officepk=" + office_pk + "&date=" + date).json()
     for patient in visits:
-        new_patient = Patient(address=patient.get("soin").get("patient").get("Adress"),
+        new_patient = Patient(address=patient.get("soin").get("patient").get("Address"),
                                      duration_of_care=patient.get("duration_visit"), pk=patient.get("pk"))
         specific_visit_time = patient.get("soin").get("specific_visit_time")
         if specific_visit_time is not None:

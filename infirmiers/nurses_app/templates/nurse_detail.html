@@ -8,7 +8,13 @@
                 <h3 class="profile-username text-center">{{ object.FirstName }} {{ object.LastName }}</h3>
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Gender</b><a class="pull-right">{{ object.Gender }}</a>
+                        <b>Gender</b>
+                        {% if object.Gender == "M" %}
+                        <a class="pull-right">Male</a>
+                        {% else %}
+                        <a class="pull-right">Female</a>
+                        {% endif %}
+
                     </li>
                     <li class="list-group-item">
                         <b>Phone Number</b><a class="pull-right">{{ object.PhoneNumber }}</a>
@@ -46,9 +52,9 @@
                             RDV N°{{ element.number_visit }}</br>
                             Date :      {{ element.visit.date }}</br>
                             Hour :      {{ element.visit.time }}</br>
-                            Treatment : <a href="{% url 'soin_detail' element.patient.pk element.treatment.pk %}" >{{ element.visit.soin.name_soin }}</a></br>
+                            Treatment : {{ element.visit.soin.name_soin }}</br>
                             Patient :   <a href="{% url 'patient_detail' element.patient.pk %}" >{{element.patient.FirstName}} {{element.patient.LastName}}</a></br>
-                            Address :   {{element.patient.Adress}}</br>
+                            Address :   {{element.patient.Address}}</br>
                         </li>
                     </ul>
                 {% endfor %}
@@ -59,9 +65,9 @@
                             RDV N°{{ element.number_visit }}</br>
                             Date :      {{ element.visit.date }}</br>
                             Hour :      {{ element.visit.time }}</br>
-                            Treatment : <a href="{% url 'soin_detail' element.patient.pk element.treatment.pk %}" >{{ element.visit.soin.name_soin }}</a></br>
+                            Treatment : {{ element.visit.soin.name_soin }}</br>
                             Patient :   <a href="{% url 'patient_detail' element.patient.pk %}" >{{element.patient.FirstName}} {{element.patient.LastName}}</a></br>
-                            Address :   {{element.patient.Adress}}</br>
+                            Address :   {{element.patient.Address}}</br>
                         </li>
                     </ul>
                 {% endfor %}

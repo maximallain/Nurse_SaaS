@@ -263,6 +263,8 @@ class Round:
         if self._patients_list[-1].must_be_visited_exactly_at != -1 \
                 and self._patients_list[-1].must_be_visited_exactly_at < time:
             return False
+        if self._patients_list[-1].must_be_visited_exactly_at != -1:
+            time = self._patients_list[-1].must_be_visited_exactly_at
         time += self._patients_list[-1].duration_of_care + self._problem.cost(self._patients_list[-1],
                                                                               self._problem.office)
         return time <= nurse.start_time + nurse.availability

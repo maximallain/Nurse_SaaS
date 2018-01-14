@@ -1,0 +1,32 @@
+Parcours de test de l'application MyNurserie
+
+1/ Créer un nouveau compte cabinet en cliquant sur "New here, Sign Up!". Renseigner les champs demandés. L'adresse à indiquer est l'adresse du cabinet.
+2/ Créer un infirmier : cliquer sur "Your nurses", puis sur "Add a nurse", remplir les champs demandés puis valider.
+3/ Ajouter une disponibilité pour cet infirmier : cliquer sur le bouton "See details" de cet infirmier, puis "Add an availability". Sélectionner le lendemain du jour d'aujourd'hui (ex : si vous testez cet appli un lundi, sélectionnez "Tuesday"). Puis entrer des heures de début et de fin de disponibilité (ex : 09:00 jusqu'à 12:30).
+4/ Cliquer sur "Back to nurses", puis ajouter un autre infirmier, de la même façon que précédemment. Lui ajouter également une plage de disponibilité, le même jour que précédemment (ie : le lendemain d'aujourd'hui), avec des horaires différents (ex : de 10:00 à 14:00).
+5/ Cliquer sur "Your patients", puis "Add a patient". Renseigner les informations demandées, puis valider. L'adresse demandée est l'adresse du domicile du patient.
+6/ Cliquer sur "See details" sur le nouveau patient, puis "Add a treatment" pour ajouter un soin. Renseigner le nom du soin, puis le jour de demain (comme pour les disponibilités des infirmiers). Sélectionner la date du début du traitement, puis sa durée (non nulle). Le dernier champ ("Specific visit time") est facultatif et ne doit être rempli que si le traitement doit absolument être effectué à une heure précise (laisser vide sinon).
+7/ Cliquer sur "Back to patients list", puis répéter les opérations 5/ et 6/ plusieurs fois. Nous vous conseillons de créer environ 7 patients, certains avec des contraintes de temps précis de traitement, d'autres sans. Veillez toutefois à ne pas mettre de telles contraintes en dehors des plages de disponibilité des infirmiers. N'oubliez pas que tous les soins doivent être prévus pour le lendemain.
+8/ Une fois que vous avez ajouté tous vos patients, retournez sur la page d'accueil en cliquant sur le logo en haut à gauche. Cliquez sur "Planify tomorrow visits" pour lancer l'optimisation des visites prévues demain.
+9/ Retournez sur la page des infirmiers. Vous pouvez désormais consulter leurs emplois du temps respectifs du lendemain en cliquant sur "See details"
+
+Accès au jeu de test:
+
+Un set d'infirmiers et de patients a été crée automatiquement via le fichier infirmiers/data/data.py. Ce set est associé à un compte
+utilisateur, et disponible sur la base de donnée SQLite sur Master. Il permet de tester l'algorithme avec un nombre important de visites.
+
+1/ Connecter vous au compte utilisateur suivant: 
+   - Username: Cabinet1
+   - Mot de passe: Boudin78
+2/ Se rendre dans les onglets Nurses et Patients pour visualiser le jeu de données.
+3/ Cliquer sur "Planify tomorrow visits" pour planifier les visites du lendemain.
+4/ Se rendre sur les pages des infirmiers pour visualiser leurs emplois du temps.
+
+En cas de suppression de la BDD, il faut:
+- Appliquer toutes les migrations de la BDD : python manage.py migrate (dans le dossier infirmiers)
+- Créer un compte utilisateur via l'interface applicative.
+- Se rendre dans le dossier infirmiers: cd infirmiers
+- Se rendre dans le terminal Django: python manage.py shell
+- Taper la commande suivante: from data.data import *
+- Taper la commande suivante: main_nurses() //pour créer des infirmiers
+- Taper la commande suivante: main_patients() //pour créer des patients/soins/visites    
