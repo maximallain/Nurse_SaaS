@@ -14,6 +14,21 @@ class PatientDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(PatientDetailView, self).get_context_data(**kwargs)
+        patient = context['patient']
+        list_treatments = patient.treatments.all()
+        list_dict = []
+        for treatment in list_treatments :
+            dict_treatment_date = {}
+            list_dispo = list(map(lambda x: int(x), treatment.frequence_soin))
+            days_treatment = []
+            for int_day in list_dispo :
+                for tuple in Soin.Treatment_Frequency_Choice :
+                    if str(int_day) == tuple[0] :
+                        days_treatment.append(tuple[1])
+            dict_treatment_date['treatment'] = treatment
+            dict_treatment_date['date']= days_treatment
+            list_dict.append(dict_treatment_date)
+        context['list_dict'] = list_dict
         return context
 
     def post(self, request, pk):
