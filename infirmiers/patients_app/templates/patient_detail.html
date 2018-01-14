@@ -84,7 +84,7 @@
             <div class="box-footer">
                 <form action="{% url 'patient_detail' patient.pk %}" method="POST">
                     {% csrf_token %}
-                    <button type="submit" name="Deletion Treatment" value="{{ treatment.pk }}">Delete this
+                    <button type="submit" name="Deletion Treatment" value="{{ dict.treatment.pk }}">Delete this
                         treatment
                     </button>
                 </form>
