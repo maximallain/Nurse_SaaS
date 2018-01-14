@@ -13,7 +13,7 @@ Install the repo git: `git clone https://gitlab.centralesupelec.fr/projet-nimitz
 - Go to the folder "infirmiers" via your terminal:                         `cd infirmiers`
 - Run the following command via your terminal (to run the django app):     `python manage.py runserver`
 - Go to the folder "optimisation" via your terminal:                       `cd optimisation`
-- Run the following command via your terminal (to run the optimizer):      `python optimizer_api`
+- Run the following command via your terminal (to run the optimizer):      `python optimizer_api.py`
 - Browse the following url: 127.0.0.1:8000/
 
 *NB: To use the optimizer, you need a working internet connection (to retrieve distances from Google Maps API)*
