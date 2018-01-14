@@ -3,13 +3,13 @@ from django import forms
 class AvailabilityForm(forms.Form):
 
     WeekDay_Choices = (
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-        ('Friday', 'Friday'),
-        ('Saturday', 'Saturday'),
-        ('Sunday', 'Sunday'),
+        ('M', 'Monday'),
+        ('T', 'Tuesday'),
+        ('W', 'Wednesday'),
+        ('Th', 'Thursday'),
+        ('F', 'Friday'),
+        ('S', 'Saturday'),
+        ('Su', 'Sunday'),
     )
 
     AvailableDay = forms.MultipleChoiceField(label="Day", choices=WeekDay_Choices)
