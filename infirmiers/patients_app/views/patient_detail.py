@@ -16,9 +16,9 @@ class PatientDetailView(DetailView):
         context = super(PatientDetailView, self).get_context_data(**kwargs)
         return context
 
-    def post(self, request,patient_id):
+    def post(self, request, pk):
         if "Deletion Treatment" in request.POST:
             treatment_pk = request.POST.get("Deletion Treatment","")
             Soin.objects.filter(pk=treatment_pk)[0].delete()
-            return HttpResponseRedirect(reverse("patient_detail", args=[patient_id]))
+            return HttpResponseRedirect(reverse("patient_detail", args=[pk]))
 
