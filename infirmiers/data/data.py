@@ -14,7 +14,7 @@ from patients_app.models.Patients import Patient
 from patients_app.models.soins import Soin
 from signUp.models.office import Office
 
-weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+weekday = ["M", "T", "W", "Th", "F", "S", "Su"]
 FN = ["Alexandre","Max", "Pierre", "Baudouin", "Matthieu", "Quentin"]
 LN = ["Sioufi", "Allain", "Léger", "Coco", "Hello","Marcel"]
 PN = ["0000000000", "0000000001", "0000000002", "0000000003", "0000000004", "0000000005"]
@@ -74,53 +74,53 @@ def main_nurses():
         L.append(A)
 
     #Create the intervals and associate it to the nurses
-    I1 = create_interval_to_db(40, 56, "Monday")
+    I1 = create_interval_to_db(40, 56, "M")
     L[0].intervals.add(I1)
-    I2 = create_interval_to_db(56, 72, "Monday")
+    I2 = create_interval_to_db(56, 72, "M")
     L[1].intervals.add(I2)
-    I3 = create_interval_to_db(72, 88, "Monday")
+    I3 = create_interval_to_db(72, 88, "M")
     L[2].intervals.add(I3)
 
-    I4 = create_interval_to_db(40, 56, "Tuesday")
+    I4 = create_interval_to_db(40, 56, "T")
     L[3].intervals.add(I4)
-    I5 = create_interval_to_db(56, 72, "Tuesday")
+    I5 = create_interval_to_db(56, 72, "T")
     L[4].intervals.add(I5)
-    I6 = create_interval_to_db(72, 88, "Tuesday")
+    I6 = create_interval_to_db(72, 88, "T")
     L[5].intervals.add(I6)
 
-    I7 = create_interval_to_db(40, 56, "Wednesday")
+    I7 = create_interval_to_db(40, 56, "W")
     L[1].intervals.add(I7)
-    I8 = create_interval_to_db(56, 72, "Wednesday")
+    I8 = create_interval_to_db(56, 72, "W")
     L[0].intervals.add(I8)
-    I9 = create_interval_to_db(72, 88, "Wednesday")
+    I9 = create_interval_to_db(72, 88, "W")
     L[2].intervals.add(I9)
 
-    I10 = create_interval_to_db(40, 56, "Thursday")
+    I10 = create_interval_to_db(40, 56, "Th")
     L[5].intervals.add(I10)
-    I11 = create_interval_to_db(56, 72, "Thursday")
+    I11 = create_interval_to_db(56, 72, "Th")
     L[3].intervals.add(I11)
-    I12 = create_interval_to_db(72, 88, "Thursday")
+    I12 = create_interval_to_db(72, 88, "Th")
     L[4].intervals.add(I12)
 
-    I13 = create_interval_to_db(40, 56, "Friday")
+    I13 = create_interval_to_db(40, 56, "F")
     L[2].intervals.add(I13)
-    I14 = create_interval_to_db(56, 72, "Friday")
+    I14 = create_interval_to_db(56, 72, "F")
     L[0].intervals.add(I14)
-    I15 = create_interval_to_db(72, 88, "Friday")
+    I15 = create_interval_to_db(72, 88, "F")
     L[1].intervals.add(I15)
 
-    I16 = create_interval_to_db(40, 56, "Saturday")
+    I16 = create_interval_to_db(40, 56, "S")
     L[5].intervals.add(I16)
-    I17 = create_interval_to_db(56, 72, "Saturday")
+    I17 = create_interval_to_db(56, 72, "S")
     L[3].intervals.add(I17)
-    I18 = create_interval_to_db(72, 88, "Saturday")
+    I18 = create_interval_to_db(72, 88, "S")
     L[4].intervals.add(I18)
 
-    I19 = create_interval_to_db(40, 56, "Sunday")
+    I19 = create_interval_to_db(40, 56, "Su")
     L[1].intervals.add(I19)
-    I20 = create_interval_to_db(56, 72, "Sunday")
+    I20 = create_interval_to_db(56, 72, "Su")
     L[2].intervals.add(I20)
-    I21 = create_interval_to_db(72, 88, "Sunday")
+    I21 = create_interval_to_db(72, 88, "Su")
     L[0].intervals.add(I21)
 
 def main_patients():

@@ -6,13 +6,13 @@ from datetime import time
 class Interval(models.Model):
     
     WeekDay_Choices = (
-        ('Monday', 'Monday'),
-        ('Tuesday', 'Tuesday'),
-        ('Wednesday', 'Wednesday'),
-        ('Thursday', 'Thursday'),
-        ('Friday', 'Friday'),
-        ('Saturday', 'Saturday'),
-        ('Sunday', 'Sunday'),
+        ('M', 'Monday'),
+        ('T', 'Tuesday'),
+        ('W', 'Wednesday'),
+        ('Th', 'Thursday'),
+        ('F', 'Friday'),
+        ('S', 'Saturday'),
+        ('Su', 'Sunday'),
     )
     
     start_time = models.PositiveIntegerField(validators=[MaxValueValidator(95)],null=True)
