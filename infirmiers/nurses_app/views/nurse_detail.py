@@ -3,6 +3,7 @@ from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+from nurses_app.models.interval import Interval
 from nurses_app.models.nurse import Nurse
 from patients_app.models.visits import Visit
 from patients_app.models.Patients import Patient
@@ -15,7 +16,7 @@ class NurseDetailView(DetailView):
     model = Nurse #This view is based on the model Nurse
     template_name = "nurse_detail.html" #The template linked to this ListView
 
-       def get_context_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super(NurseDetailView, self).get_context_data(**kwargs)
         today = date.today()
         tomorrow = today + timedelta(days=1)
