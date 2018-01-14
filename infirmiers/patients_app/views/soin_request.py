@@ -38,10 +38,10 @@ def soin_request(request, patient_id):
 
                     return HttpResponseRedirect(reverse("patient_detail", args=[patient_id]))
                 else:
-                    return render(request, 'nouveau_soin.html', {'error_message' : "Invalid date", 'form': form, 'patient_pk': patient_id})
+                    return render(request, 'nouveau_soin.html', {'error_message' : "The day of the start date has to be in your frequency days choices", 'form': form, 'patient_pk': patient_id})
             except ValueError:
                 return render(request, 'nouveau_soin.html',
-                              {'error_message': "Invalid date", 'form': form, 'patient_pk': patient_id})
+                              {'error_message': "The day of the start date has to be in your frequency days choices", 'form': form, 'patient_pk': patient_id})
     else:
         form = Soins()
 
